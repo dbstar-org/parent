@@ -12,10 +12,9 @@
     <modules>
         <module>pure</module>
         <module>base</module>
-        <!--        <module>protobuf</module>-->
-        <!--        <module>mode</module>-->
-        <!--        <module>assembly</module>-->
-        <!--        <module>obscure</module>-->
+        <module>assembly</module>
+        <module>mode</module>
+        <module>obscure</module>
     </modules>
 
     <properties>

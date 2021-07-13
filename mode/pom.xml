@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.dbstarll.parent</groupId>
+        <artifactId>parent-assembly</artifactId>
+        <version>1.0</version>
+        <relativePath>../assembly</relativePath>
+    </parent>
+    <artifactId>parent-mode</artifactId>
+    <packaging>pom</packaging>
+
+    <profiles>
+        <profile>
+            <id>mode-filtering</id>
+            <activation>
+                <file>
+                    <exists>src/main/mode</exists>
+                </file>
+            </activation>
+            <properties>
+                <project.mode>dev</project.mode>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>src/main/resources</directory>
+                    </resource>
+                </resources>
+                <testResources>
+                    <testResource>
+                        <filtering>true</filtering>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                </testResources>
+                <filters>
+                    <filter>src/main/mode/${project.mode}.properties</filter>
+                </filters>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}/parent-mode</url>
+        </site>
+    </distributionManagement>
+</project>

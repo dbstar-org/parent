@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.dbstarll.parent</groupId>
+        <artifactId>parent-base</artifactId>
+        <version>1.0</version>
+        <relativePath>../base</relativePath>
+    </parent>
+    <artifactId>parent-assembly</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <version.maven-assembly-plugin>3.3.0</version.maven-assembly-plugin>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>assembly-single</id>
+            <activation>
+                <file>
+                    <exists>src/main/assembly</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                    </plugin>
+                </plugins>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-assembly-plugin</artifactId>
+                            <version>${version.maven-assembly-plugin}</version>
+                            <executions>
+                                <execution>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>single</goal>
+                                    </goals>
+                                    <configuration>
+                                        <descriptorRefs>
+                                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                                        </descriptorRefs>
+                                        <descriptorSourceDirectory>src/main/assembly</descriptorSourceDirectory>
+                                        <archive>
+                                            <manifest>
+                                                <mainClass>${project.mainClass}</mainClass>
+                                            </manifest>
+                                        </archive>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-jar-plugin</artifactId>
+                            <configuration>
+                                <archive>
+                                    <manifest>
+                                        <mainClass>${project.mainClass}</mainClass>
+                                    </manifest>
+                                </archive>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}/parent-assembly</url>
+        </site>
+    </distributionManagement>
+</project>

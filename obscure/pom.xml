@@ -1,0 +1,183 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.dbstarll.parent</groupId>
+        <artifactId>parent-mode</artifactId>
+        <version>1.0</version>
+        <relativePath>../mode</relativePath>
+    </parent>
+    <artifactId>parent-obscure</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <!-- proguard version -->
+        <version.proguard>6.2.2</version.proguard>
+        <version.proguard.plugin>2.4.0</version.proguard.plugin>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.wvengen</groupId>
+                    <artifactId>proguard-maven-plugin</artifactId>
+                    <version>${version.proguard.plugin}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>proguard</goal>
+                            </goals>
+                            <configuration>
+                                <attach>true</attach>
+                                <libs>
+                                    <lib>${java.home}/lib/rt.jar</lib>
+                                    <lib>${java.home}/lib/jce.jar</lib>
+                                    <lib>${java.home}/lib/jsse.jar</lib>
+                                </libs>
+                                <proguardInclude>src/main/proguard.conf</proguardInclude>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sf.proguard</groupId>
+                            <artifactId>proguard-base</artifactId>
+                            <version>${version.proguard}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>proguard-active-java</id>
+            <activation>
+                <file>
+                    <exists>src/main/java</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.wvengen</groupId>
+                        <artifactId>proguard-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>proguard-skip-web</id>
+            <activation>
+                <file>
+                    <exists>src/main/webapp</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.wvengen</groupId>
+                        <artifactId>proguard-maven-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>proguard-public</id>
+            <activation>
+                <file>
+                    <missing>src/main/assembly</missing>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.github.wvengen</groupId>
+                            <artifactId>proguard-maven-plugin</artifactId>
+                            <configuration>
+                                <options>
+                                    <option>-optimizationpasses 3</option>
+                                    <option>-dontusemixedcaseclassnames</option>
+                                    <option>-overloadaggressively</option>
+                                    <option>-allowaccessmodification</option>
+
+                                    <option>-keepparameternames</option>
+                                    <option>-renamesourcefileattribute SourceFile</option>
+                                    <option>-keepattributes
+                                        Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+                                    </option>
+                                    <option>-keepclasseswithmembernames class * {native &lt;methods&gt; ;}</option>
+                                    <option>-keep public class * {public protected *;}</option>
+                                    <option>-keep public interface * {*;}</option>
+                                    <option>-keep public enum * {*;}</option>
+                                    <option>-keepclassmembernames class * {java.lang.Class class$(java.lang.String);
+                                        java.lang.Class
+                                        class$(java.lang.String, boolean);}
+                                    </option>
+                                </options>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>proguard-main</id>
+            <activation>
+                <file>
+                    <exists>src/main/assembly</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.github.wvengen</groupId>
+                            <artifactId>proguard-maven-plugin</artifactId>
+                            <configuration>
+                                <injar>${project.build.finalName}-jar-with-dependencies.jar</injar>
+                                <options>
+                                    <option>-optimizationpasses 3</option>
+                                    <option>-dontusemixedcaseclassnames</option>
+                                    <option>-overloadaggressively</option>
+                                    <option>-allowaccessmodification</option>
+
+                                    <option>-dontwarn javax.**,junit.framework.Assert</option>
+
+                                    <option>-renamesourcefileattribute SourceFile</option>
+                                    <option>-keepattributes
+                                        Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+                                    </option>
+                                    <option>-keepclasseswithmembernames class * {native &lt;methods&gt; ;}</option>
+                                    <option>-keepnames public interface org.apache.commons.logging.LogFactory</option>
+                                    <option>-keep public class * implements org.apache.commons.logging.LogFactory
+                                    </option>
+                                    <option>-keep public !abstract class org.apache.log4j.** { public *;}</option>
+                                    <option>-keep public class ${project.mainClass} {public static void
+                                        main(java.lang.String[]);}
+                                    </option>
+                                </options>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}/parent-obscure</url>
+        </site>
+    </distributionManagement>
+</project>
