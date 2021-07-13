@@ -13,15 +13,15 @@
 
     <properties>
         <!-- logger version -->
-        <version.slf4j>1.7.25</version.slf4j>
+        <version.slf4j>1.7.31</version.slf4j>
         <!-- test version -->
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.2</version.junit>
         <!-- apache commons version -->
-        <version.commons.lang>3.7</version.commons.lang>
-        <version.commons.io>2.6</version.commons.io>
-        <version.commons.codec>1.11</version.commons.codec>
-        <version.commons.beanutils>1.9.3</version.commons.beanutils>
-        <version.commons.collections>4.1</version.commons.collections>
+        <version.commons.lang>3.12.0</version.commons.lang>
+        <version.commons.io>2.10.0</version.commons.io>
+        <version.commons.codec>1.15</version.commons.codec>
+        <version.commons.beanutils>1.9.4</version.commons.beanutils>
+        <version.commons.collections>4.4</version.commons.collections>
     </properties>
 
     <dependencies>
@@ -105,7 +105,7 @@
     <distributionManagement>
         <site>
             <id>local</id>
-            <url>${project.site.root.project}/MAVEN/PARENT/parent-base</url>
+            <url>${project.site.root.project}/parent-protobuf</url>
         </site>
     </distributionManagement>
 </project>

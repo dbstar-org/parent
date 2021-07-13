@@ -11,7 +11,7 @@
 
     <modules>
         <module>pure</module>
-        <!--        <module>base</module>-->
+        <module>base</module>
         <!--        <module>protobuf</module>-->
         <!--        <module>mode</module>-->
         <!--        <module>assembly</module>-->
