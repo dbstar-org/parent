@@ -11,10 +11,54 @@
 
     <modules>
         <module>pure</module>
-        <module>base</module>
+        <!--        <module>base</module>-->
         <!--        <module>protobuf</module>-->
         <!--        <module>mode</module>-->
         <!--        <module>assembly</module>-->
         <!--        <module>obscure</module>-->
     </modules>
+
+    <properties>
+        <!-- Global Config -->
+        <project.encoding>UTF-8</project.encoding>
+
+        <!-- Encoding -->
+        <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+
+        <!-- Site config -->
+        <project.site.root>file://${HOME}/.m2/sites</project.site.root>
+        <project.site.root.project>${project.site.root}/github.com/dbstarll/parent</project.site.root.project>
+
+        <!-- Report Plugin Version -->
+        <version.maven-site-plugin>3.9.1</version.maven-site-plugin>
+        <version.maven-project-info-reports-plugin>3.1.2</version.maven-project-info-reports-plugin>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${version.maven-site-plugin}</version>
+                    <configuration>
+                        <locales>zh_CN</locales>
+                        <relativizeDecorationLinks>false</relativizeDecorationLinks>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${version.maven-project-info-reports-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}</url>
+        </site>
+    </distributionManagement>
 </project>
