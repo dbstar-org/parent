@@ -10,32 +10,9 @@
     <artifactId>pure</artifactId>
     <packaging>pom</packaging>
 
-    <scm>
-        <connection>scm:git:${project.github.git.root}/${project.artifactId}</connection>
-        <developerConnection>scm:git:${project.github.git.root}/${project.artifactId}</developerConnection>
-        <url>${project.github.web.master}/${project.artifactId}</url>
-    </scm>
-
-    <distributionManagement>
-        <site>
-            <id>local</id>
-            <url>${project.site.root.project}/${project.artifactId}</url>
-        </site>
-    </distributionManagement>
-
     <properties>
         <!-- Global Config -->
         <project.java.version>1.8</project.java.version>
-
-        <!-- GitLab -->
-        <project.github.host>github.com</project.github.host>
-        <project.github.user>dbstarll</project.github.user>
-        <project.github.project>parent</project.github.project>
-        <project.github.web.root>https://${project.github.host}/${project.github.user}/${project.github.project}
-        </project.github.web.root>
-        <project.github.web.master>${project.github.web.root}/tree/main</project.github.web.master>
-        <project.github.git.root>git@${project.github.host}:${project.github.user}/${project.github.project}.git
-        </project.github.git.root>
 
         <!-- JDK -->
         <maven.compiler.compilerVersion>${project.java.version}</maven.compiler.compilerVersion>
@@ -155,11 +132,9 @@
                         <artifactId>maven-changelog-plugin</artifactId>
                         <version>${version.maven-changelog-plugin}</version>
                         <configuration>
-                            <!-- <displayFileDetailUrl>${project.github.web.master}/%FILE%</displayFileDetailUrl> -->
-                            <displayFileRevDetailUrl>${project.github.web.root}/blob/%REV%/%FILE%
-                            </displayFileRevDetailUrl>
-                            <displayChangeSetDetailUrl>${project.github.web.root}/commit/%REV%
-                            </displayChangeSetDetailUrl>
+                            <!-- <displayFileDetailUrl>${project.git.web.master}/%FILE%</displayFileDetailUrl> -->
+                            <displayFileRevDetailUrl>${project.git.web.root}/blob/%REV%/%FILE%</displayFileRevDetailUrl>
+                            <displayChangeSetDetailUrl>${project.git.web.root}/commit/%REV%</displayChangeSetDetailUrl>
                         </configuration>
                     </plugin>
                 </plugins>

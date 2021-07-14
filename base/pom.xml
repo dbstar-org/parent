@@ -12,9 +12,7 @@
     <packaging>pom</packaging>
 
     <scm>
-        <connection>scm:git:${project.github.git.root}/${project.artifactId}</connection>
-        <developerConnection>scm:git:${project.github.git.root}/${project.artifactId}</developerConnection>
-        <url>${project.github.web.master}/${project.artifactId}</url>
+        <url>${project.git.web.master}/${project.artifactId}</url>
     </scm>
 
     <distributionManagement>

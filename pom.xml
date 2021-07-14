@@ -17,6 +17,19 @@
         <module>obscure</module>
     </modules>
 
+    <scm>
+        <connection>scm:git:${project.git.git.root}</connection>
+        <developerConnection>scm:git:${project.git.git.root}</developerConnection>
+        <url>${project.git.web.master}</url>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}</url>
+        </site>
+    </distributionManagement>
+
     <properties>
         <!-- Global Config -->
         <project.encoding>UTF-8</project.encoding>
@@ -25,9 +38,18 @@
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
         <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
 
+        <!-- Git -->
+        <project.git.host>github.com</project.git.host>
+        <project.git.user>dbstarll</project.git.user>
+        <project.git.project>parent</project.git.project>
+        <project.git.uri>${project.git.host}/${project.git.user}/${project.git.project}</project.git.uri>
+        <project.git.web.root>https://${project.git.uri}</project.git.web.root>
+        <project.git.web.master>${project.git.web.root}/tree/main</project.git.web.master>
+        <project.git.git.root>git@${project.git.uri}.git</project.git.git.root>
+
         <!-- Site config -->
         <project.site.root>file://${HOME}/.m2/sites</project.site.root>
-        <project.site.root.project>${project.site.root}/github.com/dbstarll/parent</project.site.root.project>
+        <project.site.root.project>${project.site.root}/${project.git.uri}</project.site.root.project>
 
         <!-- Report Plugin Version -->
         <version.maven-site-plugin>3.9.1</version.maven-site-plugin>
@@ -54,10 +76,4 @@
             </plugins>
         </pluginManagement>
     </build>
-    <distributionManagement>
-        <site>
-            <id>local</id>
-            <url>${project.site.root.project}</url>
-        </site>
-    </distributionManagement>
 </project>
