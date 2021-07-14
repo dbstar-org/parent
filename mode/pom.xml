@@ -24,7 +24,7 @@
 
     <profiles>
         <profile>
-            <id>mode-filtering</id>
+            <id>mode-resource-filtering</id>
             <activation>
                 <file>
                     <exists>src/main/mode</exists>
