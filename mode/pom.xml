@@ -3,13 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.dbstarll.parent</groupId>
+        <groupId>io.github.dbstarll.parent</groupId>
         <artifactId>assembly</artifactId>
         <version>1.0</version>
         <relativePath>../assembly</relativePath>
     </parent>
     <artifactId>mode</artifactId>
     <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>parent for assembly executable jar by multiple environments</description>
+    <url>${project.scm.url}</url>
 
     <scm>
         <url>${project.git.web.master}/${project.artifactId}</url>

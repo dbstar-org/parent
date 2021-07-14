@@ -3,12 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.dbstarll.parent</groupId>
+        <groupId>io.github.dbstarll.parent</groupId>
         <artifactId>PARENT</artifactId>
         <version>1.0</version>
     </parent>
     <artifactId>pure</artifactId>
     <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>parent for pure java</description>
+    <url>${project.scm.url}</url>
 
     <properties>
         <!-- Global Config -->

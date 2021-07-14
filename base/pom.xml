@@ -3,13 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.dbstarll.parent</groupId>
+        <groupId>io.github.dbstarll.parent</groupId>
         <artifactId>pure</artifactId>
         <version>1.0</version>
         <relativePath>../pure</relativePath>
     </parent>
     <artifactId>base</artifactId>
     <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>parent for commons dependencies</description>
+    <url>${project.scm.url}</url>
 
     <scm>
         <url>${project.git.web.master}/${project.artifactId}</url>

@@ -3,13 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.dbstarll.parent</groupId>
+        <groupId>io.github.dbstarll.parent</groupId>
         <artifactId>mode</artifactId>
         <version>1.0</version>
         <relativePath>../mode</relativePath>
     </parent>
     <artifactId>obscure</artifactId>
     <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>parent for code obscure</description>
+    <url>${project.scm.url}</url>
 
     <scm>
         <url>${project.git.web.master}/${project.artifactId}</url>
