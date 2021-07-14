@@ -4,12 +4,25 @@
 
     <parent>
         <groupId>com.github.dbstarll.parent</groupId>
-        <artifactId>parent-pure</artifactId>
+        <artifactId>pure</artifactId>
         <version>1.0</version>
         <relativePath>../pure</relativePath>
     </parent>
-    <artifactId>parent-base</artifactId>
+    <artifactId>base</artifactId>
     <packaging>pom</packaging>
+
+    <scm>
+        <connection>scm:git:${project.github.git.root}/${project.artifactId}</connection>
+        <developerConnection>scm:git:${project.github.git.root}/${project.artifactId}</developerConnection>
+        <url>${project.github.web.master}/${project.artifactId}</url>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}/${project.artifactId}</url>
+        </site>
+    </distributionManagement>
 
     <properties>
         <!-- logger version -->
@@ -101,11 +114,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <distributionManagement>
-        <site>
-            <id>local</id>
-            <url>${project.site.root.project}/parent-base</url>
-        </site>
-    </distributionManagement>
 </project>

@@ -4,12 +4,25 @@
 
     <parent>
         <groupId>com.github.dbstarll.parent</groupId>
-        <artifactId>parent-assembly</artifactId>
+        <artifactId>assembly</artifactId>
         <version>1.0</version>
         <relativePath>../assembly</relativePath>
     </parent>
-    <artifactId>parent-mode</artifactId>
+    <artifactId>mode</artifactId>
     <packaging>pom</packaging>
+
+    <scm>
+        <connection>scm:git:${project.github.git.root}/${project.artifactId}</connection>
+        <developerConnection>scm:git:${project.github.git.root}/${project.artifactId}</developerConnection>
+        <url>${project.github.web.master}/${project.artifactId}</url>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}/${project.artifactId}</url>
+        </site>
+    </distributionManagement>
 
     <profiles>
         <profile>
@@ -41,11 +54,4 @@
             </build>
         </profile>
     </profiles>
-
-    <distributionManagement>
-        <site>
-            <id>local</id>
-            <url>${project.site.root.project}/parent-mode</url>
-        </site>
-    </distributionManagement>
 </project>

@@ -4,12 +4,25 @@
 
     <parent>
         <groupId>com.github.dbstarll.parent</groupId>
-        <artifactId>parent-mode</artifactId>
+        <artifactId>mode</artifactId>
         <version>1.0</version>
         <relativePath>../mode</relativePath>
     </parent>
-    <artifactId>parent-obscure</artifactId>
+    <artifactId>obscure</artifactId>
     <packaging>pom</packaging>
+
+    <scm>
+        <connection>scm:git:${project.github.git.root}/${project.artifactId}</connection>
+        <developerConnection>scm:git:${project.github.git.root}/${project.artifactId}</developerConnection>
+        <url>${project.github.web.master}/${project.artifactId}</url>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}/${project.artifactId}</url>
+        </site>
+    </distributionManagement>
 
     <properties>
         <!-- proguard version -->
@@ -173,11 +186,4 @@
             </build>
         </profile>
     </profiles>
-
-    <distributionManagement>
-        <site>
-            <id>local</id>
-            <url>${project.site.root.project}/parent-obscure</url>
-        </site>
-    </distributionManagement>
 </project>

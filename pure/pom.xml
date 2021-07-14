@@ -7,20 +7,33 @@
         <artifactId>PARENT</artifactId>
         <version>1.0</version>
     </parent>
-    <artifactId>parent-pure</artifactId>
+    <artifactId>pure</artifactId>
     <packaging>pom</packaging>
+
+    <scm>
+        <connection>scm:git:${project.github.git.root}/${project.artifactId}</connection>
+        <developerConnection>scm:git:${project.github.git.root}/${project.artifactId}</developerConnection>
+        <url>${project.github.web.master}/${project.artifactId}</url>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}/${project.artifactId}</url>
+        </site>
+    </distributionManagement>
 
     <properties>
         <!-- Global Config -->
-        <project.java.version>1.6</project.java.version>
+        <project.java.version>1.8</project.java.version>
 
         <!-- GitLab -->
         <project.github.host>github.com</project.github.host>
-        <project.github.user>_user</project.github.user>
-        <project.github.project>_project</project.github.project>
+        <project.github.user>dbstarll</project.github.user>
+        <project.github.project>parent</project.github.project>
         <project.github.web.root>https://${project.github.host}/${project.github.user}/${project.github.project}
         </project.github.web.root>
-        <project.github.web.master>${project.github.web.root}/blob/main</project.github.web.master>
+        <project.github.web.master>${project.github.web.root}/tree/main</project.github.web.master>
         <project.github.git.root>git@${project.github.host}:${project.github.user}/${project.github.project}.git
         </project.github.git.root>
 
@@ -44,12 +57,6 @@
         <version.cobertura-maven-plugin>2.7</version.cobertura-maven-plugin>
         <version.maven-surefire-report-plugin>2.22.2</version.maven-surefire-report-plugin>
     </properties>
-
-    <scm>
-        <connection>scm:git:${project.github.git.root}</connection>
-        <developerConnection>scm:git:${project.github.git.root}</developerConnection>
-        <url>${project.github.web.master}</url>
-    </scm>
 
     <profiles>
         <profile>

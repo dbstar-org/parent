@@ -4,12 +4,25 @@
 
     <parent>
         <groupId>com.github.dbstarll.parent</groupId>
-        <artifactId>parent-base</artifactId>
+        <artifactId>base</artifactId>
         <version>1.0</version>
         <relativePath>../base</relativePath>
     </parent>
-    <artifactId>parent-assembly</artifactId>
+    <artifactId>assembly</artifactId>
     <packaging>pom</packaging>
+
+    <scm>
+        <connection>scm:git:${project.github.git.root}/${project.artifactId}</connection>
+        <developerConnection>scm:git:${project.github.git.root}/${project.artifactId}</developerConnection>
+        <url>${project.github.web.master}/${project.artifactId}</url>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>${project.site.root.project}/${project.artifactId}</url>
+        </site>
+    </distributionManagement>
 
     <properties>
         <version.maven-assembly-plugin>3.3.0</version.maven-assembly-plugin>
@@ -72,11 +85,4 @@
             </build>
         </profile>
     </profiles>
-
-    <distributionManagement>
-        <site>
-            <id>local</id>
-            <url>${project.site.root.project}/parent-assembly</url>
-        </site>
-    </distributionManagement>
 </project>
