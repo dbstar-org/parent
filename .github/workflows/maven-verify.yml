@@ -31,3 +31,5 @@ jobs:
 
       - name: Verify with Maven
         run: mvn --batch-mode --update-snapshots clean verify
+
+      - run: cat ~/.m2/settings.xml
