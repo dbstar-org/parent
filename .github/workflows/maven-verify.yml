@@ -42,8 +42,8 @@ jobs:
             [
               {
                 "id": "github",
-                "username": "${{ env.GITHUB_ACTOR }}",
-                "password": "${{ env.GITHUB_TOKEN }}"
+                "username": "${env.GITHUB_ACTOR}",
+                "password": "${env.GITHUB_TOKEN}"
               },
               {
                 "id": "ossrh",
