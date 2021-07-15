@@ -10,9 +10,9 @@
     <artifactId>pure</artifactId>
     <packaging>pom</packaging>
 
-    <name>${project.artifactId}</name>
+    <name>pure</name>
     <description>parent for pure java</description>
-    <url>${project.scm.url}</url>
+    <url>https://github.com/dbstarll/parent/tree/main/pure</url>
 
     <properties>
         <!-- Global Config -->

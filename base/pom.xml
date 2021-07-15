@@ -11,9 +11,9 @@
     <artifactId>base</artifactId>
     <packaging>pom</packaging>
 
-    <name>${project.artifactId}</name>
+    <name>base</name>
     <description>parent for commons dependencies</description>
-    <url>${project.scm.url}</url>
+    <url>https://github.com/dbstarll/parent/tree/main/base</url>
 
     <scm>
         <url>${project.git.web.master}/${project.artifactId}</url>

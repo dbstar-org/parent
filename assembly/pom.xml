@@ -11,9 +11,9 @@
     <artifactId>assembly</artifactId>
     <packaging>pom</packaging>
 
-    <name>${project.artifactId}</name>
+    <name>assembly</name>
     <description>parent for assembly executable jar</description>
-    <url>${project.scm.url}</url>
+    <url>https://github.com/dbstarll/parent/tree/main/assembly</url>
 
     <scm>
         <url>${project.git.web.master}/${project.artifactId}</url>

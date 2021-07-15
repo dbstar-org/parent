@@ -8,9 +8,9 @@
     <version>1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>${project.artifactId}</name>
+    <name>PARENT</name>
     <description>root parent</description>
-    <url>${project.scm.url}</url>
+    <url>https://github.com/dbstarll/parent</url>
 
     <licenses>
         <license>
@@ -22,9 +22,11 @@
 
     <developers>
         <developer>
+            <id>dbstarll</id>
             <name>dbstar</name>
-            <email>dbstarll@gmail.com</email>
-            <url>https://${project.git.host}/${project.git.user}</url>
+            <email><![CDATA[dbstarll@gmail.com]]></email>
+            <url>https://github.com/dbstarll</url>
+            <timezone>8</timezone>
         </developer>
     </developers>
 

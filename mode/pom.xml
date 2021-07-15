@@ -11,9 +11,9 @@
     <artifactId>mode</artifactId>
     <packaging>pom</packaging>
 
-    <name>${project.artifactId}</name>
+    <name>mode</name>
     <description>parent for assembly executable jar by multiple environments</description>
-    <url>${project.scm.url}</url>
+    <url>https://github.com/dbstarll/parent/tree/main/mode</url>
 
     <scm>
         <url>${project.git.web.master}/${project.artifactId}</url>

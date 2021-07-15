@@ -11,9 +11,9 @@
     <artifactId>obscure</artifactId>
     <packaging>pom</packaging>
 
-    <name>${project.artifactId}</name>
+    <name>obscure</name>
     <description>parent for code obscure</description>
-    <url>${project.scm.url}</url>
+    <url>https://github.com/dbstarll/parent/tree/main/obscure</url>
 
     <scm>
         <url>${project.git.web.master}/${project.artifactId}</url>
