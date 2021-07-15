@@ -17,6 +17,18 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
+      - run: cat ~/.m2/settings.xml
+
+      - name: Generate Maven Settings
+        uses: whelk-io/maven-settings-xml-action@v18
+        with:
+          servers: >
+            [
+              { "id": "ossrh", "username": "${{ secrets.OSS_USERNAME }}", "password": "${{ secrets.OSS_PASSWORD }}"}
+            ]
+
+      - run: cat ~/.m2/settings.xml
+
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -32,4 +44,3 @@ jobs:
       - name: Verify with Maven
         run: mvn --batch-mode --update-snapshots clean verify
 
-      - run: cat ~/.m2/settings.xml
