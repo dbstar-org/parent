@@ -17,11 +17,4 @@
     <scm>
         <url>${project.git.web.master}/${project.artifactId}</url>
     </scm>
-
-    <distributionManagement>
-        <site>
-            <id>local</id>
-            <url>${project.site.root.project}/${project.artifactId}</url>
-        </site>
-    </distributionManagement>
 </project>

@@ -19,13 +19,6 @@
         <url>${project.git.web.master}/${project.artifactId}</url>
     </scm>
 
-    <distributionManagement>
-        <site>
-            <id>local</id>
-            <url>${project.site.root.project}/${project.artifactId}</url>
-        </site>
-    </distributionManagement>
-
     <properties>
         <!-- proguard version -->
         <version.proguard>6.2.2</version.proguard>
