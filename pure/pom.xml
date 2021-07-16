@@ -27,7 +27,7 @@
         <version.checkstyle>8.44</version.checkstyle>
 
         <!-- Test Dependency version -->
-        <version.junit-jupiter-api>5.8.0-M1</version.junit-jupiter-api>
+        <version.junit-jupiter>5.8.0-M1</version.junit-jupiter>
 
         <!-- Plugin Version -->
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
@@ -35,6 +35,7 @@
         <version.maven-javadoc-plugin>3.3.0</version.maven-javadoc-plugin>
         <version.maven-resources-plugin>3.2.0</version.maven-resources-plugin>
         <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
+        <version.maven-jxr-plugin>3.1.1</version.maven-jxr-plugin>
 
         <!-- Test Plugin Version -->
         <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
@@ -78,6 +79,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>${version.maven-source-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>${version.maven-jxr-plugin}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -133,6 +139,10 @@
             </build>
             <reporting>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jxr-plugin</artifactId>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
@@ -194,15 +204,15 @@
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-api</artifactId>
-                        <version>${version.junit-jupiter-api}</version>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${version.junit-jupiter}</version>
                     </dependency>
                 </dependencies>
             </dependencyManagement>
             <dependencies>
                 <dependency>
                     <groupId>org.junit.jupiter</groupId>
-                    <artifactId>junit-jupiter-api</artifactId>
+                    <artifactId>junit-jupiter-engine</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
