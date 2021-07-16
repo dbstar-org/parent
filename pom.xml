@@ -211,7 +211,7 @@
                 <module>test</module>
             </modules>
             <properties>
-                <project.site.root>file://${HOME}/.m2/sites</project.site.root>
+                <project.site.root>file://${env.HOME}/.m2/sites</project.site.root>
                 <project.site.root.project>${project.site.root}/${project.git.uri}</project.site.root.project>
             </properties>
             <distributionManagement>
