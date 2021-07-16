@@ -36,6 +36,7 @@
         <module>assembly</module>
         <module>mode</module>
         <module>obscure</module>
+        <module>test</module>
     </modules>
 
     <scm>
@@ -80,14 +81,69 @@
         <project.site.root>file://${HOME}/.m2/sites</project.site.root>
         <project.site.root.project>${project.site.root}/${project.git.uri}</project.site.root.project>
 
-        <!-- Report Plugin Version -->
-        <version.maven-site-plugin>3.9.1</version.maven-site-plugin>
+        <!-- Plugins Version -->
+        <version.maven-antrun-plugin>3.0.0</version.maven-antrun-plugin>
+        <version.maven-assembly-plugin>3.3.0</version.maven-assembly-plugin>
+        <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
+        <version.maven-dependency-plugin>3.2.0</version.maven-dependency-plugin>
+        <version.maven-deploy-plugin>3.0.0-M1</version.maven-deploy-plugin>
+        <version.maven-gpg-plugin>3.0.1</version.maven-gpg-plugin>
+        <version.maven-install-plugin>3.0.0-M1</version.maven-install-plugin>
         <version.maven-project-info-reports-plugin>3.1.2</version.maven-project-info-reports-plugin>
+        <version.maven-release-plugin>3.0.0-M4</version.maven-release-plugin>
+        <version.maven-site-plugin>3.9.1</version.maven-site-plugin>
+        <version.versions-maven-plugin>2.8.1</version.versions-maven-plugin>
+        <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
     </properties>
 
     <build>
         <pluginManagement>
+            <!-- Project Build Plugins Version -->
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${version.maven-antrun-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${version.maven-assembly-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${version.maven-clean-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${version.maven-dependency-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${version.maven-deploy-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${version.maven-gpg-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${version.maven-install-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${version.maven-release-plugin}</version>
+                    <configuration>
+                        <addSchema>false</addSchema>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
@@ -98,23 +154,9 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>${version.maven-project-info-reports-plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>3.0.0-M4</version>
-                    <configuration>
-                        <addSchema>false</addSchema>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                    </configuration>
-                </plugin>
-                <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.8</version>
+                    <version>${version.nexus-staging-maven-plugin}</version>
                     <extensions>true</extensions>
                     <configuration>
                         <serverId>ossrh</serverId>
@@ -122,19 +164,19 @@
                         <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
                 </plugin>
+                <!-- Project Report Plugins Version -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.6</version>
-                    <executions>
-                        <execution>
-                            <id>sign-artifacts</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                    </executions>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${version.maven-project-info-reports-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>${version.versions-maven-plugin}</version>
+                    <configuration>
+                        <rulesUri>https://dbstarll.github.io/exclude-beta-rule.xml</rulesUri>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -149,4 +191,12 @@
             </plugin>
         </plugins>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

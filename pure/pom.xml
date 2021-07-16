@@ -22,68 +22,122 @@
         <maven.compiler.compilerVersion>${project.java.version}</maven.compiler.compilerVersion>
         <maven.compiler.source>${project.java.version}</maven.compiler.source>
         <maven.compiler.target>${project.java.version}</maven.compiler.target>
-        <!-- Report Plugin Version -->
+
+        <!-- Dependency Version -->
+        <version.checkstyle>8.44</version.checkstyle>
+
+        <!-- Test Dependency version -->
+        <version.junit-jupiter-api>5.8.0-M1</version.junit-jupiter-api>
+
+        <!-- Plugin Version -->
+        <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-jar-plugin>3.2.0</version.maven-jar-plugin>
-        <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
         <version.maven-javadoc-plugin>3.3.0</version.maven-javadoc-plugin>
+        <version.maven-resources-plugin>3.2.0</version.maven-resources-plugin>
+        <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
+
+        <!-- Test Plugin Version -->
+        <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
+
+        <!-- Reporting Plugin Version -->
         <version.maven-pmd-plugin>3.14.0</version.maven-pmd-plugin>
-        <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
-        <version.checkstyle>8.8</version.checkstyle>
         <version.jdepend-maven-plugin>2.0</version.jdepend-maven-plugin>
-        <version.findbugs-maven-plugin>3.0.5</version.findbugs-maven-plugin>
         <version.javancss-maven-plugin>2.1</version.javancss-maven-plugin>
+        <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
+        <version.findbugs-maven-plugin>3.0.5</version.findbugs-maven-plugin>
         <version.taglist-maven-plugin>2.4</version.taglist-maven-plugin>
         <version.maven-changelog-plugin>2.3</version.maven-changelog-plugin>
-        <!-- Report Plugin Version for Test -->
         <version.cobertura-maven-plugin>2.7</version.cobertura-maven-plugin>
-        <version.maven-surefire-report-plugin>2.22.2</version.maven-surefire-report-plugin>
+        <version.maven-surefire-report-plugin>3.0.0-M5</version.maven-surefire-report-plugin>
     </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version.maven-compiler-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${version.maven-jar-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${version.maven-javadoc-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version.maven-resources-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${version.maven-source-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <profiles>
         <profile>
-            <id>site-site</id>
+            <id>java-main</id>
             <activation>
                 <file>
                     <exists>src/main/java</exists>
                 </file>
             </activation>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>jar</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-source-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>jar-no-fork</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-checkstyle-plugin</artifactId>
+                            <version>${version.maven-checkstyle-plugin}</version>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.puppycrawl.tools</groupId>
+                                    <artifactId>checkstyle</artifactId>
+                                    <version>${version.checkstyle}</version>
+                                </dependency>
+                            </dependencies>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${version.maven-source-plugin}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${version.maven-javadoc-plugin}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                        <version>${version.maven-checkstyle-plugin}</version>
-                        <dependencies>
-                            <dependency>
-                                <groupId>com.puppycrawl.tools</groupId>
-                                <artifactId>checkstyle</artifactId>
-                                <version>${version.checkstyle}</version>
-                            </dependency>
-                        </dependencies>
+                        <artifactId>maven-source-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
@@ -92,7 +146,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${version.maven-javadoc-plugin}</version>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -102,10 +155,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-checkstyle-plugin</artifactId>
-                        <version>${version.maven-checkstyle-plugin}</version>
-                        <configuration>
-                            <configLocation>https://static.y1cloud.com/ci/google_checks.xml</configLocation>
-                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -145,19 +194,50 @@
             </reporting>
         </profile>
         <profile>
-            <id>jar-test-jar</id>
+            <id>java-test</id>
             <activation>
                 <file>
                     <exists>src/test/java</exists>
                 </file>
             </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-api</artifactId>
+                        <version>${version.junit-jupiter-api}</version>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+            <dependencies>
+                <dependency>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-api</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
             <build>
                 <pluginManagement>
                     <plugins>
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <version>${version.maven-surefire-plugin}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-jar-plugin</artifactId>
-                            <version>${version.maven-jar-plugin}</version>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>test-jar</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
                             <executions>
                                 <execution>
                                     <goals>
@@ -169,7 +249,6 @@
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-source-plugin</artifactId>
-                            <version>${version.maven-source-plugin}</version>
                             <executions>
                                 <execution>
                                     <goals>
@@ -179,16 +258,14 @@
                             </executions>
                         </plugin>
                         <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>cobertura-maven-plugin</artifactId>
+                            <version>${version.cobertura-maven-plugin}</version>
+                        </plugin>
+                        <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-javadoc-plugin</artifactId>
-                            <version>${version.maven-javadoc-plugin}</version>
-                            <executions>
-                                <execution>
-                                    <goals>
-                                        <goal>test-jar</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
+                            <artifactId>maven-surefire-report-plugin</artifactId>
+                            <version>${version.maven-surefire-report-plugin}</version>
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -198,12 +275,10 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>cobertura-maven-plugin</artifactId>
-                        <version>${version.cobertura-maven-plugin}</version>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${version.maven-surefire-report-plugin}</version>
                     </plugin>
                 </plugins>
             </reporting>
