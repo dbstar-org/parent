@@ -46,14 +46,6 @@
     </scm>
 
     <distributionManagement>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <site>
             <id>local</id>
             <url>${project.site.root.project}</url>
@@ -87,13 +79,10 @@
         <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
         <version.maven-dependency-plugin>3.2.0</version.maven-dependency-plugin>
         <version.maven-deploy-plugin>3.0.0-M1</version.maven-deploy-plugin>
-        <version.maven-gpg-plugin>3.0.1</version.maven-gpg-plugin>
         <version.maven-install-plugin>3.0.0-M1</version.maven-install-plugin>
         <version.maven-project-info-reports-plugin>3.1.2</version.maven-project-info-reports-plugin>
-        <version.maven-release-plugin>3.0.0-M4</version.maven-release-plugin>
         <version.maven-site-plugin>3.9.1</version.maven-site-plugin>
         <version.versions-maven-plugin>2.8.1</version.versions-maven-plugin>
-        <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
     </properties>
 
     <build>
@@ -127,22 +116,8 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${version.maven-gpg-plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>${version.maven-install-plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>${version.maven-release-plugin}</version>
-                    <configuration>
-                        <addSchema>false</addSchema>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -151,17 +126,6 @@
                     <configuration>
                         <locales>zh_CN</locales>
                         <relativizeDecorationLinks>false</relativizeDecorationLinks>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>${version.nexus-staging-maven-plugin}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
                 </plugin>
                 <!-- Project Report Plugins Version -->
@@ -180,16 +144,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
     <reporting>
         <plugins>
@@ -199,4 +153,69 @@
             </plugin>
         </plugins>
     </reporting>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <distributionManagement>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+            <properties>
+                <version.maven-gpg-plugin>3.0.1</version.maven-gpg-plugin>
+                <version.maven-release-plugin>3.0.0-M4</version.maven-release-plugin>
+                <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-gpg-plugin</artifactId>
+                            <version>${version.maven-gpg-plugin}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-release-plugin</artifactId>
+                            <version>${version.maven-release-plugin}</version>
+                            <configuration>
+                                <addSchema>false</addSchema>
+                                <autoVersionSubmodules>true</autoVersionSubmodules>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.sonatype.plugins</groupId>
+                            <artifactId>nexus-staging-maven-plugin</artifactId>
+                            <version>${version.nexus-staging-maven-plugin}</version>
+                            <extensions>true</extensions>
+                            <configuration>
+                                <serverId>ossrh</serverId>
+                                <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                                <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
