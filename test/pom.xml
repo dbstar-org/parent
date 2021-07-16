@@ -4,9 +4,9 @@
 
     <parent>
         <groupId>io.github.dbstarll.parent</groupId>
-        <artifactId>pure</artifactId>
+        <artifactId>base</artifactId>
         <version>1.1-SNAPSHOT</version>
-        <relativePath>../pure</relativePath>
+        <relativePath>../base</relativePath>
     </parent>
     <artifactId>test</artifactId>
 

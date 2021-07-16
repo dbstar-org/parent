@@ -133,6 +133,7 @@
             </plugins>
         </pluginManagement>
     </build>
+
     <reporting>
         <plugins>
             <plugin>
@@ -141,9 +142,15 @@
             </plugin>
         </plugins>
     </reporting>
+
     <profiles>
         <profile>
             <id>release</id>
+            <properties>
+                <version.maven-gpg-plugin>3.0.1</version.maven-gpg-plugin>
+                <version.maven-release-plugin>3.0.0-M4</version.maven-release-plugin>
+                <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
+            </properties>
             <distributionManagement>
                 <repository>
                     <id>ossrh</id>
@@ -154,11 +161,6 @@
                     <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
                 </snapshotRepository>
             </distributionManagement>
-            <properties>
-                <version.maven-gpg-plugin>3.0.1</version.maven-gpg-plugin>
-                <version.maven-release-plugin>3.0.0-M4</version.maven-release-plugin>
-                <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
-            </properties>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -205,6 +207,7 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>site-local</id>
             <modules>

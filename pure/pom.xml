@@ -225,6 +225,7 @@
                 </plugins>
             </reporting>
         </profile>
+
         <profile>
             <id>java-test</id>
             <activation>
@@ -315,6 +316,7 @@
                 </plugins>
             </reporting>
         </profile>
+
         <profile>
             <id>release</id>
             <build>
