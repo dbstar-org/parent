@@ -1,6 +1,6 @@
 name: maven-verify
 
-on: [push, workflow_dispatch]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
@@ -61,3 +61,8 @@ jobs:
 
       - name: Verify with Maven
         run: mvn --batch-mode --update-snapshots clean verify
+
+      - run: env
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        run: echo ${{ github.ref }}
