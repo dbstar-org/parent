@@ -19,10 +19,6 @@
         <url>${project.git.web.master}/${project.artifactId}</url>
     </scm>
 
-    <properties>
-        <version.maven-assembly-plugin>3.3.0</version.maven-assembly-plugin>
-    </properties>
-
     <profiles>
         <profile>
             <id>assembly-single</id>
@@ -43,7 +39,6 @@
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-assembly-plugin</artifactId>
-                            <version>${version.maven-assembly-plugin}</version>
                             <executions>
                                 <execution>
                                     <phase>package</phase>
