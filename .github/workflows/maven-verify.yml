@@ -64,5 +64,6 @@ jobs:
 
       - run: env
 
-      - if: ${{ github.ref == 'refs/heads/main' }}
-        run: echo ${{ github.ref }}
+      - name: Deploy with Maven
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: mvn --batch-mode --update-snapshots clean deploy
