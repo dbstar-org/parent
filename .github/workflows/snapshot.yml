@@ -31,7 +31,7 @@ jobs:
               {
                 "id": "github",
                 "username": "${env.GITHUB_ACTOR}",
-                "password": "${{ secrets.DEPLOY_TOKEN }}"
+                "password": "${{ secrets.GITHUB_TOKEN }}"
               },
               {
                 "id": "ossrh",
@@ -60,4 +60,4 @@ jobs:
       - run: env
 
       - name: Deploy with Maven
-        run: mvn --batch-mode --update-snapshots -X clean deploy -P release,repository-github,distribution-github
+        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-github,distribution-github
