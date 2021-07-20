@@ -26,7 +26,7 @@ jobs:
               {
                 "id": "github",
                 "username": "${env.GITHUB_ACTOR}",
-                "password": "${env.GITHUB_TOKEN}"
+                "password": "${{ secrets.GITHUB_TOKEN }}"
               },
               {
                 "id": "ossrh",
@@ -48,7 +48,7 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Verify with Maven
-        run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh
+        run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh,repository-github
 
       - name: Deploy with Maven
-        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-ossrh,distribution-ossrh
+        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-ossrh,distribution-ossrh,repository-github,distribution-github
