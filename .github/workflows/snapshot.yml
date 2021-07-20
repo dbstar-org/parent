@@ -23,23 +23,6 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
-      - name: Generate Maven Settings
-        uses: whelk-io/maven-settings-xml-action@v18
-        with:
-          servers: >
-            [
-              {
-                "id": "github",
-                "username": "${env.GITHUB_ACTOR}",
-                "password": "${env.GITHUB_TOKEN}"
-              },
-              {
-                "id": "ossrh",
-                "username": "${{ secrets.OSS_USERNAME }}",
-                "password": "${{ secrets.OSS_PASSWORD }}"
-              }
-            ]
-
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -53,11 +36,11 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Verify with Maven
-        run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh,repository-github
+        run: mvn --batch-mode --update-snapshots clean verify
 
       - run: cat ~/.m2/settings.xml
 
       - run: env
 
       - name: Deploy with Maven
-        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-ossrh,distribution-ossrh,distribution-github
+        run: mvn --batch-mode --update-snapshots clean deploy -P release,distribution-github
