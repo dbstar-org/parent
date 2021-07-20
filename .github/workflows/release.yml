@@ -1,12 +1,13 @@
-name: release
+name: deploy-release
 
 on:
   pull_request:
     branches:
       - release
+      - release-*
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,22 +21,6 @@ jobs:
       - name: Generate Maven Settings
         uses: whelk-io/maven-settings-xml-action@v18
         with:
-          repositories: >
-            [
-              {
-                "id": "oss.sonatype.org",
-                "name": "sonatype public nexus",
-                "url": "https://s01.oss.sonatype.org/content/groups/public"
-              }
-            ]
-          plugin_repositories: >
-            [
-              {
-                "id": "oss.sonatype.org",
-                "name": "sonatype public nexus",
-                "url": "https://s01.oss.sonatype.org/content/groups/public"
-              }
-            ]
           servers: >
             [
               {
@@ -63,10 +48,9 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Verify with Maven
-        run: mvn --batch-mode --update-snapshots clean verify
+        run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh
 
       - run: env
 
       - name: Deploy with Maven
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: mvn --batch-mode --update-snapshots clean deploy -P release
+        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-ossrh,distribution-ossrh
