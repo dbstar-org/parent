@@ -199,8 +199,7 @@
             <repositories>
                 <repository>
                     <id>github</id>
-                    <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/${project.git.user}/mvn-repo</url>
+                    <url>https://maven.pkg.github.com/${project.git.user}/*</url>
                     <snapshots>
                         <enabled>true</enabled>
                     </snapshots>
@@ -253,12 +252,12 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/${project.git.user}/mvn-repo</url>
+                    <url>https://maven.pkg.github.com/${project.git.user}/PARENT</url>
                 </repository>
                 <snapshotRepository>
                     <id>github</id>
                     <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/${project.git.user}/mvn-repo</url>
+                    <url>https://maven.pkg.github.com/${project.git.user}/PARENT</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>
