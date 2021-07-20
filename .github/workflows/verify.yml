@@ -31,4 +31,4 @@ jobs:
           restore-keys: ${{ runner.os }}-maven-
 
       - name: Verify with Maven
-        run: mvn --batch-mode --update-snapshots clean verify
+        run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh
