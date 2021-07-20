@@ -73,7 +73,7 @@
         <version.versions-maven-plugin>2.8.1</version.versions-maven-plugin>
 
         <!-- Next Version -->
-        <releaseVersion>1.3.3</releaseVersion>
+        <releaseVersion>1.3.4</releaseVersion>
     </properties>
 
     <build>
