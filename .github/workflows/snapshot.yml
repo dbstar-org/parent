@@ -55,6 +55,8 @@ jobs:
       - name: Verify with Maven
         run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh,repository-github
 
+      - run: cat ~/.m2/settings.xml
+
       - run: env
 
       - name: Deploy with Maven
