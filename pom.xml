@@ -200,7 +200,10 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/${project.git.user}/*</url>
+                    <url>https://maven.pkg.github.com/${project.git.user}/${project.git.project}</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
                 </repository>
             </repositories>
         </profile>
@@ -250,17 +253,14 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/${project.git.user}</url>
+                    <url>https://maven.pkg.github.com/${project.git.user}/${project.git.project}</url>
                 </repository>
                 <snapshotRepository>
                     <id>github</id>
                     <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/${project.git.user}</url>
+                    <url>https://maven.pkg.github.com/${project.git.user}/${project.git.project}</url>
                 </snapshotRepository>
             </distributionManagement>
-            <properties>
-                <github.global.server>github</github.global.server>
-            </properties>
         </profile>
 
         <profile>

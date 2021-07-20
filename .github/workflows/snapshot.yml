@@ -60,4 +60,4 @@ jobs:
       - run: env
 
       - name: Deploy with Maven
-        run: mvn --batch-mode --update-snapshots clean deploy -P release,distribution-github
+        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-github,distribution-github
