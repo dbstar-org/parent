@@ -7,7 +7,7 @@ on:
       - release-*
 
 jobs:
-  deploy:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -47,8 +47,5 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: Deploy to Github
-        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-github,distribution-github
-
-      - name: Deploy to Ossrh
-        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-ossrh,distribution-ossrh
+      - name: Release to Github
+        run: mvn --batch-mode --update-snapshots clean release:prepare release:perform -P release,repository-github,distribution-github
