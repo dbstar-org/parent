@@ -1,11 +1,10 @@
 name: deploy-release
 
 on:
-  pull_request:
+  push:
     branches:
       - release
       - release-*
-    types: synchronize
 
 jobs:
   release:
