@@ -5,10 +5,14 @@ on:
     branches-ignore:
       - release
       - release-*
+      - main
+      - snapshot-*
   pull_request:
     branches-ignore:
       - release
       - release-*
+      - main
+      - snapshot-*
   workflow_dispatch:
 
 jobs:
