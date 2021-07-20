@@ -74,6 +74,8 @@
 
         <!-- Next Version -->
         <releaseVersion>1.3.4</releaseVersion>
+        <developmentVersion>1.3.5-SNAPSHOT</developmentVersion>
+        <releaseLabel>v1.3.4</releaseLabel>
     </properties>
 
     <build>
