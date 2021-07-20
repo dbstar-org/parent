@@ -50,7 +50,5 @@ jobs:
       - name: Verify with Maven
         run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh
 
-      - run: env
-
       - name: Deploy with Maven
         run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-ossrh,distribution-ossrh
