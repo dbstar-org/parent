@@ -250,12 +250,12 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/${project.git.user}/${project.git.project}</url>
+                    <url>https://maven.pkg.github.com/${project.git.user}</url>
                 </repository>
                 <snapshotRepository>
                     <id>github</id>
                     <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/${project.git.user}/${project.git.project}</url>
+                    <url>https://maven.pkg.github.com/${project.git.user}</url>
                 </snapshotRepository>
             </distributionManagement>
             <properties>
