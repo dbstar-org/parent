@@ -258,6 +258,9 @@
                     <url>https://maven.pkg.github.com/${project.git.user}/${project.git.project}</url>
                 </snapshotRepository>
             </distributionManagement>
+            <properties>
+                <github.global.server>github</github.global.server>
+            </properties>
         </profile>
 
         <profile>
