@@ -47,5 +47,12 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
+      - name: Configure Git user
+        run: |
+          git config --local user.name dbstar
+          git config --local user.email dbstarll@gmail.com
+          git config --local user.signingkey 2204EEA5DBB58935AD22D5667BB735D83657A56A
+          git config --local commit.gpgsign true
+
       - name: Release to Github
         run: mvn --batch-mode --update-snapshots clean release:prepare release:perform -P release,repository-github,distribution-github
