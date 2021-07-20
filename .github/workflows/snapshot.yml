@@ -31,7 +31,7 @@ jobs:
               {
                 "id": "github",
                 "username": "${env.GITHUB_ACTOR}",
-                "password": "${{ secrets.GITHUB_TOKEN }}"
+                "password": "${env.GITHUB_TOKEN}"
               },
               {
                 "id": "ossrh",
