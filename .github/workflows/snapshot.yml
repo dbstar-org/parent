@@ -23,6 +23,23 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
+      - name: Generate Maven Settings
+        uses: whelk-io/maven-settings-xml-action@v18
+        with:
+          servers: >
+            [
+              {
+                "id": "github",
+                "username": "${env.GITHUB_ACTOR}",
+                "password": "${{ secrets.GITHUB_TOKEN }}"
+              },
+              {
+                "id": "ossrh",
+                "username": "${{ secrets.OSS_USERNAME }}",
+                "password": "${{ secrets.OSS_PASSWORD }}"
+              }
+            ]
+
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
