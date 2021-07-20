@@ -1,6 +1,9 @@
-name: maven-verify
+name: release
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  pull_request:
+    branches:
+      - release
 
 jobs:
   build:
