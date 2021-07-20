@@ -4,13 +4,15 @@ on:
   push:
     branches-ignore:
       - release
+      - release-*
   pull_request:
     branches-ignore:
       - release
+      - release-*
   workflow_dispatch:
 
 jobs:
-  build:
+  verify:
     runs-on: ubuntu-latest
 
     steps:
