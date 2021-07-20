@@ -53,9 +53,9 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Verify with Maven
-        run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh
+        run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh,repository-github
 
       - run: env
 
       - name: Deploy with Maven
-        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-ossrh,distribution-ossrh
+        run: mvn --batch-mode --update-snapshots clean deploy -P release,repository-ossrh,distribution-ossrh,repository-github,distribution-github
