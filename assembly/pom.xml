@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.github.dbstarll.parent</groupId>
     <artifactId>base</artifactId>
-    <version>1.1.5</version>
+    <version>1.1.6-SNAPSHOT</version>
     <relativePath>../base</relativePath>
   </parent>
   <artifactId>assembly</artifactId>
@@ -16,7 +16,7 @@
 
   <scm>
     <url>${project.git.web.master}</url>
-    <tag>v1.1.5</tag>
+    <tag>HEAD</tag>
     <connection>scm:git:${project.git.git.root}</connection>
     <developerConnection>scm:git:${project.git.web.root}</developerConnection>
   </scm>
