@@ -27,4 +27,4 @@ jobs:
           restore-keys: ${{ runner.os }}-maven-
 
       - name: Verify with Maven
-        run: mvn -B -U clean verify -P repository-github
+        run: mvn -B -U clean verify

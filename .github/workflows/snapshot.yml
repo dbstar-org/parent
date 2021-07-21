@@ -34,4 +34,4 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Deploy to Github
-        run: mvn -B -U clean deploy -P release,repository-github,distribution-github
+        run: mvn -B -U clean deploy -P release,distribution-github

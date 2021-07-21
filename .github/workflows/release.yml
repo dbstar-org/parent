@@ -52,14 +52,14 @@ jobs:
           git config --local commit.gpgsign true
 
       - name: Prepare Release
-        run: mvn -B -U release:prepare -P release,repository-github,distribution-github
+        run: mvn -B -U release:prepare -P release,distribution-github
 
       - run: cp ${{ github.workspace }}/release.properties ${{ github.workspace }}/release.properties.bak
 
       - name: Perform Release to Github
-        run: mvn -B -U release:perform -P release,repository-github,distribution-github
+        run: mvn -B -U release:perform -P release,distribution-github
 
       - run: mv ${{ github.workspace }}/release.properties.bak ${{ github.workspace }}/release.properties
 
       - name: Perform Release to Ossrh
-        run: mvn -B -U release:perform -P release,repository-ossrh,distribution-ossrh
+        run: mvn -B -U release:perform -P release,distribution-ossrh
