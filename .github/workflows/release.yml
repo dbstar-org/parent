@@ -4,6 +4,7 @@ on: workflow_dispatch
 
 jobs:
   release:
+    if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/snapshot-') }}
     runs-on: ubuntu-latest
 
     steps:

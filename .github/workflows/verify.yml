@@ -5,10 +5,6 @@ on:
     branches-ignore:
       - main
       - snapshot-*
-  pull_request:
-    branches-ignore:
-      - main
-      - snapshot-*
   workflow_dispatch:
 
 jobs:
