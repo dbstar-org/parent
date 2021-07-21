@@ -63,5 +63,3 @@ jobs:
 
       - name: Perform Release to Ossrh
         run: mvn -B -U release:perform -P release,repository-ossrh,distribution-ossrh
-
-      - run: ls -l ${{ github.workspace }}
