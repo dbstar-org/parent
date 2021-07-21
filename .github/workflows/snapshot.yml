@@ -37,5 +37,7 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
+      - run: env
+
       - name: Deploy to Github
         run: mvn -B -U clean deploy -P release,repository-github,distribution-github
