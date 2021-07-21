@@ -51,17 +51,9 @@ jobs:
           git config --local user.signingkey 2204EEA5DBB58935AD22D5667BB735D83657A56A
           git config --local commit.gpgsign true
 
+      - run: ls -l ${{ github.workspace }}
+
       - name: Prepare Release
-        run: mvn -B -U release:prepare -P release,repository-github,distribution-github
-
-      - run: ls -l ${{ github.workspace }}
-
-      - name: Perform Release to Github
-        run: mvn -B -U release:perform -P release,repository-github,distribution-github
-
-      - run: ls -l ${{ github.workspace }}
-
-      - name: Perform Release to Ossrh
-        run: mvn -B -U release:perform -P release,repository-ossrh,distribution-ossrh
+        run: mvn -B -U release:prepare -P release,repository-github,distribution-github -DdryRun=true
 
       - run: ls -l ${{ github.workspace }}
