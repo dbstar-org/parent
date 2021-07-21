@@ -3,14 +3,10 @@ name: verify
 on:
   push:
     branches-ignore:
-      - release
-      - release-*
       - main
       - snapshot-*
   pull_request:
     branches-ignore:
-      - release
-      - release-*
       - main
       - snapshot-*
   workflow_dispatch:
@@ -35,4 +31,4 @@ jobs:
           restore-keys: ${{ runner.os }}-maven-
 
       - name: Verify with Maven
-        run: mvn --batch-mode --update-snapshots clean verify -P repository-ossrh,repository-github
+        run: mvn -B -U clean verify -P repository-github
