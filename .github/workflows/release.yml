@@ -57,13 +57,11 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-      - run: env
-
       - name: Configure Git user
         run: |
-          git config --local user.name dbstar
-          git config --local user.email dbstarll@gmail.com
-          git config --local user.signingkey 2204EEA5DBB58935AD22D5667BB735D83657A56A
+          git config --local user.name ${{ github.actor }}
+          git config --local user.email ${{ github.actor }}@gmail.com
+          git config --local user.signingkey ${{ secrets.GPG_KEY }}
           git config --local commit.gpgsign true
 
       - name: Prepare Release
