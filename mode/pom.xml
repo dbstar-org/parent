@@ -1,54 +1,55 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.github.dbstarll.parent</groupId>
-        <artifactId>assembly</artifactId>
-        <version>1.1.2-SNAPSHOT</version>
-        <relativePath>../assembly</relativePath>
-    </parent>
-    <artifactId>mode</artifactId>
-    <packaging>pom</packaging>
+  <parent>
+    <groupId>io.github.dbstarll.parent</groupId>
+    <artifactId>assembly</artifactId>
+    <version>1.1.2-SNAPSHOT</version>
+    <relativePath>../assembly</relativePath>
+  </parent>
+  <artifactId>mode</artifactId>
+  <packaging>pom</packaging>
 
-    <name>mode</name>
-    <description>parent for assembly executable jar by multiple environments</description>
-    <url>https://github.com/dbstarll/parent/tree/main/mode</url>
+  <name>mode</name>
+  <description>parent for assembly executable jar by multiple environments</description>
+  <url>https://github.com/dbstarll/parent/tree/main/mode</url>
 
-    <scm>
-        <url>${project.git.web.master}</url>
-      <tag>HEAD</tag>
+  <scm>
+    <url>${project.git.web.master}</url>
+    <tag>HEAD</tag>
     <connection>scm:git:${project.git.git.root}</connection>
     <developerConnection>scm:git:${project.git.web.root}</developerConnection>
   </scm>
 
-    <profiles>
-        <profile>
-            <id>mode-resource-filtering</id>
-            <activation>
-                <file>
-                    <exists>src/main/mode</exists>
-                </file>
-            </activation>
-            <properties>
-                <project.mode>dev</project.mode>
-            </properties>
-            <build>
-                <resources>
-                    <resource>
-                        <filtering>true</filtering>
-                        <directory>src/main/resources</directory>
-                    </resource>
-                </resources>
-                <testResources>
-                    <testResource>
-                        <filtering>true</filtering>
-                        <directory>src/test/resources</directory>
-                    </testResource>
-                </testResources>
-                <filters>
-                    <filter>src/main/mode/${project.mode}.properties</filter>
-                </filters>
-            </build>
-        </profile>
-    </profiles>
+  <profiles>
+    <profile>
+      <id>mode-resource-filtering</id>
+      <activation>
+        <file>
+          <exists>src/main/mode</exists>
+        </file>
+      </activation>
+      <properties>
+        <project.mode>dev</project.mode>
+      </properties>
+      <build>
+        <resources>
+          <resource>
+            <filtering>true</filtering>
+            <directory>src/main/resources</directory>
+          </resource>
+        </resources>
+        <testResources>
+          <testResource>
+            <filtering>true</filtering>
+            <directory>src/test/resources</directory>
+          </testResource>
+        </testResources>
+        <filters>
+          <filter>src/main/mode/${project.mode}.properties</filter>
+        </filters>
+      </build>
+    </profile>
+  </profiles>
 </project>
