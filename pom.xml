@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.dbstarll.parent</groupId>
@@ -194,30 +195,14 @@
     </profile>
 
     <profile>
-      <id>repository-ossrh</id>
-      <repositories>
-        <repository>
-          <id>ossrh</id>
-          <name>Sonatype</name>
-          <url>https://s01.oss.sonatype.org/content/groups/public</url>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </repository>
-      </repositories>
-    </profile>
-
-    <profile>
       <id>distribution-ossrh</id>
       <distributionManagement>
         <repository>
           <id>ossrh</id>
-          <name>Sonatype</name>
           <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
         <snapshotRepository>
           <id>ossrh</id>
-          <name>Sonatype</name>
           <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
       </distributionManagement>
@@ -250,30 +235,14 @@
     </profile>
 
     <profile>
-      <id>repository-github</id>
-      <repositories>
-        <repository>
-          <id>github</id>
-          <name>GitHub OWNER Apache Maven Packages</name>
-          <url>https://maven.pkg.github.com/${project.git.user}/*</url>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </repository>
-      </repositories>
-    </profile>
-
-    <profile>
       <id>distribution-github</id>
       <distributionManagement>
         <repository>
           <id>github</id>
-          <name>GitHub OWNER Apache Maven Packages</name>
           <url>https://maven.pkg.github.com/${project.git.user}/${project.git.project}</url>
         </repository>
         <snapshotRepository>
           <id>github</id>
-          <name>GitHub OWNER Apache Maven Packages</name>
           <url>https://maven.pkg.github.com/${project.git.user}/${project.git.project}</url>
         </snapshotRepository>
       </distributionManagement>
@@ -281,9 +250,6 @@
 
     <profile>
       <id>site-local</id>
-      <modules>
-        <module>test</module>
-      </modules>
       <properties>
         <project.site.root>file://${env.HOME}/.m2/sites</project.site.root>
         <project.site.root.project>${project.site.root}/${project.git.uri}</project.site.root.project>
