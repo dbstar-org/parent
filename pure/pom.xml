@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -24,9 +25,6 @@
 
     <!-- Dependency Version -->
     <version.checkstyle>8.44</version.checkstyle>
-
-    <!-- Test Dependency version -->
-    <version.junit-jupiter>5.8.0-M1</version.junit-jupiter>
 
     <!-- Plugin Version -->
     <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
@@ -232,6 +230,9 @@
           <exists>src/test/java</exists>
         </file>
       </activation>
+      <properties>
+        <version.junit-jupiter>5.8.0-M1</version.junit-jupiter>
+      </properties>
       <dependencyManagement>
         <dependencies>
           <dependency>
