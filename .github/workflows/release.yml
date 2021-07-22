@@ -21,6 +21,10 @@ jobs:
           repositories: >
             [
               {
+                "id": "github",
+                "url": "https://maven.pkg.github.com/${env.GITHUB_ACTOR}/*"
+              },
+              {
                 "id": "ossrh",
                 "url": "https://s01.oss.sonatype.org/content/groups/public",
                 "releases": {
