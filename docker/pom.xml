@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.dbstarll.parent</groupId>
+    <artifactId>mode</artifactId>
+    <version>1.1.10-SNAPSHOT</version>
+    <relativePath>../mode</relativePath>
+  </parent>
+  <artifactId>docker</artifactId>
+  <packaging>pom</packaging>
+
+  <name>docker</name>
+  <description>parent for docker</description>
+  <url>https://github.com/dbstarll/parent/tree/main/docker</url>
+
+  <scm>
+    <url>${project.git.web.master}</url>
+    <connection>scm:git:${project.git.git.root}</connection>
+    <developerConnection>scm:git:${project.git.web.root}</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <docker.image.prefix>${project.git.user}</docker.image.prefix>
+    <docker.image.jar>${project.build.finalName}.jar</docker.image.jar>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>docker</id>
+      <activation>
+        <file>
+          <exists>Dockerfile</exists>
+        </file>
+      </activation>
+      <properties>
+        <docker.image.tag>${git.commit.id.describe}</docker.image.tag>
+        <version.git-commit-id-plugin>4.9.10</version.git-commit-id-plugin>
+        <version.dockerfile-maven-plugin>1.4.13</version.dockerfile-maven-plugin>
+      </properties>
+      <build>
+        <filters>
+          <filter>target/classes/git.properties</filter>
+        </filters>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>pl.project13.maven</groupId>
+              <artifactId>git-commit-id-plugin</artifactId>
+              <version>${version.git-commit-id-plugin}</version>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>revision</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                <includeOnlyProperties>
+                  <includeOnlyProperty>git.commit.id</includeOnlyProperty>
+                  <includeOnlyProperty>git.commit.id.describe</includeOnlyProperty>
+                  <includeOnlyProperty>git.commit.time</includeOnlyProperty>
+                </includeOnlyProperties>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>com.spotify</groupId>
+              <artifactId>dockerfile-maven-plugin</artifactId>
+              <version>${version.dockerfile-maven-plugin}</version>
+              <configuration>
+                <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                <tag>${docker.image.tag}</tag>
+                <buildArgs>
+                  <JAR_FILE>${docker.image.jar}</JAR_FILE>
+                </buildArgs>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>pl.project13.maven</groupId>
+            <artifactId>git-commit-id-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>dockerfile-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
