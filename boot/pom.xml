@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.dbstarll.parent</groupId>
+    <artifactId>docker</artifactId>
+    <version>1.1.10-SNAPSHOT</version>
+    <relativePath>../docker</relativePath>
+  </parent>
+  <artifactId>boot</artifactId>
+  <packaging>pom</packaging>
+
+  <name>boot</name>
+  <description>parent for spring boot</description>
+  <url>https://github.com/dbstarll/parent/tree/main/boot</url>
+
+  <scm>
+    <url>${project.git.web.master}</url>
+    <connection>scm:git:${project.git.git.root}</connection>
+    <developerConnection>scm:git:${project.git.web.root}</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <version.spring-boot>2.5.3</version.spring-boot>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${version.spring-boot}</version>
+          <configuration>
+            <attach>false</attach>
+            <classifier>boot</classifier>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>docker</id>
+      <activation>
+        <file>
+          <exists>Dockerfile</exists>
+        </file>
+      </activation>
+      <properties>
+        <docker.image.jar>${project.build.finalName}-boot.jar</docker.image.jar>
+      </properties>
+    </profile>
+  </profiles>
+</project>
