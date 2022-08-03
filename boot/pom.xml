@@ -23,6 +23,8 @@
 
   <properties>
     <version.spring-boot>2.5.3</version.spring-boot>
+    <project.spring-boot.attach>false</project.spring-boot.attach>
+    <project.spring-boot.classifier>boot</project.spring-boot.classifier>
   </properties>
 
   <build>
@@ -33,8 +35,8 @@
           <artifactId>spring-boot-maven-plugin</artifactId>
           <version>${version.spring-boot}</version>
           <configuration>
-            <attach>false</attach>
-            <classifier>boot</classifier>
+            <attach>${project.spring-boot.attach}</attach>
+            <classifier>${project.spring-boot.classifier}</classifier>
           </configuration>
           <executions>
             <execution>
@@ -63,7 +65,7 @@
         </file>
       </activation>
       <properties>
-        <docker.image.jar>${project.build.finalName}-boot.jar</docker.image.jar>
+        <docker.image.jar>${project.build.finalName}-${project.spring-boot.classifier}.jar</docker.image.jar>
       </properties>
     </profile>
   </profiles>
