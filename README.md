@@ -10,6 +10,7 @@
 | pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；代码质量相关的报告插件设置 |
 | base | 引入常用的基准依赖包。包含slf4j和Apache Commons |
 | assembly | 使用maven-assembly-plugin来打包可执行jar |
+| mode | 以不同的运行模式来打包可执行jar |
 
 本文包含以下内容：
 
@@ -57,6 +58,7 @@ graph TD;
 | pure | maven.compiler.source | `${project.java.version}` | Java源文件版本 |
 | pure | maven.compiler.target | `${project.java.version}` | Java编译文件版本 |
 | assembly | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类 |
+| mode | project.mode | dev | 运行模式，Profile`mode-resource-filtering`激活时 |
 
 ---
 
@@ -167,6 +169,7 @@ graph TD;
 | pure | java-main | 存在目录：src/main/java | 生成jar、javadoc.jar、source.jar和相关报告 |
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、生成test.jar、test-javadoc.jar、test-source.jar和相关报告 |
 | assembly | assembly-single | 存在目录：src/main/assembly；并且定义了属性：project.mainClass | 执行maven-assembly-plugin:single goal |
+| mode | mode-resource-filtering | 存在目录：src/main/mode | 以指定的运行模式来加载对应的配置文件 |
 
 ---
 
