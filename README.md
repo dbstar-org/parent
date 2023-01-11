@@ -8,6 +8,7 @@
 | ---| --- |
 | parent | 所有父项目的继承根。包含项目的编码设置；Maven基础插件版本；代码发布相关设置 |
 | pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；代码质量相关的报告插件设置 |
+| base | 引入常用的基准依赖包。包含slf4j和Apache Commons |
 
 本文包含以下内容：
 
@@ -64,6 +65,11 @@ graph TD;
 | 父项目 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- |
 | pure | org.junit.jupiter | junit-jupiter-engine | Profile`java-test`激活时 |
+| base | org.slf4j | slf4j-api |
+| base | org.slf4j | jul-to-slf4j | runtime |
+| base | org.slf4j | jcl-over-slf4j | runtime |
+| base | org.apache.commons | commons-lang3 |
+| base | ommons-io | commons-io |
 
 ---
 
@@ -74,6 +80,15 @@ graph TD;
 | 父项目 | 属性 | 默认版本 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- | --- | --- |
 | pure | version.junit-jupiter | 5.8.0-M1 | org.junit.jupiter | junit-jupiter-engine | Profile`java-test`激活时 |
+| base | version.slf4j | 1.7.32 | org.slf4j | slf4j-api |
+| base | version.slf4j | 1.7.32 | org.slf4j | jul-to-slf4j |
+| base | version.slf4j | 1.7.32 | org.slf4j | jcl-over-slf4j |
+| base | version.slf4j | 1.7.32 | org.slf4j | log4j-over-slf4j |
+| base | version.commons-lang3 | 3.12.0 | org.apache.commons | commons-lang3 |
+| base | version.commons-io | 2.11.0 | ommons-io | commons-io |
+| base | version.commons-codec | 1.15 | commons-codec | commons-codec |
+| base | version.commons-beanutils | 1.9.4 | commons-beanutils | commons-beanutils |
+| base | version.commons-collections4 | 4.4 | org.apache.commons | commons-collections4 |
 
 ---
 
