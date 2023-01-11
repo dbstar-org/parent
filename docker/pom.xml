@@ -22,6 +22,11 @@
     <tag>HEAD</tag>
   </scm>
 
+  <properties>
+    <version.git-commit-id-plugin>4.9.10</version.git-commit-id-plugin>
+    <version.dockerfile-maven-plugin>1.4.13</version.dockerfile-maven-plugin>
+  </properties>
+
   <profiles>
     <profile>
       <id>docker</id>
@@ -34,8 +39,6 @@
         <project.docker.image.prefix>${project.git.group}</project.docker.image.prefix>
         <project.docker.image.tag>${git.commit.id.describe}</project.docker.image.tag>
         <project.docker.image.jar>${project.build.finalName}.jar</project.docker.image.jar>
-        <version.git-commit-id-plugin>4.9.10</version.git-commit-id-plugin>
-        <version.dockerfile-maven-plugin>1.4.13</version.dockerfile-maven-plugin>
       </properties>
       <build>
         <filters>

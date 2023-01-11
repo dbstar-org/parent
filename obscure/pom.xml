@@ -25,7 +25,7 @@
   <properties>
     <!-- proguard version -->
     <version.proguard>6.2.2</version.proguard>
-    <version.proguard.plugin>2.4.0</version.proguard.plugin>
+    <version.proguard.plugin>2.6.0</version.proguard.plugin>
   </properties>
 
   <build>

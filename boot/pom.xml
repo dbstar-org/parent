@@ -22,6 +22,10 @@
     <tag>HEAD</tag>
   </scm>
 
+  <properties>
+    <version.spring-boot>2.7.7</version.spring-boot>
+  </properties>
+
   <profiles>
     <profile>
       <id>spring-boot</id>
@@ -31,7 +35,6 @@
         </property>
       </activation>
       <properties>
-        <version.spring-boot>2.5.3</version.spring-boot>
         <project.spring-boot.attach>false</project.spring-boot.attach>
         <project.spring-boot.classifier>boot</project.spring-boot.classifier>
       </properties>

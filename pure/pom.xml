@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -23,11 +24,27 @@
     <maven.compiler.target>${project.java.version}</maven.compiler.target>
 
     <!-- Plugin Version -->
-    <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
-    <version.maven-jar-plugin>3.2.0</version.maven-jar-plugin>
-    <version.maven-javadoc-plugin>3.3.0</version.maven-javadoc-plugin>
-    <version.maven-resources-plugin>3.2.0</version.maven-resources-plugin>
+    <version.maven-compiler-plugin>3.10.1</version.maven-compiler-plugin>
+    <version.maven-jar-plugin>3.3.0</version.maven-jar-plugin>
+    <version.maven-javadoc-plugin>3.4.1</version.maven-javadoc-plugin>
+    <version.maven-resources-plugin>3.3.0</version.maven-resources-plugin>
     <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
+
+    <!-- Reporting Plugin Version -->
+    <version.maven-jxr-plugin>3.3.0</version.maven-jxr-plugin>
+    <version.maven-checkstyle-plugin>3.2.0</version.maven-checkstyle-plugin>
+    <version.checkstyle>8.45.1</version.checkstyle>
+    <version.maven-changelog-plugin>2.3</version.maven-changelog-plugin>
+    <version.maven-pmd-plugin>3.19.0</version.maven-pmd-plugin>
+    <version.jdepend-maven-plugin>2.0</version.jdepend-maven-plugin>
+    <version.findbugs-maven-plugin>3.0.5</version.findbugs-maven-plugin>
+    <version.taglist-maven-plugin>3.0.0</version.taglist-maven-plugin>
+
+    <!-- Test Plugin Version-->
+    <version.junit-jupiter>5.8.0-M1</version.junit-jupiter>
+    <version.maven-surefire-plugin>3.0.0-M7</version.maven-surefire-plugin>
+    <version.maven-surefire-report-plugin>3.0.0-M7</version.maven-surefire-report-plugin>
+    <version.cobertura-maven-plugin>2.7</version.cobertura-maven-plugin>
   </properties>
 
   <build>
@@ -70,17 +87,6 @@
           <exists>src/main/java</exists>
         </file>
       </activation>
-      <properties>
-        <!-- Reporting Plugin Version -->
-        <version.maven-jxr-plugin>3.1.1</version.maven-jxr-plugin>
-        <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
-        <version.checkstyle>8.45.1</version.checkstyle>
-        <version.maven-changelog-plugin>2.3</version.maven-changelog-plugin>
-        <version.maven-pmd-plugin>3.14.0</version.maven-pmd-plugin>
-        <version.jdepend-maven-plugin>2.0</version.jdepend-maven-plugin>
-        <version.findbugs-maven-plugin>3.0.5</version.findbugs-maven-plugin>
-        <version.taglist-maven-plugin>2.4</version.taglist-maven-plugin>
-      </properties>
       <build>
         <pluginManagement>
           <plugins>
@@ -240,12 +246,6 @@
           <exists>src/test/java</exists>
         </file>
       </activation>
-      <properties>
-        <version.junit-jupiter>5.8.0-M1</version.junit-jupiter>
-        <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
-        <version.maven-surefire-report-plugin>3.0.0-M5</version.maven-surefire-report-plugin>
-        <version.cobertura-maven-plugin>2.7</version.cobertura-maven-plugin>
-      </properties>
       <dependencyManagement>
         <dependencies>
           <dependency>

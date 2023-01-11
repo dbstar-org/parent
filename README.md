@@ -111,6 +111,7 @@ graph TD;
 
 | 父项目 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- |
+| parent | org.apache.maven.plugins | maven-enforcer-plugin |
 | parent | org.codehaus.mojo | versions-maven-plugin | 生成报告时 |
 | parent | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
 | parent | org.apache.maven.plugins | maven-release-plugin | Profile`release`激活时 |
@@ -138,39 +139,40 @@ graph TD;
 
 | 父项目 | 属性 | 默认版本 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- | --- | --- |
-| parent | version.maven-antrun-plugin | 3.0.0 | org.apache.maven.plugins | maven-antrun-plugin |
-| parent | version.maven-clean-plugin | 3.1.0 | org.apache.maven.plugins | maven-clean-plugin |
-| parent | version.maven-dependency-plugin | 3.2.0 | org.apache.maven.plugins | maven-dependency-plugin |
-| parent | version.maven-deploy-plugin | 3.0.0-M1 | org.apache.maven.plugins | maven-deploy-plugin |
-| parent | version.maven-install-plugin | 3.0.0-M1 | org.apache.maven.plugins | maven-install-plugin |
-| parent | version.maven-project-info-reports-plugin | 3.1.2 | org.apache.maven.plugins | maven-project-info-reports-plugin |
-| parent | version.maven-site-plugin | 3.9.1 | org.apache.maven.plugins | maven-site-plugin |
-| parent | version.versions-maven-plugin | 2.8.1 | org.codehaus.mojo | versions-maven-plugin |
+| parent | version.maven-enforcer-plugin | 3.1.0 | org.apache.maven.plugins | maven-enforcer-plugin |
+| parent | version.maven-antrun-plugin | 3.1.0 | org.apache.maven.plugins | maven-antrun-plugin |
+| parent | version.maven-clean-plugin | 3.2.0 | org.apache.maven.plugins | maven-clean-plugin |
+| parent | version.maven-dependency-plugin | 3.4.0 | org.apache.maven.plugins | maven-dependency-plugin |
+| parent | version.maven-deploy-plugin | 3.0.0 | org.apache.maven.plugins | maven-deploy-plugin |
+| parent | version.maven-install-plugin | 3.1.0 | org.apache.maven.plugins | maven-install-plugin |
+| parent | version.maven-project-info-reports-plugin | 3.4.1 | org.apache.maven.plugins | maven-project-info-reports-plugin |
+| parent | version.maven-site-plugin | 4.0.0-M4 | org.apache.maven.plugins | maven-site-plugin |
+| parent | version.versions-maven-plugin | 2.14.2 | org.codehaus.mojo | versions-maven-plugin |
 | parent | version.maven-gpg-plugin | 3.0.1 | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
-| parent | version.maven-release-plugin | 3.0.0-M4 | org.apache.maven.plugins | maven-release-plugin | Profile`release`激活时 |
-| parent | version.nexus-staging-maven-plugin | 1.6.8 | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
-| pure | version.maven-compiler-plugin | 3.8.1 | org.apache.maven.plugins | maven-compiler-plugin |
-| pure | version.maven-jar-plugin | 3.2.0 | org.apache.maven.plugins | maven-jar-plugin |
-| pure | version.maven-javadoc-plugin | 3.3.0 | org.apache.maven.plugins | maven-javadoc-plugin |
-| pure | version.maven-resources-plugin | 3.2.0 | org.apache.maven.plugins | maven-resources-plugin |
+| parent | version.maven-release-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-release-plugin | Profile`release`激活时 |
+| parent | version.nexus-staging-maven-plugin | 1.6.13 | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
+| pure | version.maven-compiler-plugin | 3.10.1 | org.apache.maven.plugins | maven-compiler-plugin |
+| pure | version.maven-jar-plugin | 3.3.0 | org.apache.maven.plugins | maven-jar-plugin |
+| pure | version.maven-javadoc-plugin | 3.4.1 | org.apache.maven.plugins | maven-javadoc-plugin |
+| pure | version.maven-resources-plugin | 3.3.0 | org.apache.maven.plugins | maven-resources-plugin |
 | pure | version.maven-source-plugin | 3.2.1 | org.apache.maven.plugins | maven-source-plugin |
-| pure | version.maven-jxr-plugin | 3.1.1 | org.apache.maven.plugins | maven-jxr-plugin | Profile`java-main`激活时 |
-| pure | version.maven-checkstyle-plugin | 3.1.2 | org.apache.maven.plugins | maven-checkstyle-plugin | Profile`java-main`激活时 |
+| pure | version.maven-jxr-plugin | 3.3.0 | org.apache.maven.plugins | maven-jxr-plugin | Profile`java-main`激活时 |
+| pure | version.maven-checkstyle-plugin | 3.2.0 | org.apache.maven.plugins | maven-checkstyle-plugin | Profile`java-main`激活时 |
 | pure | version.checkstyle | 8.45.1 | com.puppycrawl.tools | checkstyle | Profile`java-main`激活时 |
 | pure | version.maven-changelog-plugin | 2.3 | org.apache.maven.plugins | maven-changelog-plugin | Profile`java-main`激活时 |
-| pure | version.maven-pmd-plugin | 3.14.0 | org.apache.maven.plugins | maven-pmd-plugin | Profile`java-main`激活时 |
+| pure | version.maven-pmd-plugin | 3.19.0 | org.apache.maven.plugins | maven-pmd-plugin | Profile`java-main`激活时 |
 | pure | version.jdepend-maven-plugin | 2.0 | org.codehaus.mojo | jdepend-maven-plugin | Profile`java-main`激活时 |
 | pure | version.findbugs-maven-plugin | 3.0.5 | org.codehaus.mojo | findbugs-maven-plugin | Profile`java-main`激活时 |
-| pure | version.taglist-maven-plugin | 2.4 | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活时 |
-| pure | version.maven-surefire-plugin | 3.0.0-M5 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
-| pure | version.maven-surefire-report-plugin | 3.0.0-M5 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
+| pure | version.taglist-maven-plugin | 3.0.0 | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活时 |
+| pure | version.maven-surefire-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
+| pure | version.maven-surefire-report-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.cobertura-maven-plugin | 2.7 | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活时 |
 | docker | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
 | docker | version.dockerfile-maven-plugin | 1.4.13 | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
-| assembly | version.maven-assembly-plugin | 3.3.0 | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
-| obscure | version.proguard.plugin | 2.4.0 | com.github.wvengen | proguard-maven-plugin |
+| assembly | version.maven-assembly-plugin | 3.4.2 | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
+| obscure | version.proguard.plugin | 2.6.0 | com.github.wvengen | proguard-maven-plugin |
 | obscure | version.proguard | 6.2.2 | net.sf.proguard | proguard-base |
-| boot | version.spring-boot | 2.5.3 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
+| boot | version.spring-boot | 2.7.7 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
 

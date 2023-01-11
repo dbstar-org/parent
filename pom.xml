@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.dbstarll.parent</groupId>
@@ -66,20 +67,44 @@
     <project.git.git.root>git@${project.git.uri}.git</project.git.git.root>
 
     <!-- Plugins Version -->
-    <version.maven-antrun-plugin>3.0.0</version.maven-antrun-plugin>
-    <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
-    <version.maven-dependency-plugin>3.2.0</version.maven-dependency-plugin>
-    <version.maven-deploy-plugin>3.0.0-M1</version.maven-deploy-plugin>
-    <version.maven-install-plugin>3.0.0-M1</version.maven-install-plugin>
-    <version.maven-project-info-reports-plugin>3.1.2</version.maven-project-info-reports-plugin>
-    <version.maven-site-plugin>3.9.1</version.maven-site-plugin>
-    <version.versions-maven-plugin>2.8.1</version.versions-maven-plugin>
+    <version.maven-enforcer-plugin>3.1.0</version.maven-enforcer-plugin>
+    <version.maven-antrun-plugin>3.1.0</version.maven-antrun-plugin>
+    <version.maven-clean-plugin>3.2.0</version.maven-clean-plugin>
+    <version.maven-dependency-plugin>3.4.0</version.maven-dependency-plugin>
+    <version.maven-deploy-plugin>3.0.0</version.maven-deploy-plugin>
+    <version.maven-install-plugin>3.1.0</version.maven-install-plugin>
+    <version.maven-project-info-reports-plugin>3.4.1</version.maven-project-info-reports-plugin>
+    <version.maven-site-plugin>4.0.0-M4</version.maven-site-plugin>
+    <version.versions-maven-plugin>2.14.2</version.versions-maven-plugin>
+    <version.maven-gpg-plugin>3.0.1</version.maven-gpg-plugin>
+    <version.maven-release-plugin>3.0.0-M7</version.maven-release-plugin>
+    <version.nexus-staging-maven-plugin>1.6.13</version.nexus-staging-maven-plugin>
   </properties>
 
   <build>
     <pluginManagement>
       <!-- Project Build Plugins Version -->
       <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${version.maven-enforcer-plugin}</version>
+          <executions>
+            <execution>
+              <id>enforce-maven</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <requireMavenVersion>
+                    <version>3.2.5</version>
+                  </requireMavenVersion>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
@@ -130,6 +155,12 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 
   <reporting>
@@ -144,10 +175,6 @@
   <profiles>
     <profile>
       <id>release</id>
-      <properties>
-        <version.maven-gpg-plugin>3.0.1</version.maven-gpg-plugin>
-        <version.maven-release-plugin>3.0.0-M4</version.maven-release-plugin>
-      </properties>
       <build>
         <pluginManagement>
           <plugins>
@@ -201,9 +228,6 @@
           <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
       </distributionManagement>
-      <properties>
-        <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
-      </properties>
       <build>
         <pluginManagement>
           <plugins>
