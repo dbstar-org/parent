@@ -46,14 +46,14 @@ graph TD;
 | 父项目 | 属性 | 默认值 | 描述 |
 | --- | --- | --- | --- |
 | parent | project.encoding | UTF-8 | 项目的默认编码 |
-| parent | project.build.sourceEncoding | ${project.encoding} | 源文件的默认编码 |
-| parent | project.reporting.outputEncoding | ${project.encoding} | 报告输出文件的默认编码 |
-| parent | project.site.root | file://${env.HOME}/.m2/sites | 本地报告站点的根目录，Profile`site-local`激活时 |
-| parent | project.site.root.project | ${project.site.root}/${project.git.uri} | 本地报告站点的项目根目录，Profile`site-local`激活时 |
+| parent | project.build.sourceEncoding | `${project.encoding}` | 源文件的默认编码 |
+| parent | project.reporting.outputEncoding | `${project.encoding}` | 报告输出文件的默认编码 |
+| parent | project.site.root | `file://${env.HOME}/.m2/sites` | 本地报告站点的根目录，Profile`site-local`激活时 |
+| parent | project.site.root.project | `${project.site.root}/${project.git.uri}` | 本地报告站点的项目根目录，Profile`site-local`激活时 |
 | pure | project.java.version | 1.8 | Java版本 |
-| pure | maven.compiler.compilerVersion | ${project.java.version} | Java编译级别 |
-| pure | maven.compiler.source | ${project.java.version} | Java源文件版本 |
-| pure | maven.compiler.target | ${project.java.version} | Java编译文件版本 |
+| pure | maven.compiler.compilerVersion | `${project.java.version}` | Java编译级别 |
+| pure | maven.compiler.source | `${project.java.version}` | Java源文件版本 |
+| pure | maven.compiler.target | `${project.java.version}` | Java编译文件版本 |
 
 ---
 
@@ -159,13 +159,13 @@ graph TD;
 | --- | --- | --- |
 | project.git.host | github.com | git仓库的域名 |
 | project.git.user | dbstarll | git仓库中的用户名 |
-| project.git.group | ${project.git.user} | git仓库中的项目组名 |
+| project.git.group | `${project.git.user}` | git仓库中的项目组名 |
 | project.git.project | parent | git仓库中的项目名称 |
 | project.git.branch.master | main | git仓库中的项目的主分支名称 |
-| project.git.uri | ${project.git.host}/${project.git.user}/${project.git.project} | git仓库中的项目地址的uri部分 |
-| project.git.web.root | https://${project.git.uri} | git仓库中的项目的web根地址 |
-| project.git.web.master | ${project.git.web.root}/tree/${project.git.branch.master} | git仓库中的项目主分支的web地址 |
-| project.git.git.root | git@${project.git.uri}.git | git仓库中的项目的git根地址 |
+| project.git.uri | `${project.git.host}/${project.git.user}/${project.git.project}` | git仓库中的项目地址的uri部分 |
+| project.git.web.root | `https://${project.git.uri}` | git仓库中的项目的web根地址 |
+| project.git.web.master | `${project.git.web.root}/tree/${project.git.branch.master}` | git仓库中的项目主分支的web地址 |
+| project.git.git.root | `git@${project.git.uri}.git` | git仓库中的项目的git根地址 |
 
 在每个直接继承父项目的子项目中，都需要在`pom.xml`中覆盖定义以下片段，否则这些片段会继承父项目中的定义，然后导致路径叠加异常：
 
