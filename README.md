@@ -93,10 +93,10 @@ graph TD;
 | 父项目 | 属性 | 默认版本 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- | --- | --- |
 | pure | version.junit-jupiter | 5.8.0-M1 | org.junit.jupiter | junit-jupiter-engine | Profile`java-test`激活时 |
-| base | version.slf4j | 1.7.32 | org.slf4j | slf4j-api |
-| base | version.slf4j | 1.7.32 | org.slf4j | jul-to-slf4j |
-| base | version.slf4j | 1.7.32 | org.slf4j | jcl-over-slf4j |
-| base | version.slf4j | 1.7.32 | org.slf4j | log4j-over-slf4j |
+| base | version.slf4j | 2.0.6 | org.slf4j | slf4j-api |
+| base | version.slf4j | 2.0.6 | org.slf4j | jul-to-slf4j |
+| base | version.slf4j | 2.0.6 | org.slf4j | jcl-over-slf4j |
+| base | version.slf4j | 2.0.6 | org.slf4j | log4j-over-slf4j |
 | base | version.commons-lang3 | 3.12.0 | org.apache.commons | commons-lang3 |
 | base | version.commons-io | 2.11.0 | commons-io | commons-io |
 | base | version.commons-codec | 1.15 | commons-codec | commons-codec |
