@@ -1,11 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>io.github.dbstarll.parent</groupId>
-    <artifactId>docker</artifactId>
+    <artifactId>base</artifactId>
     <version>1.2.3-SNAPSHOT</version>
-    <relativePath>../docker</relativePath>
+    <relativePath>../base</relativePath>
   </parent>
   <artifactId>boot</artifactId>
   <packaging>pom</packaging>
@@ -21,50 +22,71 @@
     <tag>HEAD</tag>
   </scm>
 
-  <properties>
-    <version.spring-boot>2.5.3</version.spring-boot>
-    <project.spring-boot.attach>false</project.spring-boot.attach>
-    <project.spring-boot.classifier>boot</project.spring-boot.classifier>
-  </properties>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>${version.spring-boot}</version>
-          <configuration>
-            <attach>${project.spring-boot.attach}</attach>
-            <classifier>${project.spring-boot.classifier}</classifier>
-          </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>repackage</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
   <profiles>
     <profile>
-      <id>docker</id>
+      <id>spring-boot</id>
+      <activation>
+        <property>
+          <name>project.mainClass</name>
+        </property>
+      </activation>
+      <properties>
+        <version.spring-boot>2.5.3</version.spring-boot>
+        <project.spring-boot.attach>false</project.spring-boot.attach>
+        <project.spring-boot.classifier>boot</project.spring-boot.classifier>
+      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-maven-plugin</artifactId>
+              <version>${version.spring-boot}</version>
+              <configuration>
+                <attach>${project.spring-boot.attach}</attach>
+                <classifier>${project.spring-boot.classifier}</classifier>
+              </configuration>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>repackage</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <configuration>
+                <archive>
+                  <manifest>
+                    <mainClass>${project.mainClass}</mainClass>
+                  </manifest>
+                </archive>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>spring-boot-docker</id>
       <activation>
         <file>
           <exists>Dockerfile</exists>
         </file>
+        <property>
+          <name>project.mainClass</name>
+        </property>
       </activation>
       <properties>
+        <project.spring-boot.classifier>boot</project.spring-boot.classifier>
         <docker.image.jar>${project.build.finalName}-${project.spring-boot.classifier}.jar</docker.image.jar>
       </properties>
     </profile>

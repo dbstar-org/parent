@@ -12,6 +12,7 @@
 | assembly | 使用maven-assembly-plugin来打包可执行jar |
 | mode | 以不同的运行模式来打包可执行jar |
 | obscure | 打包后做源代码混淆，防止反编译 |
+| boot | 以spring-boot.jar的方式来打包可执行jar |
 
 本文包含以下内容：
 
@@ -35,8 +36,8 @@ graph TD;
     assembly-->base;
     mode-->assembly;
     obscure-->mode;
+    boot-->base;
     docker-->mode;
-    boot-->docker;
 ```
 
 ---
@@ -60,6 +61,8 @@ graph TD;
 | pure | maven.compiler.target | `${project.java.version}` | Java编译文件版本 |
 | assembly | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类 |
 | mode | project.mode | dev | 运行模式，Profile`mode-resource-filtering`激活时 |
+| boot | project.spring-boot.attach | false | 是否发布Spring Boot打包后的可执行Jar，Profile`spring-boot`激活时 |
+| boot | project.spring-boot.classifier | boot | 可执行Jar的classifier后缀名称，Profile`spring-boot`激活时 |
 
 ---
 
@@ -118,6 +121,7 @@ graph TD;
 | pure | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活，生成报告时 |
 | assembly | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
 | obscure | com.github.wvengen | proguard-maven-plugin | Profile`proguard-active-java`激活时 |
+| boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
 
@@ -157,6 +161,7 @@ graph TD;
 | assembly | version.maven-assembly-plugin | 3.3.0 | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
 | obscure | version.proguard.plugin | 2.4.0 | com.github.wvengen | proguard-maven-plugin |
 | obscure | version.proguard | 6.2.2 | net.sf.proguard | proguard-base |
+| boot | version.spring-boot | 2.5.3 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
 
@@ -178,6 +183,8 @@ graph TD;
 | obscure | proguard-skip-web | 存在目录：src/main/webapp | 在JavaWeb项目中跳过插件 |
 | obscure | proguard-public | 缺失目录：src/main/assembly | 按照工具类Jar包的方式混淆 |
 | obscure | proguard-main | 存在目录：src/main/assembly；并且定义了属性：project.mainClass | 按照可执行Jar包的方式混淆 |
+| boot | spring-boot | 定义了属性：project.mainClass | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
+| boot | spring-boot-docker | 存在文件：Dockerfile；并且定义了属性：project.mainClass | 使用打包后的可执行jar来构建docker image |
 
 ---
 
