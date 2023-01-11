@@ -142,6 +142,9 @@
         <file>
           <exists>src/main/assembly</exists>
         </file>
+        <property>
+          <name>project.mainClass</name>
+        </property>
       </activation>
       <build>
         <pluginManagement>

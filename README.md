@@ -11,6 +11,7 @@
 | base | 引入常用的基准依赖包。包含slf4j和Apache Commons |
 | assembly | 使用maven-assembly-plugin来打包可执行jar |
 | mode | 以不同的运行模式来打包可执行jar |
+| obscure | 打包后做源代码混淆，防止反编译 |
 
 本文包含以下内容：
 
@@ -33,9 +34,9 @@ graph TD;
     base-->pure;
     assembly-->base;
     mode-->assembly;
+    obscure-->mode;
     docker-->mode;
     boot-->docker;
-    obscure-->mode;
 ```
 
 ---
@@ -116,6 +117,7 @@ graph TD;
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活，生成报告时 |
 | assembly | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
+| obscure | com.github.wvengen | proguard-maven-plugin | Profile`proguard-active-java`激活时 |
 
 ---
 
@@ -153,6 +155,8 @@ graph TD;
 | pure | version.maven-surefire-report-plugin | 3.0.0-M5 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.cobertura-maven-plugin | 2.7 | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活时 |
 | assembly | version.maven-assembly-plugin | 3.3.0 | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
+| obscure | version.proguard.plugin | 2.4.0 | com.github.wvengen | proguard-maven-plugin |
+| obscure | version.proguard | 6.2.2 | net.sf.proguard | proguard-base |
 
 ---
 
@@ -170,6 +174,10 @@ graph TD;
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、生成test.jar、test-javadoc.jar、test-source.jar和相关报告 |
 | assembly | assembly-single | 存在目录：src/main/assembly；并且定义了属性：project.mainClass | 执行maven-assembly-plugin:single goal |
 | mode | mode-resource-filtering | 存在目录：src/main/mode | 以指定的运行模式来加载对应的配置文件 |
+| obscure | proguard-active-java | 存在目录：src/main/java | 在Java项目中启用插件 |
+| obscure | proguard-skip-web | 存在目录：src/main/webapp | 在JavaWeb项目中跳过插件 |
+| obscure | proguard-public | 缺失目录：src/main/assembly | 按照工具类Jar包的方式混淆 |
+| obscure | proguard-main | 存在目录：src/main/assembly；并且定义了属性：project.mainClass | 按照可执行Jar包的方式混淆 |
 
 ---
 
