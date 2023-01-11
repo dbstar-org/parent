@@ -57,10 +57,12 @@
     <!-- Git -->
     <project.git.host>github.com</project.git.host>
     <project.git.user>dbstarll</project.git.user>
+    <project.git.group>${project.git.user}</project.git.group>
     <project.git.project>parent</project.git.project>
-    <project.git.uri>${project.git.host}/${project.git.user}/${project.git.project}</project.git.uri>
+    <project.git.branch.master>main</project.git.branch.master>
+    <project.git.uri>${project.git.host}/${project.git.group}/${project.git.project}</project.git.uri>
     <project.git.web.root>https://${project.git.uri}</project.git.web.root>
-    <project.git.web.master>${project.git.web.root}/tree/main</project.git.web.master>
+    <project.git.web.master>${project.git.web.root}/tree/${project.git.branch.master}</project.git.web.master>
     <project.git.git.root>git@${project.git.uri}.git</project.git.git.root>
 
     <!-- Plugins Version -->
