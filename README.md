@@ -69,7 +69,7 @@ graph TD;
 | base | org.slf4j | jul-to-slf4j | runtime |
 | base | org.slf4j | jcl-over-slf4j | runtime |
 | base | org.apache.commons | commons-lang3 |
-| base | ommons-io | commons-io |
+| base | commons-io | commons-io |
 
 ---
 
@@ -85,7 +85,7 @@ graph TD;
 | base | version.slf4j | 1.7.32 | org.slf4j | jcl-over-slf4j |
 | base | version.slf4j | 1.7.32 | org.slf4j | log4j-over-slf4j |
 | base | version.commons-lang3 | 3.12.0 | org.apache.commons | commons-lang3 |
-| base | version.commons-io | 2.11.0 | ommons-io | commons-io |
+| base | version.commons-io | 2.11.0 | commons-io | commons-io |
 | base | version.commons-codec | 1.15 | commons-codec | commons-codec |
 | base | version.commons-beanutils | 1.9.4 | commons-beanutils | commons-beanutils |
 | base | version.commons-collections4 | 4.4 | org.apache.commons | commons-collections4 |
