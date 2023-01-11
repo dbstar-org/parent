@@ -22,29 +22,12 @@
     <maven.compiler.source>${project.java.version}</maven.compiler.source>
     <maven.compiler.target>${project.java.version}</maven.compiler.target>
 
-    <!-- Dependency Version -->
-    <version.checkstyle>8.45.1</version.checkstyle>
-
     <!-- Plugin Version -->
     <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
     <version.maven-jar-plugin>3.2.0</version.maven-jar-plugin>
     <version.maven-javadoc-plugin>3.3.0</version.maven-javadoc-plugin>
     <version.maven-resources-plugin>3.2.0</version.maven-resources-plugin>
     <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
-    <version.maven-jxr-plugin>3.1.1</version.maven-jxr-plugin>
-
-    <!-- Test Plugin Version -->
-    <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
-
-    <!-- Reporting Plugin Version -->
-    <version.maven-pmd-plugin>3.14.0</version.maven-pmd-plugin>
-    <version.jdepend-maven-plugin>2.0</version.jdepend-maven-plugin>
-    <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
-    <version.findbugs-maven-plugin>3.0.5</version.findbugs-maven-plugin>
-    <version.taglist-maven-plugin>2.4</version.taglist-maven-plugin>
-    <version.maven-changelog-plugin>2.3</version.maven-changelog-plugin>
-    <version.cobertura-maven-plugin>2.7</version.cobertura-maven-plugin>
-    <version.maven-surefire-report-plugin>3.0.0-M5</version.maven-surefire-report-plugin>
   </properties>
 
   <build>
@@ -75,11 +58,6 @@
           <artifactId>maven-source-plugin</artifactId>
           <version>${version.maven-source-plugin}</version>
         </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jxr-plugin</artifactId>
-          <version>${version.maven-jxr-plugin}</version>
-        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -92,6 +70,17 @@
           <exists>src/main/java</exists>
         </file>
       </activation>
+      <properties>
+        <!-- Reporting Plugin Version -->
+        <version.maven-jxr-plugin>3.1.1</version.maven-jxr-plugin>
+        <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
+        <version.checkstyle>8.45.1</version.checkstyle>
+        <version.maven-changelog-plugin>2.3</version.maven-changelog-plugin>
+        <version.maven-pmd-plugin>3.14.0</version.maven-pmd-plugin>
+        <version.jdepend-maven-plugin>2.0</version.jdepend-maven-plugin>
+        <version.findbugs-maven-plugin>3.0.5</version.findbugs-maven-plugin>
+        <version.taglist-maven-plugin>2.4</version.taglist-maven-plugin>
+      </properties>
       <build>
         <pluginManagement>
           <plugins>
@@ -119,6 +108,11 @@
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jxr-plugin</artifactId>
+              <version>${version.maven-jxr-plugin}</version>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-checkstyle-plugin</artifactId>
               <version>${version.maven-checkstyle-plugin}</version>
               <configuration>
@@ -132,6 +126,72 @@
                 </dependency>
               </dependencies>
             </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-changelog-plugin</artifactId>
+              <version>${version.maven-changelog-plugin}</version>
+              <configuration>
+                <!-- <displayFileDetailUrl>${project.git.web.master}/%FILE%</displayFileDetailUrl> -->
+                <displayFileRevDetailUrl>${project.git.web.root}/blob/%REV%/%FILE%</displayFileRevDetailUrl>
+                <displayChangeSetDetailUrl>${project.git.web.root}/commit/%REV%</displayChangeSetDetailUrl>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-pmd-plugin</artifactId>
+              <version>${version.maven-pmd-plugin}</version>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>jdepend-maven-plugin</artifactId>
+              <version>${version.jdepend-maven-plugin}</version>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>findbugs-maven-plugin</artifactId>
+              <version>${version.findbugs-maven-plugin}</version>
+              <configuration>
+                <threshold>Low</threshold>
+                <effort>Max</effort>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>taglist-maven-plugin</artifactId>
+              <version>${version.taglist-maven-plugin}</version>
+              <configuration>
+                <tagListOptions>
+                  <tagClasses>
+                    <tagClass>
+                      <displayName>Todo Work Annotation</displayName>
+                      <tags>
+                        <tag>
+                          <matchString>TODO</matchString>
+                          <matchType>ignoreCase</matchType>
+                        </tag>
+                        <tag>
+                          <matchString>@todo</matchString>
+                          <matchType>ignoreCase</matchType>
+                        </tag>
+                        <tag>
+                          <matchString>FIXME</matchString>
+                          <matchType>exact</matchType>
+                        </tag>
+                      </tags>
+                    </tagClass>
+                    <tagClass>
+                      <displayName>Version Annotation</displayName>
+                      <tags>
+                        <tag>
+                          <matchString>@deprecated</matchString>
+                          <matchType>ignoreCase</matchType>
+                        </tag>
+                      </tags>
+                    </tagClass>
+                  </tagClasses>
+                </tagListOptions>
+              </configuration>
+            </plugin>
           </plugins>
         </pluginManagement>
       </build>
@@ -139,81 +199,35 @@
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jxr-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-pmd-plugin</artifactId>
-            <version>${version.maven-pmd-plugin}</version>
+            <artifactId>maven-jxr-plugin</artifactId>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
           </plugin>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-changelog-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+          </plugin>
+          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>jdepend-maven-plugin</artifactId>
-            <version>${version.jdepend-maven-plugin}</version>
           </plugin>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>findbugs-maven-plugin</artifactId>
-            <version>${version.findbugs-maven-plugin}</version>
-            <configuration>
-              <threshold>Low</threshold>
-              <effort>Max</effort>
-            </configuration>
           </plugin>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>taglist-maven-plugin</artifactId>
-            <version>${version.taglist-maven-plugin}</version>
-            <configuration>
-              <tagListOptions>
-                <tagClasses>
-                  <tagClass>
-                    <displayName>Todo Work Annotation</displayName>
-                    <tags>
-                      <tag>
-                        <matchString>TODO</matchString>
-                        <matchType>ignoreCase</matchType>
-                      </tag>
-                      <tag>
-                        <matchString>@todo</matchString>
-                        <matchType>ignoreCase</matchType>
-                      </tag>
-                      <tag>
-                        <matchString>FIXME</matchString>
-                        <matchType>exact</matchType>
-                      </tag>
-                    </tags>
-                  </tagClass>
-                  <tagClass>
-                    <displayName>Version Annotation</displayName>
-                    <tags>
-                      <tag>
-                        <matchString>@deprecated</matchString>
-                        <matchType>ignoreCase</matchType>
-                      </tag>
-                    </tags>
-                  </tagClass>
-                </tagClasses>
-              </tagListOptions>
-            </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-changelog-plugin</artifactId>
-            <version>${version.maven-changelog-plugin}</version>
-            <configuration>
-              <!-- <displayFileDetailUrl>${project.git.web.master}/%FILE%</displayFileDetailUrl> -->
-              <displayFileRevDetailUrl>${project.git.web.root}/blob/%REV%/%FILE%</displayFileRevDetailUrl>
-              <displayChangeSetDetailUrl>${project.git.web.root}/commit/%REV%</displayChangeSetDetailUrl>
-            </configuration>
           </plugin>
         </plugins>
       </reporting>
@@ -228,6 +242,9 @@
       </activation>
       <properties>
         <version.junit-jupiter>5.8.0-M1</version.junit-jupiter>
+        <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
+        <version.maven-surefire-report-plugin>3.0.0-M5</version.maven-surefire-report-plugin>
+        <version.cobertura-maven-plugin>2.7</version.cobertura-maven-plugin>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -287,14 +304,14 @@
               </executions>
             </plugin>
             <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>cobertura-maven-plugin</artifactId>
-              <version>${version.cobertura-maven-plugin}</version>
-            </plugin>
-            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-surefire-report-plugin</artifactId>
               <version>${version.maven-surefire-report-plugin}</version>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>cobertura-maven-plugin</artifactId>
+              <version>${version.cobertura-maven-plugin}</version>
             </plugin>
           </plugins>
         </pluginManagement>
@@ -302,12 +319,12 @@
       <reporting>
         <plugins>
           <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>cobertura-maven-plugin</artifactId>
-          </plugin>
-          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-report-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </reporting>

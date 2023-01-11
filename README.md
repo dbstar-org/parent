@@ -7,17 +7,18 @@
 | 名称 | 用途 |
 | ---| --- |
 | parent | 所有父项目的继承根。包含项目的编码设置；Maven基础插件版本；代码发布相关设置 |
-| pure | 预定义纯Java相关的设置，包括编译级别；java打包相关的plugin设置；代码质量相关的report plugin设置 |
+| pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；代码质量相关的报告插件设置 |
 
 本文包含以下内容：
 
 1. [继承关系](#继承关系)
 1. [预定义的配置项](#预定义的配置项)
-1. [预定义的依赖包](#预定义的依赖包)
+1. [预定义的依赖](#预定义的依赖)
+1. [预定义的依赖声明](#预定义的依赖声明)
 1. [预定义的插件](#预定义的插件)
 1. [预定义的插件声明](#预定义的插件声明)
 1. [预定义的Profile](#预定义的profile)
-1. [Git仓库相关配置](#git仓库相关配置)
+1. [代码仓库相关配置](#代码仓库相关配置)
 
 ### 继承关系
 
@@ -47,12 +48,32 @@ graph TD;
 | parent | project.encoding | UTF-8 | 项目的默认编码 |
 | parent | project.build.sourceEncoding | ${project.encoding} | 源文件的默认编码 |
 | parent | project.reporting.outputEncoding | ${project.encoding} | 报告输出文件的默认编码 |
-| parent | project.site.root | file://${env.HOME}/.m2/sites | 本地报告站点的根目录，profile`site-local`激活时 |
-| parent | project.site.root.project | ${project.site.root}/${project.git.uri} | 本地报告站点的项目根目录，profile`site-local`激活时 |
+| parent | project.site.root | file://${env.HOME}/.m2/sites | 本地报告站点的根目录，Profile`site-local`激活时 |
+| parent | project.site.root.project | ${project.site.root}/${project.git.uri} | 本地报告站点的项目根目录，Profile`site-local`激活时 |
+| pure | project.java.version | 1.8 | Java版本 |
+| pure | maven.compiler.compilerVersion | ${project.java.version} | Java编译级别 |
+| pure | maven.compiler.source | ${project.java.version} | Java源文件版本 |
+| pure | maven.compiler.target | ${project.java.version} | Java编译文件版本 |
 
 ---
 
-### 预定义的依赖包
+### 预定义的依赖
+
+本系统中包含如下预定义的依赖：
+
+| 父项目 | groupId | artifactId | 备注 | 
+| --- | --- | --- | --- |
+| pure | org.junit.jupiter | junit-jupiter-engine | Profile`java-test`激活时 |
+
+---
+
+### 预定义的依赖声明
+
+依赖声明`<dependencyManagement>`用于声明依赖项的版本信息。本系统中包含如下预定义的依赖声明：
+
+| 父项目 | 属性 | 默认版本 | groupId | artifactId | 备注 | 
+| --- | --- | --- | --- | --- | --- |
+| pure | version.junit-jupiter | 5.8.0-M1 | org.junit.jupiter | junit-jupiter-engine | Profile`java-test`激活时 |
 
 ---
 
@@ -63,9 +84,18 @@ graph TD;
 | 父项目 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- |
 | parent | org.codehaus.mojo | versions-maven-plugin | 生成报告时 |
-| parent | org.apache.maven.plugins | maven-gpg-plugin | profile`release`激活时 |
-| parent | org.apache.maven.plugins | maven-release-plugin | profile`release`激活时 |
-| parent | org.sonatype.plugins | nexus-staging-maven-plugin | profile`distribution-ossrh`激活时 |
+| parent | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
+| parent | org.apache.maven.plugins | maven-release-plugin | Profile`release`激活时 |
+| parent | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
+| pure | org.apache.maven.plugins | maven-jxr-plugin | Profile`java-main`激活，生成报告时 |
+| pure | org.apache.maven.plugins | maven-checkstyle-plugin | Profile`java-main`激活，生成报告时 |
+| pure | org.apache.maven.plugins | maven-changelog-plugin | Profile`java-main`激活，生成报告时 |
+| pure | org.apache.maven.plugins | maven-pmd-plugin | Profile`java-main`激活，生成报告时 |
+| pure | org.codehaus.mojo | jdepend-maven-plugin | Profile`java-main`激活，生成报告时 |
+| pure | org.codehaus.mojo | findbugs-maven-plugin | Profile`java-main`激活，生成报告时 |
+| pure | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活，生成报告时 |
+| pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
+| pure | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活，生成报告时 |
 
 ---
 
@@ -84,13 +114,29 @@ graph TD;
 | parent | version.maven-project-info-reports-plugin | 3.1.2 | org.apache.maven.plugins | maven-project-info-reports-plugin |
 | parent | version.maven-site-plugin | 3.9.1 | org.apache.maven.plugins | maven-site-plugin |
 | parent | version.versions-maven-plugin | 2.8.1 | org.codehaus.mojo | versions-maven-plugin |
-| parent | version.maven-gpg-plugin | 3.0.1 | org.apache.maven.plugins | maven-gpg-plugin | profile`release`激活时 |
-| parent | version.maven-release-plugin | 3.0.0-M4 | org.apache.maven.plugins | maven-release-plugin | profile`release`激活时 |
-| parent | version.nexus-staging-maven-plugin | 1.6.8 | org.sonatype.plugins | nexus-staging-maven-plugin | profile`distribution-ossrh`激活时 |
+| parent | version.maven-gpg-plugin | 3.0.1 | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
+| parent | version.maven-release-plugin | 3.0.0-M4 | org.apache.maven.plugins | maven-release-plugin | Profile`release`激活时 |
+| parent | version.nexus-staging-maven-plugin | 1.6.8 | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
+| pure | version.maven-compiler-plugin | 3.8.1 | org.apache.maven.plugins | maven-compiler-plugin |
+| pure | version.maven-jar-plugin | 3.2.0 | org.apache.maven.plugins | maven-jar-plugin |
+| pure | version.maven-javadoc-plugin | 3.3.0 | org.apache.maven.plugins | maven-javadoc-plugin |
+| pure | version.maven-resources-plugin | 3.2.0 | org.apache.maven.plugins | maven-resources-plugin |
+| pure | version.maven-source-plugin | 3.2.1 | org.apache.maven.plugins | maven-source-plugin |
+| pure | version.maven-jxr-plugin | 3.1.1 | org.apache.maven.plugins | maven-jxr-plugin | Profile`java-main`激活时 |
+| pure | version.maven-checkstyle-plugin | 3.1.2 | org.apache.maven.plugins | maven-checkstyle-plugin | Profile`java-main`激活时 |
+| pure | version.checkstyle | 8.45.1 | com.puppycrawl.tools | checkstyle | Profile`java-main`激活时 |
+| pure | version.maven-changelog-plugin | 2.3 | org.apache.maven.plugins | maven-changelog-plugin | Profile`java-main`激活时 |
+| pure | version.maven-pmd-plugin | 3.14.0 | org.apache.maven.plugins | maven-pmd-plugin | Profile`java-main`激活时 |
+| pure | version.jdepend-maven-plugin | 2.0 | org.codehaus.mojo | jdepend-maven-plugin | Profile`java-main`激活时 |
+| pure | version.findbugs-maven-plugin | 3.0.5 | org.codehaus.mojo | findbugs-maven-plugin | Profile`java-main`激活时 |
+| pure | version.taglist-maven-plugin | 2.4 | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活时 |
+| pure | version.maven-surefire-plugin | 3.0.0-M5 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
+| pure | version.maven-surefire-report-plugin | 3.0.0-M5 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
+| pure | version.cobertura-maven-plugin | 2.7 | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活时 |
 
 ---
 
-### 预定义的Profile
+### 预定义的profile
 
 `<profile>`是符合预定条件时才激活的配置片段。本系统中包含如下预定义的`Profile`：
 
@@ -100,10 +146,12 @@ graph TD;
 | parent | distribution-ossrh | 手动 | 用于提交发布物到Maven中央仓库 |
 | parent | distribution-github | 手动 | 用于提交发布物到Github个人Maven仓库 |
 | parent | site-local | 手动 | 用于在本地生成站点报告 |
+| pure | java-main | 存在目录：src/main/java | 生成jar、javadoc.jar、source.jar和相关报告 |
+| pure | java-test | 存在目录：src/test/java | 执行单元测试、生成test.jar、test-javadoc.jar、test-source.jar和相关报告 |
 
 ---
 
-### git仓库相关配置
+### 代码仓库相关配置
 
 在根项目`parent`中，预定义了一些与git仓库相关的配置项，这些配置项的默认值以[github.com](https://github.com)为蓝本，如下所示：
 
@@ -153,4 +201,3 @@ graph TD;
 ```
 
 ---
-
