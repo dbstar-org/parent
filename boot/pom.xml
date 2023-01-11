@@ -4,9 +4,9 @@
 
   <parent>
     <groupId>io.github.dbstarll.parent</groupId>
-    <artifactId>base</artifactId>
+    <artifactId>docker</artifactId>
     <version>1.2.3-SNAPSHOT</version>
-    <relativePath>../base</relativePath>
+    <relativePath>../docker</relativePath>
   </parent>
   <artifactId>boot</artifactId>
   <packaging>pom</packaging>
@@ -76,7 +76,7 @@
       </build>
     </profile>
     <profile>
-      <id>spring-boot-docker</id>
+      <id>docker</id>
       <activation>
         <file>
           <exists>Dockerfile</exists>
@@ -87,7 +87,7 @@
       </activation>
       <properties>
         <project.spring-boot.classifier>boot</project.spring-boot.classifier>
-        <docker.image.jar>${project.build.finalName}-${project.spring-boot.classifier}.jar</docker.image.jar>
+        <project.docker.image.jar>${project.build.finalName}-${project.spring-boot.classifier}.jar</project.docker.image.jar>
       </properties>
     </profile>
   </profiles>

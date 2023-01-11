@@ -9,6 +9,7 @@
 | parent | 所有父项目的继承根。包含项目的编码设置；Maven基础插件版本；代码发布相关设置 |
 | pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；代码质量相关的报告插件设置 |
 | base | 引入常用的基准依赖包。包含slf4j和Apache Commons |
+| docker | 将Jar打包发布成Docker Image |
 | assembly | 使用maven-assembly-plugin来打包可执行jar |
 | mode | 以不同的运行模式来打包可执行jar |
 | obscure | 打包后做源代码混淆，防止反编译 |
@@ -33,11 +34,11 @@
 graph TD;
     pure-->parent;
     base-->pure;
-    assembly-->base;
+    docker-->base;
+    assembly-->docker;
     mode-->assembly;
     obscure-->mode;
-    boot-->base;
-    docker-->mode;
+    boot-->docker;
 ```
 
 ---
@@ -59,8 +60,12 @@ graph TD;
 | pure | maven.compiler.compilerVersion | `${project.java.version}` | Java编译级别 |
 | pure | maven.compiler.source | `${project.java.version}` | Java源文件版本 |
 | pure | maven.compiler.target | `${project.java.version}` | Java编译文件版本 |
+| docker | project.docker.image.prefix | `${project.git.group}` | Docker Image文件的前缀，Profile`docker`激活时 |
+| docker | project.docker.image.tag | `${git.commit.id.describe}` | Docker Image文件的标签(版本号)，Profile`docker`激活时 |
+| docker | project.docker.image.jar | `${project.build.finalName}.jar` | 用于构建Docker Image的Jar包名称，Profile`docker`激活时 |
 | assembly | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类 |
 | mode | project.mode | dev | 运行模式，Profile`mode-resource-filtering`激活时 |
+| boot | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类 |
 | boot | project.spring-boot.attach | false | 是否发布Spring Boot打包后的可执行Jar，Profile`spring-boot`激活时 |
 | boot | project.spring-boot.classifier | boot | 可执行Jar的classifier后缀名称，Profile`spring-boot`激活时 |
 
@@ -119,6 +124,8 @@ graph TD;
 | pure | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活，生成报告时 |
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活，生成报告时 |
+| docker | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
+| docker | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
 | assembly | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
 | obscure | com.github.wvengen | proguard-maven-plugin | Profile`proguard-active-java`激活时 |
 | boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
@@ -158,6 +165,8 @@ graph TD;
 | pure | version.maven-surefire-plugin | 3.0.0-M5 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
 | pure | version.maven-surefire-report-plugin | 3.0.0-M5 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.cobertura-maven-plugin | 2.7 | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活时 |
+| docker | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
+| docker | version.dockerfile-maven-plugin | 1.4.13 | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
 | assembly | version.maven-assembly-plugin | 3.3.0 | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
 | obscure | version.proguard.plugin | 2.4.0 | com.github.wvengen | proguard-maven-plugin |
 | obscure | version.proguard | 6.2.2 | net.sf.proguard | proguard-base |
@@ -177,14 +186,14 @@ graph TD;
 | parent | site-local | 手动 | 用于在本地生成站点报告 |
 | pure | java-main | 存在目录：src/main/java | 生成jar、javadoc.jar、source.jar和相关报告 |
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、生成test.jar、test-javadoc.jar、test-source.jar和相关报告 |
-| assembly | assembly-single | 存在目录：src/main/assembly；并且定义了属性：project.mainClass | 执行maven-assembly-plugin:single goal |
+| docker | docker | 存在文件：Dockerfile | 使用项目Jar来构建Docker Image |
+| assembly | assembly-single | 存在目录：src/main/assembly；并且定义了属性：project.mainClass | 执行maven-assembly-plugin:single goal来打包可执行jar |
 | mode | mode-resource-filtering | 存在目录：src/main/mode | 以指定的运行模式来加载对应的配置文件 |
 | obscure | proguard-active-java | 存在目录：src/main/java | 在Java项目中启用插件 |
 | obscure | proguard-skip-web | 存在目录：src/main/webapp | 在JavaWeb项目中跳过插件 |
 | obscure | proguard-public | 缺失目录：src/main/assembly | 按照工具类Jar包的方式混淆 |
 | obscure | proguard-main | 存在目录：src/main/assembly；并且定义了属性：project.mainClass | 按照可执行Jar包的方式混淆 |
 | boot | spring-boot | 定义了属性：project.mainClass | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
-| boot | spring-boot-docker | 存在文件：Dockerfile；并且定义了属性：project.mainClass | 使用打包后的可执行jar来构建docker image |
 
 ---
 

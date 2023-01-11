@@ -3,9 +3,9 @@
 
   <parent>
     <groupId>io.github.dbstarll.parent</groupId>
-    <artifactId>base</artifactId>
+    <artifactId>docker</artifactId>
     <version>1.2.3-SNAPSHOT</version>
-    <relativePath>../base</relativePath>
+    <relativePath>../docker</relativePath>
   </parent>
   <artifactId>assembly</artifactId>
   <packaging>pom</packaging>
@@ -82,6 +82,21 @@
           </plugins>
         </pluginManagement>
       </build>
+    </profile>
+    <profile>
+      <id>docker</id>
+      <activation>
+        <file>
+          <exists>src/main/assembly</exists>
+        </file>
+        <property>
+          <name>project.mainClass</name>
+        </property>
+      </activation>
+      <properties>
+        <project.spring-boot.classifier>boot</project.spring-boot.classifier>
+        <project.docker.image.jar>${project.build.finalName}-jar-with-dependencies.jar</project.docker.image.jar>
+      </properties>
     </profile>
   </profiles>
 </project>

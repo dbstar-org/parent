@@ -1,11 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>io.github.dbstarll.parent</groupId>
-    <artifactId>mode</artifactId>
+    <artifactId>base</artifactId>
     <version>1.2.3-SNAPSHOT</version>
-    <relativePath>../mode</relativePath>
+    <relativePath>../base</relativePath>
   </parent>
   <artifactId>docker</artifactId>
   <packaging>pom</packaging>
@@ -21,11 +22,6 @@
     <tag>HEAD</tag>
   </scm>
 
-  <properties>
-    <docker.image.prefix>${project.git.user}</docker.image.prefix>
-    <docker.image.jar>${project.build.finalName}.jar</docker.image.jar>
-  </properties>
-
   <profiles>
     <profile>
       <id>docker</id>
@@ -35,7 +31,9 @@
         </file>
       </activation>
       <properties>
-        <docker.image.tag>${git.commit.id.describe}</docker.image.tag>
+        <project.docker.image.prefix>${project.git.group}</project.docker.image.prefix>
+        <project.docker.image.tag>${git.commit.id.describe}</project.docker.image.tag>
+        <project.docker.image.jar>${project.build.finalName}.jar</project.docker.image.jar>
         <version.git-commit-id-plugin>4.9.10</version.git-commit-id-plugin>
         <version.dockerfile-maven-plugin>1.4.13</version.dockerfile-maven-plugin>
       </properties>
@@ -70,10 +68,10 @@
               <artifactId>dockerfile-maven-plugin</artifactId>
               <version>${version.dockerfile-maven-plugin}</version>
               <configuration>
-                <repository>${docker.image.prefix}/${project.artifactId}</repository>
-                <tag>${docker.image.tag}</tag>
+                <repository>${project.docker.image.prefix}/${project.artifactId}</repository>
+                <tag>${project.docker.image.tag}</tag>
                 <buildArgs>
-                  <JAR_FILE>${docker.image.jar}</JAR_FILE>
+                  <JAR_FILE>${project.docker.image.jar}</JAR_FILE>
                 </buildArgs>
               </configuration>
             </plugin>
