@@ -92,7 +92,7 @@ graph TD;
 
 | 父项目 | 属性 | 默认版本 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- | --- | --- |
-| pure | version.junit-jupiter | 5.8.0-M1 | org.junit.jupiter | junit-jupiter-engine | Profile`java-test`激活时 |
+| pure | version.junit-jupiter | 5.9.2 | org.junit.jupiter | junit-jupiter-engine | Profile`java-test`激活时 |
 | base | version.slf4j | 2.0.6 | org.slf4j | slf4j-api |
 | base | version.slf4j | 2.0.6 | org.slf4j | jul-to-slf4j |
 | base | version.slf4j | 2.0.6 | org.slf4j | jcl-over-slf4j |
@@ -158,7 +158,7 @@ graph TD;
 | pure | version.maven-source-plugin | 3.2.1 | org.apache.maven.plugins | maven-source-plugin |
 | pure | version.maven-jxr-plugin | 3.3.0 | org.apache.maven.plugins | maven-jxr-plugin | Profile`java-main`激活时 |
 | pure | version.maven-checkstyle-plugin | 3.2.0 | org.apache.maven.plugins | maven-checkstyle-plugin | Profile`java-main`激活时 |
-| pure | version.checkstyle | 8.45.1 | com.puppycrawl.tools | checkstyle | Profile`java-main`激活时 |
+| pure | version.checkstyle | 10.6.0 | com.puppycrawl.tools | checkstyle | Profile`java-main`激活时 |
 | pure | version.maven-changelog-plugin | 2.3 | org.apache.maven.plugins | maven-changelog-plugin | Profile`java-main`激活时 |
 | pure | version.maven-pmd-plugin | 3.19.0 | org.apache.maven.plugins | maven-pmd-plugin | Profile`java-main`激活时 |
 | pure | version.jdepend-maven-plugin | 2.0 | org.codehaus.mojo | jdepend-maven-plugin | Profile`java-main`激活时 |
