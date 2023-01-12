@@ -335,12 +335,6 @@
             </plugin>
           </plugins>
         </pluginManagement>
-        <plugins>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-          </plugin>
-        </plugins>
       </build>
       <reporting>
         <plugins>
@@ -351,6 +345,17 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>cobertura-maven-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>report</report>
+                </reports>
+              </reportSet>
+            </reportSets>
           </plugin>
         </plugins>
       </reporting>
