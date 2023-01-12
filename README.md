@@ -125,6 +125,7 @@ graph TD;
 | pure | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活，生成报告时 |
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活，生成报告时 |
+| pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | docker | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
 | docker | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
 | assembly | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
