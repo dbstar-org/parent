@@ -167,6 +167,7 @@ graph TD;
 | pure | version.maven-surefire-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
 | pure | version.maven-surefire-report-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.cobertura-maven-plugin | 2.7 | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活时 |
+| pure | version.jacoco-maven-plugin | 0.8.8 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | docker | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
 | docker | version.dockerfile-maven-plugin | 1.4.13 | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
 | assembly | version.maven-assembly-plugin | 3.4.2 | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
