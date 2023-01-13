@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.github.dbstarll.parent</groupId>
     <artifactId>mode</artifactId>
-    <version>1.2.8</version>
+    <version>1.2.9-SNAPSHOT</version>
     <relativePath>../mode</relativePath>
   </parent>
   <artifactId>obscure</artifactId>
@@ -16,7 +16,7 @@
 
   <scm>
     <url>${project.git.web.master}</url>
-    <tag>v1.2.8</tag>
+    <tag>HEAD</tag>
     <connection>scm:git:${project.git.git.root}</connection>
     <developerConnection>scm:git:${project.git.web.root}</developerConnection>
   </scm>
