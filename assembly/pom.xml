@@ -91,7 +91,6 @@
         </file>
       </activation>
       <properties>
-        <project.spring-boot.classifier>boot</project.spring-boot.classifier>
         <project.docker.image.jar>${project.build.finalName}-jar-with-dependencies.jar</project.docker.image.jar>
       </properties>
     </profile>

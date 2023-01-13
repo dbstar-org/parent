@@ -183,20 +183,23 @@ graph TD;
 
 | 父项目 | Profile | 激活条件 | 用途 | 
 | --- | --- | --- | --- |
-| parent | release | 手动 | 在发布版本时使用：`mvn release:prepare -P release` |
+| parent | release | 手动 | 在发布版本时使用：`mvn release:prepare -P release`，生成gpg签名 |
 | parent | distribution-ossrh | 手动 | 用于提交发布物到Maven中央仓库 |
 | parent | distribution-github | 手动 | 用于提交发布物到Github个人Maven仓库 |
 | parent | site-local | 手动 | 用于在本地生成站点报告 |
-| pure | java-main | 存在目录：src/main/java | 生成jar、javadoc.jar、source.jar和相关报告 |
-| pure | java-test | 存在目录：src/test/java | 执行单元测试、生成test.jar、test-javadoc.jar、test-source.jar和相关报告 |
+| pure | java-main | 存在目录：src/main/java | 生成jar、配置javadoc.jar、source.jar和相关报告 |
+| pure | java-test | 存在目录：src/test/java | 执行单元测试、代码覆盖率报告、生成test.jar、配置test-javadoc.jar、test-source.jar和相关报告 |
+| pure | release | 手动 | 生成javadoc.jar、source.jar |
 | docker | docker | 存在文件：Dockerfile | 使用项目Jar来构建Docker Image |
 | assembly | assembly-single | 存在目录：src/main/assembly | 执行maven-assembly-plugin:single goal来打包可执行jar |
+| assembly | docker | 存在文件：Dockerfile | 修改属性`<project.docker.image.jar>`为可执行jar |
 | mode | mode-resource-filtering | 存在目录：src/main/mode | 以指定的运行模式来加载对应的配置文件 |
 | obscure | proguard-active-java | 存在目录：src/main/java | 在Java项目中启用插件 |
 | obscure | proguard-skip-web | 存在目录：src/main/webapp | 在JavaWeb项目中跳过插件 |
 | obscure | proguard-public | 缺失目录：src/main/assembly | 按照工具类Jar包的方式混淆 |
 | obscure | proguard-main | 存在目录：src/main/assembly | 按照可执行Jar包的方式混淆 |
-| boot | spring-boot | 默认激活 | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
+| boot | spring-boot | 存在目录：src/main/java | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
+| boot | docker | 存在文件：Dockerfile | 修改属性`<project.docker.image.jar>`为可执行jar |
 
 ---
 

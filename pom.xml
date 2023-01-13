@@ -90,7 +90,6 @@
           <version>${version.maven-enforcer-plugin}</version>
           <executions>
             <execution>
-              <id>enforce-maven</id>
               <goals>
                 <goal>enforce</goal>
               </goals>

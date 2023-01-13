@@ -22,6 +22,8 @@
   </scm>
 
   <properties>
+    <project.spring-boot.attach>false</project.spring-boot.attach>
+    <project.spring-boot.classifier>boot</project.spring-boot.classifier>
     <version.spring-boot>2.7.7</version.spring-boot>
   </properties>
 
@@ -29,12 +31,10 @@
     <profile>
       <id>spring-boot</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
+        <file>
+          <exists>src/main/java</exists>
+        </file>
       </activation>
-      <properties>
-        <project.spring-boot.attach>false</project.spring-boot.attach>
-        <project.spring-boot.classifier>boot</project.spring-boot.classifier>
-      </properties>
       <build>
         <pluginManagement>
           <plugins>
@@ -45,6 +45,8 @@
               <configuration>
                 <attach>${project.spring-boot.attach}</attach>
                 <classifier>${project.spring-boot.classifier}</classifier>
+                <!--suppress UnresolvedMavenProperty -->
+                <mainClass>${project.mainClass}</mainClass>
               </configuration>
               <executions>
                 <execution>
@@ -72,7 +74,6 @@
         </file>
       </activation>
       <properties>
-        <project.spring-boot.classifier>boot</project.spring-boot.classifier>
         <project.docker.image.jar>${project.build.finalName}-${project.spring-boot.classifier}.jar</project.docker.image.jar>
       </properties>
     </profile>
