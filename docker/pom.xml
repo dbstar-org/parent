@@ -36,6 +36,7 @@
       </activation>
       <properties>
         <project.docker.image.prefix>${project.git.group}</project.docker.image.prefix>
+        <!--suppress UnresolvedMavenProperty -->
         <project.docker.image.tag>${git.commit.id.describe}</project.docker.image.tag>
         <project.docker.image.jar>${project.build.finalName}.jar</project.docker.image.jar>
       </properties>

@@ -141,9 +141,6 @@
         <file>
           <exists>src/main/assembly</exists>
         </file>
-        <property>
-          <name>project.mainClass</name>
-        </property>
       </activation>
       <build>
         <pluginManagement>
@@ -167,6 +164,7 @@
                   <option>-keepnames public interface org.apache.commons.logging.LogFactory</option>
                   <option>-keep public class * implements org.apache.commons.logging.LogFactory</option>
                   <option>-keep public !abstract class org.apache.log4j.** { public *;}</option>
+                  <!--suppress UnresolvedMavenProperty -->
                   <option>-keep public class ${project.mainClass} {public static void main(java.lang.String[]);}</option>
                 </options>
               </configuration>

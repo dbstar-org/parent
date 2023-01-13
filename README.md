@@ -65,7 +65,6 @@ graph TD;
 | docker | project.docker.image.jar | `${project.build.finalName}.jar` | 用于构建Docker Image的Jar包名称，Profile`docker`激活时 |
 | assembly | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类 |
 | mode | project.mode | dev | 运行模式，Profile`mode-resource-filtering`激活时 |
-| boot | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类 |
 | boot | project.spring-boot.attach | false | 是否发布Spring Boot打包后的可执行Jar，Profile`spring-boot`激活时 |
 | boot | project.spring-boot.classifier | boot | 可执行Jar的classifier后缀名称，Profile`spring-boot`激活时 |
 
@@ -191,13 +190,13 @@ graph TD;
 | pure | java-main | 存在目录：src/main/java | 生成jar、javadoc.jar、source.jar和相关报告 |
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、生成test.jar、test-javadoc.jar、test-source.jar和相关报告 |
 | docker | docker | 存在文件：Dockerfile | 使用项目Jar来构建Docker Image |
-| assembly | assembly-single | 存在目录：src/main/assembly；并且定义了属性：project.mainClass | 执行maven-assembly-plugin:single goal来打包可执行jar |
+| assembly | assembly-single | 存在目录：src/main/assembly | 执行maven-assembly-plugin:single goal来打包可执行jar |
 | mode | mode-resource-filtering | 存在目录：src/main/mode | 以指定的运行模式来加载对应的配置文件 |
 | obscure | proguard-active-java | 存在目录：src/main/java | 在Java项目中启用插件 |
 | obscure | proguard-skip-web | 存在目录：src/main/webapp | 在JavaWeb项目中跳过插件 |
 | obscure | proguard-public | 缺失目录：src/main/assembly | 按照工具类Jar包的方式混淆 |
-| obscure | proguard-main | 存在目录：src/main/assembly；并且定义了属性：project.mainClass | 按照可执行Jar包的方式混淆 |
-| boot | spring-boot | 定义了属性：project.mainClass | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
+| obscure | proguard-main | 存在目录：src/main/assembly | 按照可执行Jar包的方式混淆 |
+| boot | spring-boot | 默认激活 | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
 
 ---
 

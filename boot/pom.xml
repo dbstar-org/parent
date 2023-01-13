@@ -29,9 +29,7 @@
     <profile>
       <id>spring-boot</id>
       <activation>
-        <property>
-          <name>project.mainClass</name>
-        </property>
+        <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
         <project.spring-boot.attach>false</project.spring-boot.attach>
@@ -56,17 +54,6 @@
                 </execution>
               </executions>
             </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-jar-plugin</artifactId>
-              <configuration>
-                <archive>
-                  <manifest>
-                    <mainClass>${project.mainClass}</mainClass>
-                  </manifest>
-                </archive>
-              </configuration>
-            </plugin>
           </plugins>
         </pluginManagement>
         <plugins>
@@ -83,9 +70,6 @@
         <file>
           <exists>Dockerfile</exists>
         </file>
-        <property>
-          <name>project.mainClass</name>
-        </property>
       </activation>
       <properties>
         <project.spring-boot.classifier>boot</project.spring-boot.classifier>

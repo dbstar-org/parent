@@ -32,9 +32,6 @@
         <file>
           <exists>src/main/assembly</exists>
         </file>
-        <property>
-          <name>project.mainClass</name>
-        </property>
       </activation>
       <build>
         <plugins>
@@ -62,6 +59,7 @@
                     <descriptorSourceDirectory>src/main/assembly</descriptorSourceDirectory>
                     <archive>
                       <manifest>
+                        <!--suppress UnresolvedMavenProperty -->
                         <mainClass>${project.mainClass}</mainClass>
                       </manifest>
                     </archive>
@@ -75,6 +73,7 @@
               <configuration>
                 <archive>
                   <manifest>
+                    <!--suppress UnresolvedMavenProperty -->
                     <mainClass>${project.mainClass}</mainClass>
                   </manifest>
                 </archive>
@@ -90,9 +89,6 @@
         <file>
           <exists>src/main/assembly</exists>
         </file>
-        <property>
-          <name>project.mainClass</name>
-        </property>
       </activation>
       <properties>
         <project.spring-boot.classifier>boot</project.spring-boot.classifier>
