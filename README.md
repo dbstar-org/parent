@@ -123,7 +123,6 @@ graph TD;
 | pure | org.codehaus.mojo | findbugs-maven-plugin | Profile`java-main`激活，生成报告时 |
 | pure | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活，生成报告时 |
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
-| pure | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | docker | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
 | docker | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
@@ -148,8 +147,9 @@ graph TD;
 | parent | version.maven-project-info-reports-plugin | 3.4.1 | org.apache.maven.plugins | maven-project-info-reports-plugin |
 | parent | version.maven-site-plugin | 4.0.0-M4 | org.apache.maven.plugins | maven-site-plugin |
 | parent | version.versions-maven-plugin | 2.14.2 | org.codehaus.mojo | versions-maven-plugin |
+| parent | version.maven-release-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-release-plugin |
+| parent | version.maven-assembly-plugin | 3.4.2 | org.apache.maven.plugins | maven-assembly-plugin |
 | parent | version.maven-gpg-plugin | 3.0.1 | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
-| parent | version.maven-release-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-release-plugin | Profile`release`激活时 |
 | parent | version.nexus-staging-maven-plugin | 1.6.13 | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
 | pure | version.maven-compiler-plugin | 3.10.1 | org.apache.maven.plugins | maven-compiler-plugin |
 | pure | version.maven-jar-plugin | 3.3.0 | org.apache.maven.plugins | maven-jar-plugin |
@@ -165,12 +165,10 @@ graph TD;
 | pure | version.findbugs-maven-plugin | 3.0.5 | org.codehaus.mojo | findbugs-maven-plugin | Profile`java-main`激活时 |
 | pure | version.taglist-maven-plugin | 3.0.0 | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活时 |
 | pure | version.maven-surefire-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
-| pure | version.maven-surefire-report-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
-| pure | version.cobertura-maven-plugin | 2.7 | org.codehaus.mojo | cobertura-maven-plugin | Profile`java-test`激活时 |
+| pure | version.maven-surefire-report-plugin | 3.0.0-M8 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.jacoco-maven-plugin | 0.8.8 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | docker | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
 | docker | version.dockerfile-maven-plugin | 1.4.13 | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
-| assembly | version.maven-assembly-plugin | 3.4.2 | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
 | obscure | version.proguard.plugin | 2.6.0 | com.github.wvengen | proguard-maven-plugin |
 | obscure | version.proguard | 6.2.2 | net.sf.proguard | proguard-base |
 | boot | version.spring-boot | 2.7.7 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |

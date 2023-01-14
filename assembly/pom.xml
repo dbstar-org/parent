@@ -21,10 +21,6 @@
     <developerConnection>scm:git:${project.git.web.root}</developerConnection>
   </scm>
 
-  <properties>
-    <version.maven-assembly-plugin>3.4.2</version.maven-assembly-plugin>
-  </properties>
-
   <profiles>
     <profile>
       <id>assembly-single</id>
@@ -45,7 +41,6 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-assembly-plugin</artifactId>
-              <version>${version.maven-assembly-plugin}</version>
               <executions>
                 <execution>
                   <phase>package</phase>
