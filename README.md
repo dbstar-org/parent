@@ -220,7 +220,6 @@ graph TD;
 在每个直接继承父项目的子项目中，都需要在`pom.xml`中覆盖定义以下片段，否则这些片段会继承父项目中的定义，然后导致路径叠加异常：
 
 ```
-  <name>your project name</name>
   <description>your project description</description>
   <url>https://your project url</url>
 ```
@@ -237,10 +236,6 @@ graph TD;
 ```xml
     <profile>
       <id>site-local</id>
-      <properties>
-        <project.site.root>file://${env.HOME}/.m2/sites</project.site.root>
-        <project.site.root.project>${project.site.root}/${project.git.uri}</project.site.root.project>
-      </properties>
       <distributionManagement>
         <site>
           <id>local</id>
