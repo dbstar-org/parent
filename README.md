@@ -212,7 +212,7 @@ graph TD;
 | project.git.group | `${project.git.user}` | git仓库中的项目组名 |
 | project.git.project | parent | git仓库中的项目名称 |
 | project.git.branch.master | main | git仓库中的项目的主分支名称 |
-| project.git.uri | `${project.git.host}/${project.git.user}/${project.git.project}` | git仓库中的项目地址的uri部分 |
+| project.git.uri | `${project.git.host}/${project.git.group}/${project.git.project}` | git仓库中的项目地址的uri部分 |
 | project.git.web.root | `https://${project.git.uri}` | git仓库中的项目的web根地址 |
 | project.git.web.master | `${project.git.web.root}/tree/${project.git.branch.master}` | git仓库中的项目主分支的web地址 |
 | project.git.git.root | `git@${project.git.uri}.git` | git仓库中的项目的git根地址 |
