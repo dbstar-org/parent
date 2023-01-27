@@ -31,17 +31,17 @@
 
     <!-- Reporting Plugin Version -->
     <version.maven-jxr-plugin>3.3.0</version.maven-jxr-plugin>
-    <version.maven-checkstyle-plugin>3.2.0</version.maven-checkstyle-plugin>
+    <version.maven-checkstyle-plugin>3.2.1</version.maven-checkstyle-plugin>
     <version.checkstyle>9.3</version.checkstyle>
     <version.maven-changelog-plugin>2.3</version.maven-changelog-plugin>
-    <version.maven-pmd-plugin>3.19.0</version.maven-pmd-plugin>
+    <version.maven-pmd-plugin>3.20.0</version.maven-pmd-plugin>
     <version.jdepend-maven-plugin>2.0</version.jdepend-maven-plugin>
     <version.findbugs-maven-plugin>3.0.5</version.findbugs-maven-plugin>
     <version.taglist-maven-plugin>3.0.0</version.taglist-maven-plugin>
 
     <!-- Test Plugin Version-->
     <version.junit-jupiter>5.9.2</version.junit-jupiter>
-    <version.maven-surefire-plugin>3.0.0-M7</version.maven-surefire-plugin>
+    <version.maven-surefire-plugin>3.0.0-M8</version.maven-surefire-plugin>
     <version.maven-surefire-report-plugin>3.0.0-M8</version.maven-surefire-report-plugin>
     <version.jacoco-maven-plugin>0.8.8</version.jacoco-maven-plugin>
   </properties>
