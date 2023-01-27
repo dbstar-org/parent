@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.github.dbstarll.parent</groupId>
     <artifactId>docker</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.0</version>
     <relativePath>../docker</relativePath>
   </parent>
   <artifactId>boot</artifactId>
@@ -18,7 +18,7 @@
     <url>${project.git.web.master}</url>
     <connection>scm:git:${project.git.git.root}</connection>
     <developerConnection>scm:git:${project.git.web.root}</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v1.3.0</tag>
   </scm>
 
   <properties>
