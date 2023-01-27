@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.github.dbstarll.parent</groupId>
     <artifactId>mode</artifactId>
-    <version>1.2.11-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <relativePath>../mode</relativePath>
   </parent>
   <artifactId>obscure</artifactId>
