@@ -11,7 +11,7 @@
 
   <name>pure</name>
   <description>parent for pure java</description>
-  <url>https://github.com/dbstarll/parent/tree/main/pure</url>
+  <url>https://github.com/dbstar-org/parent/tree/main/pure</url>
 
   <properties>
     <!-- Global Config -->

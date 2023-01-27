@@ -9,7 +9,7 @@
 
   <name>parent</name>
   <description>root parent</description>
-  <url>https://github.com/dbstarll/parent</url>
+  <url>https://github.com/dbstar-org/parent</url>
 
   <licenses>
     <license>
@@ -57,7 +57,7 @@
     <!-- Git -->
     <project.git.host>github.com</project.git.host>
     <project.git.user>dbstarll</project.git.user>
-    <project.git.group>${project.git.user}</project.git.group>
+    <project.git.group>dbstar-org</project.git.group>
     <project.git.project>parent</project.git.project>
     <project.git.branch.master>main</project.git.branch.master>
     <project.git.uri>${project.git.host}/${project.git.group}/${project.git.project}</project.git.uri>

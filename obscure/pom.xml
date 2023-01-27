@@ -12,7 +12,7 @@
 
   <name>obscure</name>
   <description>parent for code obscure</description>
-  <url>https://github.com/dbstarll/parent/tree/main/obscure</url>
+  <url>https://github.com/dbstar-org/parent/tree/main/obscure</url>
 
   <scm>
     <url>${project.git.web.master}</url>

@@ -12,7 +12,7 @@
 
   <name>docker</name>
   <description>parent for docker</description>
-  <url>https://github.com/dbstarll/parent/tree/main/docker</url>
+  <url>https://github.com/dbstar-org/parent/tree/main/docker</url>
 
   <scm>
     <url>${project.git.web.master}</url>

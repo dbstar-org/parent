@@ -12,7 +12,7 @@
 
   <name>mode</name>
   <description>parent for assembly executable jar by multiple environments</description>
-  <url>https://github.com/dbstarll/parent/tree/main/mode</url>
+  <url>https://github.com/dbstar-org/parent/tree/main/mode</url>
 
   <scm>
     <url>${project.git.web.master}</url>

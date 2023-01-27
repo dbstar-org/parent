@@ -209,7 +209,7 @@ graph TD;
 | --- | --- | --- |
 | project.git.host | github.com | git仓库的域名 |
 | project.git.user | dbstarll | git仓库中的用户名 |
-| project.git.group | `${project.git.user}` | git仓库中的项目组名 |
+| project.git.group | dbstar-org | git仓库中的项目组名 |
 | project.git.project | parent | git仓库中的项目名称 |
 | project.git.branch.master | main | git仓库中的项目的主分支名称 |
 | project.git.uri | `${project.git.host}/${project.git.group}/${project.git.project}` | git仓库中的项目地址的uri部分 |

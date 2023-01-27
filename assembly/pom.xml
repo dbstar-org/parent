@@ -12,7 +12,7 @@
 
   <name>assembly</name>
   <description>parent for assembly executable jar</description>
-  <url>https://github.com/dbstarll/parent/tree/main/assembly</url>
+  <url>https://github.com/dbstar-org/parent/tree/main/assembly</url>
 
   <scm>
     <url>${project.git.web.master}</url>

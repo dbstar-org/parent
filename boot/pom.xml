@@ -12,7 +12,7 @@
 
   <name>boot</name>
   <description>parent for spring boot</description>
-  <url>https://github.com/dbstarll/parent/tree/main/boot</url>
+  <url>https://github.com/dbstar-org/parent/tree/main/boot</url>
 
   <scm>
     <url>${project.git.web.master}</url>
