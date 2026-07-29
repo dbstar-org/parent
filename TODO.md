@@ -24,6 +24,7 @@
 ## 已完成
 
 - [x] **依赖版本升级到 JDK 1.8 适配的最新版**：slf4j 2.0.6→2.0.18、commons-lang3 3.12.0→3.20.0、commons-io 2.11.0→2.22.0、commons-codec 1.15→1.22.0、commons-beanutils 1.9.4→1.11.0（修复 CVE-2025-48734）、commons-collections4 4.4→4.5.0、spring-boot 2.7.7→2.7.18（2.7 线最后一版）；8 个新构件全部实测字节码 version 52.0（Java 1.8），无需回退；slf4j 桥接包对 slf4j-api、commons-beanutils 对 commons-logging 的 exclusion 保持原样（1.11.0 传递依赖面与 1.9.4 一致，commons-logging 仍在）；junit-bom 5.14.4 已是 5.x 最新线（JUnit 6 需 Java 17）不动。
+- [x] **git-commit-id-plugin 提升到 base 层**：从 boot 的 spring-boot Profile（spring 专属）提升到 base 新增的 `java-main` Profile（与 pure 同名 Profile 自动合并，存在 `src/main/java` 即激活），所有 Java 项目均可生成 git.properties，不再局限于 spring；新增 `failOnNoGitDirectory=false`，无 .git 目录的构建环境（源码包、CI 浅克隆）宽容跳过；版本属性 `version.git-commit-id-plugin` 同步移至 base，boot 中相关配置（插件、filters）全部拆除。
 - [x] **README 与 pom 版本不一致**：`README.md` 中 `version.checkstyle` 由 10.6.0 修正为与 pom 一致的 9.3。
 - [x] **移除老旧报告插件**：从 `pure` 模块 `java-main` Profile 删除 findbugs、pmd、checkstyle、jdepend、taglist、jxr、changelog 共 7 个报告插件及 8 个版本属性，代码质量/安全报告统一改用 Sonar（`org.sonarsource.scanner.maven:sonar-maven-plugin:sonar`，不纳入 pom 管理）。findbugs→spotbugs 迁移项随之作废。
 - [x] **升级 Maven 插件版本（根 pom）**：enforcer 3.6.3、antrun 3.2.0、clean 3.5.0、dependency 3.11.0、deploy 3.1.4、install 3.1.4、project-info-reports 3.9.0、versions 2.21.0、assembly 3.8.0、gpg 3.2.8、nexus-staging 1.7.0（均已实测 JDK 8 可运行）；enforcer 的 requireMavenVersion 同步从 3.2.5 提升到 3.6.3（新插件的 requiredMavenVersion 均为 3.6.3）。release 3.0.0-M7 留待 milestone 转正批次。

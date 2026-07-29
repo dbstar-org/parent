@@ -107,7 +107,7 @@ graph TD;
 | parent | org.sonatype.central | central-publishing-maven-plugin | Profile`distribution-central`激活时 |
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
-| boot | pl.project13.maven | git-commit-id-plugin | Profile`spring-boot`激活时 |
+| base | pl.project13.maven | git-commit-id-plugin | Profile`java-main`激活时 |
 | boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
@@ -138,7 +138,7 @@ graph TD;
 | pure | version.maven-surefire-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
 | pure | version.maven-surefire-report-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.jacoco-maven-plugin | 0.8.15 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
-| boot | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`spring-boot`激活时 |
+| base | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`java-main`激活时 |
 | boot | version.spring-boot | 2.7.18 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
@@ -157,9 +157,10 @@ graph TD;
 | pure | jdk9+ | JDK版本≥9 | 设置`maven.compiler.release` |
 | pure | jdk23+ | JDK版本≥23 | 设置`maven.compiler.proc`为full（JDK23起javac不再默认执行注解处理） |
 | pure | java-main | 存在目录：src/main/java | 生成jar、配置javadoc.jar、source.jar和相关报告 |
+| base | java-main | 存在目录：src/main/java | 与pure的同名Profile合并，执行git-commit-id-plugin:revision生成git.properties（无.git目录时跳过） |
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、代码覆盖率报告、生成test.jar、配置test-javadoc.jar、test-source.jar和相关报告 |
 | pure | release | 手动 | 生成javadoc.jar、source.jar |
-| boot | spring-boot | 存在目录：src/main/java | 执行git-commit-id-plugin:revision生成git.properties、执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
+| boot | spring-boot | 存在目录：src/main/java | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
 
 ---
 

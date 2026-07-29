@@ -24,8 +24,8 @@ boot → base
 | --- | --- |
 | `parent`（根） | 继承根。编码设置（UTF-8）、git 仓库相关属性（`project.git.*`）、基础插件版本（enforcer/release/gpg/site 等）、发布 Profile |
 | `pure` | 纯 Java 父项目。Java 编译级别（默认 8，属性 `project.java.version`，必须为纯数字格式）、按构建 JDK 分组的编译参数 Profile（jdk8 用 source/target，jdk9+ 用 release，jdk23+ 追加 proc=full）、打包插件、测试相关 Profile（JUnit 5 + JaCoCo）。代码质量/安全报告不在 pom 中预定义，统一由外部 `org.sonarsource.scanner.maven:sonar-maven-plugin:sonar` 生成 |
-| `base` | 引入基准依赖：slf4j（api + jul/jcl/log4j 桥接，2.0.18）、Apache Commons（lang3/io/codec/beanutils/collections4）和 JUnit 5 测试环境（`java-test` Profile 导入 junit-bom + 注入 junit-jupiter 聚合构件） |
-| `boot` | 存在 `src/main/java` 时激活 `spring-boot` Profile，用 git-commit-id-plugin 生成 git.properties（含 `git.commit.id.describe` 版本信息，spring actuator `/info` 可直接展示）、用 spring-boot-maven-plugin（2.7.18）repackage 可执行 jar |
+| `base` | 引入基准依赖：slf4j（api + jul/jcl/log4j 桥接，2.0.18）、Apache Commons（lang3/io/codec/beanutils/collections4）、JUnit 5 测试环境（`java-test` Profile 导入 junit-bom + 注入 junit-jupiter 聚合构件）和 git-commit-id-plugin（与 pure 同名的 `java-main` Profile 合并，生成 git.properties 含 `git.commit.id.describe` 版本信息，`failOnNoGitDirectory=false` 无 .git 时跳过） |
+| `boot` | 存在 `src/main/java` 时激活 `spring-boot` Profile，用 spring-boot-maven-plugin（2.7.18）repackage 可执行 jar（git.properties 由 base 层生成，spring actuator `/info` 可直接展示） |
 
 ## 构建与测试
 

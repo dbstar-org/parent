@@ -32,6 +32,8 @@
     <version.commons-collections4>4.5.0</version.commons-collections4>
     <!-- test version -->
     <version.junit-jupiter>5.14.4</version.junit-jupiter>
+    <!-- plugin version -->
+    <version.git-commit-id-plugin>4.9.10</version.git-commit-id-plugin>
   </properties>
 
   <dependencyManagement>
@@ -138,6 +140,50 @@
   </dependencies>
 
   <profiles>
+    <profile>
+      <id>java-main</id>
+      <activation>
+        <file>
+          <exists>src/main/java</exists>
+        </file>
+      </activation>
+      <build>
+        <filters>
+          <filter>target/classes/git.properties</filter>
+        </filters>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>pl.project13.maven</groupId>
+              <artifactId>git-commit-id-plugin</artifactId>
+              <version>${version.git-commit-id-plugin}</version>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>revision</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                <includeOnlyProperties>
+                  <includeOnlyProperty>git.commit.id</includeOnlyProperty>
+                  <includeOnlyProperty>git.commit.id.describe</includeOnlyProperty>
+                  <includeOnlyProperty>git.commit.time</includeOnlyProperty>
+                </includeOnlyProperties>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>pl.project13.maven</groupId>
+            <artifactId>git-commit-id-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>java-test</id>
       <activation>
