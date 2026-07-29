@@ -14,17 +14,14 @@
   - 注意：commons-beanutils 对 commons-logging 的 exclusion、slf4j 桥接包对 slf4j-api 的 exclusion 需保持原样。
   - 验收：`mvn validate` 通过；README 版本表格同步更新。
 
-- [ ] **升级 Maven 插件版本（pure 模块）**
-  - 现状：compiler 3.10.1 → 3.15.0、jar 3.3.0 → 3.5.1、javadoc 3.4.1 → 3.12.0、resources 3.3.0 → 3.5.0、source 3.2.1 → 3.4.0、jacoco 0.8.8 → 0.8.15。
-  - 验收：`mvn validate` 通过；README 版本表格同步更新。
-
 - [ ] **milestone 插件版本替换为正式版**
-  - 现状：maven-release-plugin 3.0.0-M7（正式版 3.3.1）、surefire / surefire-report 3.0.0-M8（正式版 3.2.5+）。
+  - 现状：maven-release-plugin 3.0.0-M7（正式版 3.3.1）。
   - 注意：release 插件升级会改变发布行为，需单独验证 `mvn release:prepare`。
   - 验收：`mvn validate` 通过；发布流程不受影响。
 
 - [ ] **升级 junit-jupiter**
-  - 现状：junit-jupiter 5.9.2。
+  - 现状：junit-jupiter 5.9.2；5.x 最新 5.14.4（Java 8 兼容）。
+  - 注意：JUnit 6.x 要求 Java 17，与本项目 JDK 8 基线冲突，只能升 5.x 线。
   - 验收：`mvn validate` 通过；README 版本表格同步更新。
 
 - [ ] **评估 spring-boot 版本基线**
@@ -38,6 +35,7 @@
 - [x] **移除老旧报告插件**：从 `pure` 模块 `java-main` Profile 删除 findbugs、pmd、checkstyle、jdepend、taglist、jxr、changelog 共 7 个报告插件及 8 个版本属性，代码质量/安全报告统一改用 Sonar（`org.sonarsource.scanner.maven:sonar-maven-plugin:sonar`，不纳入 pom 管理）。findbugs→spotbugs 迁移项随之作废。
 - [x] **升级 Maven 插件版本（根 pom）**：enforcer 3.6.3、antrun 3.2.0、clean 3.5.0、dependency 3.11.0、deploy 3.1.4、install 3.1.4、project-info-reports 3.9.0、versions 2.21.0、assembly 3.8.0、gpg 3.2.8、nexus-staging 1.7.0（均已实测 JDK 8 可运行）；enforcer 的 requireMavenVersion 同步从 3.2.5 提升到 3.6.3（新插件的 requiredMavenVersion 均为 3.6.3）。release 3.0.0-M7 留待 milestone 转正批次。
 - [x] **maven-site-plugin 改用稳定主线**：4.x 里程碑线停滞于 4.0.0-M16（2024-07，始终未出正式版），由 4.0.0-M4 改用活跃维护的 3.x 正式版 3.22.0（JDK 8 / Maven 3.6.3 要求均满足）。
+- [x] **升级 Maven 插件版本（pure 模块）**：compiler 3.15.0、jar 3.5.1、javadoc 3.12.0、resources 3.5.0、source 3.4.0、jacoco 0.8.15，surefire / surefire-report 由 3.0.0-M8 转正 3.5.6（均已实测 JDK 8 可运行，requiredMavenVersion 3.6.3 与 enforcer 门槛一致）。junit-jupiter 保持 5.9.2 留待单独处理。
 
 ## 通用约束
 

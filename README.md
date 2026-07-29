@@ -144,14 +144,14 @@ graph TD;
 | parent | version.maven-assembly-plugin | 3.8.0 | org.apache.maven.plugins | maven-assembly-plugin |
 | parent | version.maven-gpg-plugin | 3.2.8 | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
 | parent | version.nexus-staging-maven-plugin | 1.7.0 | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
-| pure | version.maven-compiler-plugin | 3.10.1 | org.apache.maven.plugins | maven-compiler-plugin |
-| pure | version.maven-jar-plugin | 3.3.0 | org.apache.maven.plugins | maven-jar-plugin |
-| pure | version.maven-javadoc-plugin | 3.4.1 | org.apache.maven.plugins | maven-javadoc-plugin |
-| pure | version.maven-resources-plugin | 3.3.0 | org.apache.maven.plugins | maven-resources-plugin |
-| pure | version.maven-source-plugin | 3.2.1 | org.apache.maven.plugins | maven-source-plugin |
-| pure | version.maven-surefire-plugin | 3.0.0-M8 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
-| pure | version.maven-surefire-report-plugin | 3.0.0-M8 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
-| pure | version.jacoco-maven-plugin | 0.8.8 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
+| pure | version.maven-compiler-plugin | 3.15.0 | org.apache.maven.plugins | maven-compiler-plugin |
+| pure | version.maven-jar-plugin | 3.5.1 | org.apache.maven.plugins | maven-jar-plugin |
+| pure | version.maven-javadoc-plugin | 3.12.0 | org.apache.maven.plugins | maven-javadoc-plugin |
+| pure | version.maven-resources-plugin | 3.5.0 | org.apache.maven.plugins | maven-resources-plugin |
+| pure | version.maven-source-plugin | 3.4.0 | org.apache.maven.plugins | maven-source-plugin |
+| pure | version.maven-surefire-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
+| pure | version.maven-surefire-report-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
+| pure | version.jacoco-maven-plugin | 0.8.15 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | docker | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
 | docker | version.dockerfile-maven-plugin | 1.4.13 | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
 | obscure | version.proguard.plugin | 2.6.0 | com.github.wvengen | proguard-maven-plugin |
