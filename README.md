@@ -158,7 +158,7 @@ graph TD;
 | pure | version.maven-source-plugin | 3.2.1 | org.apache.maven.plugins | maven-source-plugin |
 | pure | version.maven-jxr-plugin | 3.3.0 | org.apache.maven.plugins | maven-jxr-plugin | Profile`java-main`激活时 |
 | pure | version.maven-checkstyle-plugin | 3.2.1 | org.apache.maven.plugins | maven-checkstyle-plugin | Profile`java-main`激活时 |
-| pure | version.checkstyle | 10.6.0 | com.puppycrawl.tools | checkstyle | Profile`java-main`激活时 |
+| pure | version.checkstyle | 9.3 | com.puppycrawl.tools | checkstyle | Profile`java-main`激活时 |
 | pure | version.maven-changelog-plugin | 2.3 | org.apache.maven.plugins | maven-changelog-plugin | Profile`java-main`激活时 |
 | pure | version.maven-pmd-plugin | 3.20.0 | org.apache.maven.plugins | maven-pmd-plugin | Profile`java-main`激活时 |
 | pure | version.jdepend-maven-plugin | 2.0 | org.codehaus.mojo | jdepend-maven-plugin | Profile`java-main`激活时 |
