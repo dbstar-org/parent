@@ -10,7 +10,7 @@
 
 ## 模块结构与继承关系
 
-仓库根 `pom.xml` 聚合了 7 个模块，模块之间的**继承链**（注意：不是平级的兄弟模块）如下：
+仓库根 `pom.xml` 聚合了 6 个模块，模块之间的**继承链**（注意：不是平级的兄弟模块）如下：
 
 ```
 pure → parent
@@ -18,7 +18,6 @@ base → pure
 docker → base
 assembly → docker
 mode → assembly
-obscure → mode
 boot → docker        （注意：boot 继承自 docker，与 assembly 分支平行）
 ```
 
@@ -32,7 +31,6 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 | `docker` | 存在 `Dockerfile` 时激活 `docker` Profile，用 git-commit-id-plugin 生成 git.properties、用 dockerfile-maven-plugin 构建 Docker 镜像 |
 | `assembly` | 存在 `src/main/assembly` 时激活，用 maven-assembly-plugin 打 `jar-with-dependencies` 可执行 jar，主类由 `project.mainClass` 属性指定（子项目必须设置） |
 | `mode` | 存在 `src/main/mode` 时激活，按运行模式（`project.mode`，默认 `dev`）用 `src/main/mode/${project.mode}.properties` 做资源过滤 |
-| `obscure` | 用 proguard-maven-plugin 做代码混淆；根据 `src/main/assembly`、`src/main/webapp` 是否存在自动切换混淆策略（工具 jar / 可执行 jar / Web 项目跳过） |
 | `boot` | 存在 `src/main/java` 时激活 `spring-boot` Profile，用 spring-boot-maven-plugin（2.7.7）repackage 可执行 jar |
 
 ## 构建与测试

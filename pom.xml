@@ -36,7 +36,6 @@
     <module>mode</module>
     <module>docker</module>
     <module>boot</module>
-    <module>obscure</module>
   </modules>
 
   <scm>

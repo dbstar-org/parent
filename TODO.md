@@ -31,11 +31,6 @@
   - 注意：升到 3.x 要求 Java 17 与 Jakarta EE 迁移，与 `pure` 默认编译级别 8 冲突；可能需要先升级 2.7.18（2.7 线最后一个版本），3.x 另议。
   - 验收：明确结论并记录；若升级则 `mvn validate` 通过、README 同步更新。
 
-- [ ] **评估 ProGuard 7.x 升级**
-  - 现状：`obscure` 模块 `version.proguard = 6.2.2`，只支持 Java 8 字节码，混淆 Java 11+ 编译的 class 会失败。
-  - 注意：ProGuard 7.x 配置项有变化，需单独验证 obscure 的三种混淆策略（工具 jar / 可执行 jar / Web 跳过）。
-  - 验收：明确结论并记录；若升级则 `mvn validate` 通过、README 同步更新。
-
 ## 已完成
 
 - [x] **README 与 pom 版本不一致**：`README.md` 中 `version.checkstyle` 由 10.6.0 修正为与 pom 一致的 9.3。
@@ -46,6 +41,7 @@
 - [x] **按构建 JDK 分组的编译参数 Profile**：`project.java.version` 默认值 1.8 → 8（纯数字，`--release` 不兼容 `1.8` 格式）；删除死配置 `maven.compiler.compilerVersion`；新增 `jdk8`（source/target）、`jdk9+`（release）、`jdk23+`（proc=full，JDK 23 起 javac 不再默认执行注解处理）三个 profile；`maven.compiler.parameters=true` 全版本启用（保留方法参数名供反射使用）。已在 JDK 8/11/25 三种环境下实测属性解析与 `mvn verify`。
 - [x] **milestone 插件版本替换为正式版**：maven-release-plugin 3.0.0-M7 → 3.3.1（JDK 8 可运行，requiredMavenVersion 3.6.3）；本地 `release:prepare -DdryRun=true` 完整跑通 17 个阶段（版本映射 v1.4.0 → 1.4.1-SNAPSHOT、tag v1.4.0 均正确）。至此 milestone 版本全部清零。
 - [x] **junit-jupiter 下沉 base 并改用 junit-bom**：`version.junit-jupiter` 5.9.2 → 5.14.4 并移至 `base`；base 新增与 pure 同名的 `java-test` Profile（自动合并），导入 junit-bom 统一版本，注入构件由 junit-jupiter-engine（仅运行期）换成 junit-jupiter 聚合构件（api+params+engine，开箱即可编写+运行测试）；pure 的 java-test 只保留 surefire/jacoco 等测试插件。
+- [x] **取消 obscure 层**：确认不再需要代码混淆，删除 `obscure` 模块（叶子节点，不影响继承链），根 pom modules 摘除，README/AGENTS.md 中 obscure 及 proguard 相关的模块、插件、版本属性、Profile 说明全部清除，「评估 ProGuard 7.x 升级」待办项随之作废。
 
 ## 通用约束
 

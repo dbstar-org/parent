@@ -12,7 +12,6 @@
 | docker | 将Jar打包发布成Docker Image |
 | assembly | 使用maven-assembly-plugin来打包可执行jar |
 | mode | 以不同的运行模式来打包可执行jar |
-| obscure | 打包后做源代码混淆，防止反编译 |
 | boot | 以spring-boot.jar的方式来打包可执行jar |
 
 本文包含以下内容：
@@ -37,7 +36,6 @@ graph TD;
     docker-->base;
     assembly-->docker;
     mode-->assembly;
-    obscure-->mode;
     boot-->docker;
 ```
 
@@ -122,7 +120,6 @@ graph TD;
 | docker | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
 | docker | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
 | assembly | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
-| obscure | com.github.wvengen | proguard-maven-plugin | Profile`proguard-active-java`激活时 |
 | boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
@@ -156,8 +153,6 @@ graph TD;
 | pure | version.jacoco-maven-plugin | 0.8.15 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | docker | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
 | docker | version.dockerfile-maven-plugin | 1.4.13 | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
-| obscure | version.proguard.plugin | 2.6.0 | com.github.wvengen | proguard-maven-plugin |
-| obscure | version.proguard | 6.2.2 | net.sf.proguard | proguard-base |
 | boot | version.spring-boot | 2.7.7 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
@@ -182,10 +177,6 @@ graph TD;
 | assembly | assembly-single | 存在目录：src/main/assembly | 执行maven-assembly-plugin:single goal来打包可执行jar |
 | assembly | docker | 存在文件：Dockerfile | 修改属性`<project.docker.image.jar>`为可执行jar |
 | mode | mode-resource-filtering | 存在目录：src/main/mode | 以指定的运行模式来加载对应的配置文件 |
-| obscure | proguard-active-java | 存在目录：src/main/java | 在Java项目中启用插件 |
-| obscure | proguard-skip-web | 存在目录：src/main/webapp | 在JavaWeb项目中跳过插件 |
-| obscure | proguard-public | 缺失目录：src/main/assembly | 按照工具类Jar包的方式混淆 |
-| obscure | proguard-main | 存在目录：src/main/assembly | 按照可执行Jar包的方式混淆 |
 | boot | spring-boot | 存在目录：src/main/java | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
 | boot | docker | 存在文件：Dockerfile | 修改属性`<project.docker.image.jar>`为可执行jar |
 
