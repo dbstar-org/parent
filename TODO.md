@@ -14,10 +14,10 @@
   - 注意：commons-beanutils 对 commons-logging 的 exclusion、slf4j 桥接包对 slf4j-api 的 exclusion 需保持原样。
   - 验收：`mvn validate` 通过；README 版本表格同步更新。
 
-- [ ] **milestone 插件版本替换为正式版**
-  - 现状：maven-release-plugin 3.0.0-M7（正式版 3.3.1）。
-  - 注意：release 插件升级会改变发布行为，需单独验证 `mvn release:prepare`。
-  - 验收：`mvn validate` 通过；发布流程不受影响。
+- [ ] **迁移中央仓库发布到 Central Portal**
+  - 现状：OSSRH 已于 2025-06-30 关闭，`distribution-ossrh` Profile 和 nexus-staging-maven-plugin 已是死配置，发布 Maven 中央仓库当前必然失败。
+  - 方案：替换为 `org.sonatype.central:central-publishing-maven-plugin`；配合在 Central Portal 迁移命名空间、生成发布 token、更新 `~/.m2/settings.xml` 与 GitHub secrets、改造 dbstar-org/general 的 maven-release.yml。
+  - 验收：一次真实 release 成功发布到中央仓库。
 
 - [ ] **升级 junit-jupiter**
   - 现状：junit-jupiter 5.9.2；5.x 最新 5.14.4（Java 8 兼容）。
@@ -42,6 +42,7 @@
 - [x] **maven-site-plugin 改用稳定主线**：4.x 里程碑线停滞于 4.0.0-M16（2024-07，始终未出正式版），由 4.0.0-M4 改用活跃维护的 3.x 正式版 3.22.0（JDK 8 / Maven 3.6.3 要求均满足）。
 - [x] **升级 Maven 插件版本（pure 模块）**：compiler 3.15.0、jar 3.5.1、javadoc 3.12.0、resources 3.5.0、source 3.4.0、jacoco 0.8.15，surefire / surefire-report 由 3.0.0-M8 转正 3.5.6（均已实测 JDK 8 可运行，requiredMavenVersion 3.6.3 与 enforcer 门槛一致）。junit-jupiter 保持 5.9.2 留待单独处理。
 - [x] **按构建 JDK 分组的编译参数 Profile**：`project.java.version` 默认值 1.8 → 8（纯数字，`--release` 不兼容 `1.8` 格式）；删除死配置 `maven.compiler.compilerVersion`；新增 `jdk8`（source/target）、`jdk9+`（release）、`jdk23+`（proc=full，JDK 23 起 javac 不再默认执行注解处理）三个 profile；`maven.compiler.parameters=true` 全版本启用（保留方法参数名供反射使用）。已在 JDK 8/11/25 三种环境下实测属性解析与 `mvn verify`。
+- [x] **milestone 插件版本替换为正式版**：maven-release-plugin 3.0.0-M7 → 3.3.1（JDK 8 可运行，requiredMavenVersion 3.6.3）；本地 `release:prepare -DdryRun=true` 完整跑通 17 个阶段（版本映射 v1.4.0 → 1.4.1-SNAPSHOT、tag v1.4.0 均正确）。至此 milestone 版本全部清零。
 
 ## 通用约束
 

@@ -76,7 +76,7 @@
     <version.maven-site-plugin>3.22.0</version.maven-site-plugin>
     <version.versions-maven-plugin>2.21.0</version.versions-maven-plugin>
     <version.maven-gpg-plugin>3.2.8</version.maven-gpg-plugin>
-    <version.maven-release-plugin>3.0.0-M7</version.maven-release-plugin>
+    <version.maven-release-plugin>3.3.1</version.maven-release-plugin>
     <version.maven-assembly-plugin>3.8.0</version.maven-assembly-plugin>
     <version.nexus-staging-maven-plugin>1.7.0</version.nexus-staging-maven-plugin>
   </properties>
@@ -134,7 +134,7 @@
           <artifactId>maven-site-plugin</artifactId>
           <version>${version.maven-site-plugin}</version>
           <configuration>
-            <relativizeDecorationLinks>false</relativizeDecorationLinks>
+            <relativizeSiteLinks>false</relativizeSiteLinks>
           </configuration>
         </plugin>
         <!-- Project Report Plugins Version -->

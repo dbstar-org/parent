@@ -142,7 +142,7 @@ graph TD;
 | parent | version.maven-project-info-reports-plugin | 3.9.0 | org.apache.maven.plugins | maven-project-info-reports-plugin |
 | parent | version.maven-site-plugin | 3.22.0 | org.apache.maven.plugins | maven-site-plugin |
 | parent | version.versions-maven-plugin | 2.21.0 | org.codehaus.mojo | versions-maven-plugin |
-| parent | version.maven-release-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-release-plugin |
+| parent | version.maven-release-plugin | 3.3.1 | org.apache.maven.plugins | maven-release-plugin |
 | parent | version.maven-assembly-plugin | 3.8.0 | org.apache.maven.plugins | maven-assembly-plugin |
 | parent | version.maven-gpg-plugin | 3.2.8 | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
 | parent | version.nexus-staging-maven-plugin | 1.7.0 | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
