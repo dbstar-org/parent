@@ -32,8 +32,6 @@
   <modules>
     <module>pure</module>
     <module>base</module>
-    <module>assembly</module>
-    <module>mode</module>
     <module>docker</module>
     <module>boot</module>
   </modules>
@@ -76,7 +74,6 @@
     <version.versions-maven-plugin>2.21.0</version.versions-maven-plugin>
     <version.maven-gpg-plugin>3.2.8</version.maven-gpg-plugin>
     <version.maven-release-plugin>3.3.1</version.maven-release-plugin>
-    <version.maven-assembly-plugin>3.8.0</version.maven-assembly-plugin>
     <version.central-publishing-maven-plugin>0.11.0</version.central-publishing-maven-plugin>
   </properties>
 
@@ -174,11 +171,6 @@
             <autoVersionSubmodules>true</autoVersionSubmodules>
             <tagNameFormat>v@{project.version}</tagNameFormat>
           </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>${version.maven-assembly-plugin}</version>
         </plugin>
       </plugins>
     </pluginManagement>

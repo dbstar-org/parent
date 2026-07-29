@@ -42,6 +42,7 @@
 - [x] **milestone 插件版本替换为正式版**：maven-release-plugin 3.0.0-M7 → 3.3.1（JDK 8 可运行，requiredMavenVersion 3.6.3）；本地 `release:prepare -DdryRun=true` 完整跑通 17 个阶段（版本映射 v1.4.0 → 1.4.1-SNAPSHOT、tag v1.4.0 均正确）。至此 milestone 版本全部清零。
 - [x] **junit-jupiter 下沉 base 并改用 junit-bom**：`version.junit-jupiter` 5.9.2 → 5.14.4 并移至 `base`；base 新增与 pure 同名的 `java-test` Profile（自动合并），导入 junit-bom 统一版本，注入构件由 junit-jupiter-engine（仅运行期）换成 junit-jupiter 聚合构件（api+params+engine，开箱即可编写+运行测试）；pure 的 java-test 只保留 surefire/jacoco 等测试插件。
 - [x] **取消 obscure 层**：确认不再需要代码混淆，删除 `obscure` 模块（叶子节点，不影响继承链），根 pom modules 摘除，README/AGENTS.md 中 obscure 及 proguard 相关的模块、插件、版本属性、Profile 说明全部清除，「评估 ProGuard 7.x 升级」待办项随之作废。
+- [x] **取消 assembly 和 mode 层**：可执行 jar 打包全面由 spring-boot（boot 模块）取代，删除 `assembly`、`mode` 模块（死胡同分支，仅 mode 以 assembly 为 parent，删除后继承链 pure→parent、base→pure、docker→base、boot→docker 无断链）；根 pom 的 maven-assembly-plugin pluginManagement 条目与 `version.maven-assembly-plugin` 属性（死配置）一并删除；README/AGENTS.md 中相关模块、配置项、插件、Profile 说明全部清除；`project.mainClass` 约定改由 boot 承接（boot 的 spring-boot-maven-plugin 仍以 `${project.mainClass}` 指定主类，下游子项目设置方式不变），`project.mode` 随 mode 模块移除。
 
 ## 通用约束
 

@@ -10,8 +10,6 @@
 | pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；站点报告插件设置（代码质量报告通过Sonar生成） |
 | base | 引入常用的基准依赖包。包含slf4j、Apache Commons和JUnit 5测试环境 |
 | docker | 将Jar打包发布成Docker Image |
-| assembly | 使用maven-assembly-plugin来打包可执行jar |
-| mode | 以不同的运行模式来打包可执行jar |
 | boot | 以spring-boot.jar的方式来打包可执行jar |
 
 本文包含以下内容：
@@ -34,8 +32,6 @@ graph TD;
     pure-->parent;
     base-->pure;
     docker-->base;
-    assembly-->docker;
-    mode-->assembly;
     boot-->docker;
 ```
 
@@ -63,8 +59,7 @@ graph TD;
 | docker | project.docker.image.prefix | `${project.git.group}` | Docker Image文件的前缀，Profile`docker`激活时 |
 | docker | project.docker.image.tag | `${git.commit.id.describe}` | Docker Image文件的标签(版本号)，Profile`docker`激活时 |
 | docker | project.docker.image.jar | `${project.build.finalName}.jar` | 用于构建Docker Image的Jar包名称，Profile`docker`激活时 |
-| assembly | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类 |
-| mode | project.mode | dev | 运行模式，Profile`mode-resource-filtering`激活时 |
+| boot | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类，Profile`spring-boot`激活时 |
 | boot | project.spring-boot.attach | false | 是否发布Spring Boot打包后的可执行Jar，Profile`spring-boot`激活时 |
 | boot | project.spring-boot.classifier | boot | 可执行Jar的classifier后缀名称，Profile`spring-boot`激活时 |
 
@@ -119,7 +114,6 @@ graph TD;
 | pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | docker | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
 | docker | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
-| assembly | org.apache.maven.plugins | maven-assembly-plugin | Profile`assembly-single`激活时 |
 | boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
@@ -140,7 +134,6 @@ graph TD;
 | parent | version.maven-site-plugin | 3.22.0 | org.apache.maven.plugins | maven-site-plugin |
 | parent | version.versions-maven-plugin | 2.21.0 | org.codehaus.mojo | versions-maven-plugin |
 | parent | version.maven-release-plugin | 3.3.1 | org.apache.maven.plugins | maven-release-plugin |
-| parent | version.maven-assembly-plugin | 3.8.0 | org.apache.maven.plugins | maven-assembly-plugin |
 | parent | version.maven-gpg-plugin | 3.2.8 | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
 | parent | version.central-publishing-maven-plugin | 0.11.0 | org.sonatype.central | central-publishing-maven-plugin | Profile`distribution-central`激活时 |
 | pure | version.maven-compiler-plugin | 3.15.0 | org.apache.maven.plugins | maven-compiler-plugin |
@@ -174,9 +167,6 @@ graph TD;
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、代码覆盖率报告、生成test.jar、配置test-javadoc.jar、test-source.jar和相关报告 |
 | pure | release | 手动 | 生成javadoc.jar、source.jar |
 | docker | docker | 存在文件：Dockerfile | 使用项目Jar来构建Docker Image |
-| assembly | assembly-single | 存在目录：src/main/assembly | 执行maven-assembly-plugin:single goal来打包可执行jar |
-| assembly | docker | 存在文件：Dockerfile | 修改属性`<project.docker.image.jar>`为可执行jar |
-| mode | mode-resource-filtering | 存在目录：src/main/mode | 以指定的运行模式来加载对应的配置文件 |
 | boot | spring-boot | 存在目录：src/main/java | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
 | boot | docker | 存在文件：Dockerfile | 修改属性`<project.docker.image.jar>`为可执行jar |
 

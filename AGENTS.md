@@ -10,15 +10,13 @@
 
 ## 模块结构与继承关系
 
-仓库根 `pom.xml` 聚合了 6 个模块，模块之间的**继承链**（注意：不是平级的兄弟模块）如下：
+仓库根 `pom.xml` 聚合了 4 个模块，模块之间的**继承链**（注意：不是平级的兄弟模块）如下：
 
 ```
 pure → parent
 base → pure
 docker → base
-assembly → docker
-mode → assembly
-boot → docker        （注意：boot 继承自 docker，与 assembly 分支平行）
+boot → docker
 ```
 
 各模块职责：
@@ -29,8 +27,6 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 | `pure` | 纯 Java 父项目。Java 编译级别（默认 8，属性 `project.java.version`，必须为纯数字格式）、按构建 JDK 分组的编译参数 Profile（jdk8 用 source/target，jdk9+ 用 release，jdk23+ 追加 proc=full）、打包插件、测试相关 Profile（JUnit 5 + JaCoCo）。代码质量/安全报告不在 pom 中预定义，统一由外部 `org.sonarsource.scanner.maven:sonar-maven-plugin:sonar` 生成 |
 | `base` | 引入基准依赖：slf4j（api + jul/jcl/log4j 桥接，2.0.6）、Apache Commons（lang3/io/codec/beanutils/collections4）和 JUnit 5 测试环境（`java-test` Profile 导入 junit-bom + 注入 junit-jupiter 聚合构件） |
 | `docker` | 存在 `Dockerfile` 时激活 `docker` Profile，用 git-commit-id-plugin 生成 git.properties、用 dockerfile-maven-plugin 构建 Docker 镜像 |
-| `assembly` | 存在 `src/main/assembly` 时激活，用 maven-assembly-plugin 打 `jar-with-dependencies` 可执行 jar，主类由 `project.mainClass` 属性指定（子项目必须设置） |
-| `mode` | 存在 `src/main/mode` 时激活，按运行模式（`project.mode`，默认 `dev`）用 `src/main/mode/${project.mode}.properties` 做资源过滤 |
 | `boot` | 存在 `src/main/java` 时激活 `spring-boot` Profile，用 spring-boot-maven-plugin（2.7.7）repackage 可执行 jar |
 
 ## 构建与测试
@@ -42,7 +38,7 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
   - `mvn validate` 或 `mvn clean install` 确认所有 pom 无语法/继承错误
   - `mvn help:effective-pom` 查看某个模块的有效 POM
   - `mvn versions:display-plugin-updates` / `mvn versions:display-dependency-updates` 检查版本更新（versions-maven-plugin 内联了 `ruleSet`，正则排除 rc/beta/alpha 预发布版，含 `beta-2` 连字符形式；`-M` 里程碑版不排除，扫描结果中需人工甄别）
-- Profile 大多按**文件/目录存在性自动激活**（如 `src/main/java`、`src/test/java`、`Dockerfile`、`src/main/assembly`），本仓库各模块没有这些目录，因此这些 Profile 在本仓库构建时不会触发，只在下游子项目中生效。
+- Profile 大多按**文件/目录存在性自动激活**（如 `src/main/java`、`src/test/java`、`Dockerfile`），本仓库各模块没有这些目录，因此这些 Profile 在本仓库构建时不会触发，只在下游子项目中生效。
 
 ## 发布与部署
 
@@ -61,7 +57,7 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 - pom.xml 使用 2 空格缩进，UTF-8 编码。
 - 版本号一律通过 `<properties>` 中的 `version.*` 属性集中管理，属性命名规则：`version.<artifactId>`（如 `version.maven-compiler-plugin`、`version.slf4j`）。修改版本时改属性，不要在插件/依赖声明里硬编码版本。
 - 插件版本放 `<pluginManagement>`，依赖版本放 `<dependencyManagement>`；只有需要默认生效的插件/依赖才放进 `<plugins>`/`<dependencies>`。
-- 可被下游覆盖的定制项以 `project.*` 属性暴露（如 `project.java.version`、`project.mainClass`、`project.mode`、`project.docker.image.*`）。
+- 可被下游覆盖的定制项以 `project.*` 属性暴露（如 `project.java.version`、`project.mainClass`、`project.docker.image.*`）。
 - 仓库根和各模块目录下存在 `pom.xml.versionsBackup`，是 versions-maven-plugin 运行后的备份文件，不要手工编辑，也不要提交其改动。
 - 下游子项目直接继承这些父 POM 时，必须覆盖 `<description>`、`<url>`、`<scm>` 和 `site-local` Profile 的 `<site>` 配置，否则 URL 会错误叠加（详见 README「代码仓库相关配置」一节）。
 
