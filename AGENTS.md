@@ -43,7 +43,7 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 - 本项目自身没有 Java 代码和单元测试；「测试」本质上是验证各 pom 能正确解析。常用检查：
   - `mvn validate` 或 `mvn clean install` 确认所有 pom 无语法/继承错误
   - `mvn help:effective-pom` 查看某个模块的有效 POM
-  - `mvn versions:display-plugin-updates` / `mvn versions:display-dependency-updates` 检查版本更新（versions-maven-plugin 配置了排除 beta 的规则，指向 `https://dbstarll.github.io/exclude-beta-rule.xml`）
+  - `mvn versions:display-plugin-updates` / `mvn versions:display-dependency-updates` 检查版本更新（versions-maven-plugin 内联了 `ruleSet`，正则排除 rc/beta/alpha 预发布版，含 `beta-2` 连字符形式；`-M` 里程碑版不排除，扫描结果中需人工甄别）
 - Profile 大多按**文件/目录存在性自动激活**（如 `src/main/java`、`src/test/java`、`Dockerfile`、`src/main/assembly`），本仓库各模块没有这些目录，因此这些 Profile 在本仓库构建时不会触发，只在下游子项目中生效。
 
 ## 发布与部署

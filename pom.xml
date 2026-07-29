@@ -148,7 +148,22 @@
           <artifactId>versions-maven-plugin</artifactId>
           <version>${version.versions-maven-plugin}</version>
           <configuration>
-            <rulesUri>https://dbstarll.github.io/exclude-beta-rule.xml</rulesUri>
+            <ruleSet>
+              <ignoreVersions>
+                <ignoreVersion>
+                  <type>regex</type>
+                  <version>(?i).*[-.]?rc[-.]?\d*</version>
+                </ignoreVersion>
+                <ignoreVersion>
+                  <type>regex</type>
+                  <version>(?i).*[-.]?beta[-.]?\d*</version>
+                </ignoreVersion>
+                <ignoreVersion>
+                  <type>regex</type>
+                  <version>(?i).*[-.]?alpha[-.]?\d*</version>
+                </ignoreVersion>
+              </ignoreVersions>
+            </ruleSet>
           </configuration>
         </plugin>
         <plugin>
