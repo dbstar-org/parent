@@ -3,9 +3,9 @@
 
   <parent>
     <groupId>io.github.dbstarll.parent</groupId>
-    <artifactId>docker</artifactId>
+    <artifactId>base</artifactId>
     <version>1.4.0-SNAPSHOT</version>
-    <relativePath>../docker</relativePath>
+    <relativePath>../base</relativePath>
   </parent>
   <artifactId>boot</artifactId>
   <packaging>pom</packaging>
@@ -25,6 +25,7 @@
     <project.spring-boot.attach>false</project.spring-boot.attach>
     <project.spring-boot.classifier>boot</project.spring-boot.classifier>
     <version.spring-boot>2.7.7</version.spring-boot>
+    <version.git-commit-id-plugin>4.9.10</version.git-commit-id-plugin>
   </properties>
 
   <profiles>
@@ -36,8 +37,31 @@
         </file>
       </activation>
       <build>
+        <filters>
+          <filter>target/classes/git.properties</filter>
+        </filters>
         <pluginManagement>
           <plugins>
+            <plugin>
+              <groupId>pl.project13.maven</groupId>
+              <artifactId>git-commit-id-plugin</artifactId>
+              <version>${version.git-commit-id-plugin}</version>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>revision</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                <includeOnlyProperties>
+                  <includeOnlyProperty>git.commit.id</includeOnlyProperty>
+                  <includeOnlyProperty>git.commit.id.describe</includeOnlyProperty>
+                  <includeOnlyProperty>git.commit.time</includeOnlyProperty>
+                </includeOnlyProperties>
+              </configuration>
+            </plugin>
             <plugin>
               <groupId>org.springframework.boot</groupId>
               <artifactId>spring-boot-maven-plugin</artifactId>
@@ -60,22 +84,15 @@
         </pluginManagement>
         <plugins>
           <plugin>
+            <groupId>pl.project13.maven</groupId>
+            <artifactId>git-commit-id-plugin</artifactId>
+          </plugin>
+          <plugin>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <profile>
-      <id>docker</id>
-      <activation>
-        <file>
-          <exists>Dockerfile</exists>
-        </file>
-      </activation>
-      <properties>
-        <project.docker.image.jar>${project.build.finalName}-${project.spring-boot.classifier}.jar</project.docker.image.jar>
-      </properties>
     </profile>
   </profiles>
 </project>

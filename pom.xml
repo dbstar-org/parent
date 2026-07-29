@@ -32,7 +32,6 @@
   <modules>
     <module>pure</module>
     <module>base</module>
-    <module>docker</module>
     <module>boot</module>
   </modules>
 

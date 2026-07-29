@@ -9,8 +9,7 @@
 | parent | 所有父项目的继承根。包含项目的编码设置；Maven基础插件版本；代码发布相关设置 |
 | pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；站点报告插件设置（代码质量报告通过Sonar生成） |
 | base | 引入常用的基准依赖包。包含slf4j、Apache Commons和JUnit 5测试环境 |
-| docker | 将Jar打包发布成Docker Image |
-| boot | 以spring-boot.jar的方式来打包可执行jar |
+| boot | 以spring-boot.jar的方式来打包可执行jar，并生成git.properties版本信息 |
 
 本文包含以下内容：
 
@@ -31,8 +30,7 @@
 graph TD;
     pure-->parent;
     base-->pure;
-    docker-->base;
-    boot-->docker;
+    boot-->base;
 ```
 
 ---
@@ -56,9 +54,6 @@ graph TD;
 | pure | maven.compiler.target | `${project.java.version}` | Java编译文件版本，Profile`jdk8`激活时 |
 | pure | maven.compiler.release | `${project.java.version}` | Java编译发行版本，Profile`jdk9+`激活时 |
 | pure | maven.compiler.proc | full | 启用全量注解处理，Profile`jdk23+`激活时 |
-| docker | project.docker.image.prefix | `${project.git.group}` | Docker Image文件的前缀，Profile`docker`激活时 |
-| docker | project.docker.image.tag | `${git.commit.id.describe}` | Docker Image文件的标签(版本号)，Profile`docker`激活时 |
-| docker | project.docker.image.jar | `${project.build.finalName}.jar` | 用于构建Docker Image的Jar包名称，Profile`docker`激活时 |
 | boot | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类，Profile`spring-boot`激活时 |
 | boot | project.spring-boot.attach | false | 是否发布Spring Boot打包后的可执行Jar，Profile`spring-boot`激活时 |
 | boot | project.spring-boot.classifier | boot | 可执行Jar的classifier后缀名称，Profile`spring-boot`激活时 |
@@ -112,8 +107,7 @@ graph TD;
 | parent | org.sonatype.central | central-publishing-maven-plugin | Profile`distribution-central`激活时 |
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
-| docker | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
-| docker | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
+| boot | pl.project13.maven | git-commit-id-plugin | Profile`spring-boot`激活时 |
 | boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
@@ -144,8 +138,7 @@ graph TD;
 | pure | version.maven-surefire-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
 | pure | version.maven-surefire-report-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.jacoco-maven-plugin | 0.8.15 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
-| docker | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
-| docker | version.dockerfile-maven-plugin | 1.4.13 | com.spotify | dockerfile-maven-plugin | Profile`docker`激活时 |
+| boot | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`spring-boot`激活时 |
 | boot | version.spring-boot | 2.7.7 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
@@ -166,9 +159,7 @@ graph TD;
 | pure | java-main | 存在目录：src/main/java | 生成jar、配置javadoc.jar、source.jar和相关报告 |
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、代码覆盖率报告、生成test.jar、配置test-javadoc.jar、test-source.jar和相关报告 |
 | pure | release | 手动 | 生成javadoc.jar、source.jar |
-| docker | docker | 存在文件：Dockerfile | 使用项目Jar来构建Docker Image |
-| boot | spring-boot | 存在目录：src/main/java | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
-| boot | docker | 存在文件：Dockerfile | 修改属性`<project.docker.image.jar>`为可执行jar |
+| boot | spring-boot | 存在目录：src/main/java | 执行git-commit-id-plugin:revision生成git.properties、执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
 
 ---
 
