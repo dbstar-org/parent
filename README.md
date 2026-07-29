@@ -82,15 +82,15 @@ graph TD;
 | 父项目 | 属性 | 默认版本 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- | --- | --- |
 | base | version.junit-jupiter | 5.14.4 | org.junit | junit-bom | import，Profile`java-test`激活时 |
-| base | version.slf4j | 2.0.6 | org.slf4j | slf4j-api |
-| base | version.slf4j | 2.0.6 | org.slf4j | jul-to-slf4j |
-| base | version.slf4j | 2.0.6 | org.slf4j | jcl-over-slf4j |
-| base | version.slf4j | 2.0.6 | org.slf4j | log4j-over-slf4j |
-| base | version.commons-lang3 | 3.12.0 | org.apache.commons | commons-lang3 |
-| base | version.commons-io | 2.11.0 | commons-io | commons-io |
-| base | version.commons-codec | 1.15 | commons-codec | commons-codec |
-| base | version.commons-beanutils | 1.9.4 | commons-beanutils | commons-beanutils |
-| base | version.commons-collections4 | 4.4 | org.apache.commons | commons-collections4 |
+| base | version.slf4j | 2.0.18 | org.slf4j | slf4j-api |
+| base | version.slf4j | 2.0.18 | org.slf4j | jul-to-slf4j |
+| base | version.slf4j | 2.0.18 | org.slf4j | jcl-over-slf4j |
+| base | version.slf4j | 2.0.18 | org.slf4j | log4j-over-slf4j |
+| base | version.commons-lang3 | 3.20.0 | org.apache.commons | commons-lang3 |
+| base | version.commons-io | 2.22.0 | commons-io | commons-io |
+| base | version.commons-codec | 1.22.0 | commons-codec | commons-codec |
+| base | version.commons-beanutils | 1.11.0 | commons-beanutils | commons-beanutils |
+| base | version.commons-collections4 | 4.5.0 | org.apache.commons | commons-collections4 |
 
 ---
 
@@ -139,7 +139,7 @@ graph TD;
 | pure | version.maven-surefire-report-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.jacoco-maven-plugin | 0.8.15 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | boot | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`spring-boot`激活时 |
-| boot | version.spring-boot | 2.7.7 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
+| boot | version.spring-boot | 2.7.18 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 
 ---
 

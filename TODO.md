@@ -4,16 +4,6 @@
 
 ## 待办
 
-- [ ] **升级 commons-beanutils 修复 CVE**
-  - 现状：`base` 模块 `version.commons-beanutils = 1.9.4`，存在 CVE-2025-48734，1.11.0 修复。
-  - 影响：`base` 被所有下游项目继承，影响面大，需评估兼容性。
-  - 验收：`mvn validate` 通过；README 版本表格同步更新。
-
-- [ ] **升级 slf4j 与 Apache Commons 基准依赖**
-  - 现状：slf4j 2.0.6 → 2.0.18、commons-lang3 3.12.0 → 3.20.0、commons-io 2.11.0 → 2.22.0、commons-codec 1.15 → 1.22.0、commons-collections4 4.4 → 4.5.0。
-  - 注意：commons-beanutils 对 commons-logging 的 exclusion、slf4j 桥接包对 slf4j-api 的 exclusion 需保持原样。
-  - 验收：`mvn validate` 通过；README 版本表格同步更新。
-
 - [ ] **迁移中央仓库发布到 Central Portal（本仓库改造已完成，剩人工准备工作）**
   - 已完成：`distribution-ossrh` 重写为 `distribution-central`（`central-publishing-maven-plugin` 0.11.0，server id `central`，autoPublish + waitUntil=published，含 SNAPSHOT 支持），nexus-staging 插件与属性已移除。注意该插件要求 Maven ≥ 3.9.2（仅发布时激活）。
   - 人工准备工作：
@@ -26,13 +16,14 @@
     7. 触发一次真实 release 验证中央仓库发布成功。
   - 验收：一次真实 release 成功发布到中央仓库。
 
-- [ ] **评估 spring-boot 版本基线**
-  - 现状：`boot` 模块 `version.spring-boot = 2.7.7`，2.7.x 开源支持已于 2023 年 11 月结束。
-  - 注意：升到 3.x 要求 Java 17 与 Jakarta EE 迁移，与 `pure` 默认编译级别 8 冲突；可能需要先升级 2.7.18（2.7 线最后一个版本），3.x 另议。
+- [ ] **评估 spring-boot 3.x 版本基线**
+  - 现状：`boot` 模块 `version.spring-boot` 已升至 2.7.18（2.7 线最后一个版本，JDK 8 基线），2.7.x 开源支持已于 2023 年 11 月结束。
+  - 注意：升到 3.x 要求 Java 17 与 Jakarta EE 迁移，与 `pure` 默认编译级别 8 冲突，需连同 `project.java.version` 基线一起决策。
   - 验收：明确结论并记录；若升级则 `mvn validate` 通过、README 同步更新。
 
 ## 已完成
 
+- [x] **依赖版本升级到 JDK 1.8 适配的最新版**：slf4j 2.0.6→2.0.18、commons-lang3 3.12.0→3.20.0、commons-io 2.11.0→2.22.0、commons-codec 1.15→1.22.0、commons-beanutils 1.9.4→1.11.0（修复 CVE-2025-48734）、commons-collections4 4.4→4.5.0、spring-boot 2.7.7→2.7.18（2.7 线最后一版）；8 个新构件全部实测字节码 version 52.0（Java 1.8），无需回退；slf4j 桥接包对 slf4j-api、commons-beanutils 对 commons-logging 的 exclusion 保持原样（1.11.0 传递依赖面与 1.9.4 一致，commons-logging 仍在）；junit-bom 5.14.4 已是 5.x 最新线（JUnit 6 需 Java 17）不动。
 - [x] **README 与 pom 版本不一致**：`README.md` 中 `version.checkstyle` 由 10.6.0 修正为与 pom 一致的 9.3。
 - [x] **移除老旧报告插件**：从 `pure` 模块 `java-main` Profile 删除 findbugs、pmd、checkstyle、jdepend、taglist、jxr、changelog 共 7 个报告插件及 8 个版本属性，代码质量/安全报告统一改用 Sonar（`org.sonarsource.scanner.maven:sonar-maven-plugin:sonar`，不纳入 pom 管理）。findbugs→spotbugs 迁移项随之作废。
 - [x] **升级 Maven 插件版本（根 pom）**：enforcer 3.6.3、antrun 3.2.0、clean 3.5.0、dependency 3.11.0、deploy 3.1.4、install 3.1.4、project-info-reports 3.9.0、versions 2.21.0、assembly 3.8.0、gpg 3.2.8、nexus-staging 1.7.0（均已实测 JDK 8 可运行）；enforcer 的 requireMavenVersion 同步从 3.2.5 提升到 3.6.3（新插件的 requiredMavenVersion 均为 3.6.3）。release 3.0.0-M7 留待 milestone 转正批次。

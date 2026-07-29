@@ -24,7 +24,7 @@
   <properties>
     <project.spring-boot.attach>false</project.spring-boot.attach>
     <project.spring-boot.classifier>boot</project.spring-boot.classifier>
-    <version.spring-boot>2.7.7</version.spring-boot>
+    <version.spring-boot>2.7.18</version.spring-boot>
     <version.git-commit-id-plugin>4.9.10</version.git-commit-id-plugin>
   </properties>
 

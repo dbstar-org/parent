@@ -23,13 +23,13 @@
 
   <properties>
     <!-- logger version -->
-    <version.slf4j>2.0.6</version.slf4j>
+    <version.slf4j>2.0.18</version.slf4j>
     <!-- apache commons version -->
-    <version.commons-lang3>3.12.0</version.commons-lang3>
-    <version.commons-io>2.11.0</version.commons-io>
-    <version.commons-codec>1.15</version.commons-codec>
-    <version.commons-beanutils>1.9.4</version.commons-beanutils>
-    <version.commons-collections4>4.4</version.commons-collections4>
+    <version.commons-lang3>3.20.0</version.commons-lang3>
+    <version.commons-io>2.22.0</version.commons-io>
+    <version.commons-codec>1.22.0</version.commons-codec>
+    <version.commons-beanutils>1.11.0</version.commons-beanutils>
+    <version.commons-collections4>4.5.0</version.commons-collections4>
     <!-- test version -->
     <version.junit-jupiter>5.14.4</version.junit-jupiter>
   </properties>
