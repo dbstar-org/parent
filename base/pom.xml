@@ -34,6 +34,8 @@
     <version.junit-jupiter>5.14.4</version.junit-jupiter>
     <!-- plugin version -->
     <version.git-commit-id-plugin>4.9.10</version.git-commit-id-plugin>
+    <!-- lombok version -->
+    <version.lombok>1.18.46</version.lombok>
   </properties>
 
   <dependencyManagement>
@@ -109,6 +111,12 @@
         <artifactId>commons-collections4</artifactId>
         <version>${version.commons-collections4}</version>
       </dependency>
+      <!-- lombok -->
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${version.lombok}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -136,6 +144,12 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
+    </dependency>
+    <!-- lombok：编译期注解处理器，不进运行期、不向下游传递 -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
