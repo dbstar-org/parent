@@ -25,6 +25,10 @@
     <project.spring-boot.attach>false</project.spring-boot.attach>
     <project.spring-boot.classifier>boot</project.spring-boot.classifier>
     <version.spring-boot>2.7.18</version.spring-boot>
+    <!-- 覆盖 base 的 2.0.18：spring-boot 2.7 官方组合 logback 1.2.x 仅支持 slf4j 1.7 绑定机制 -->
+    <version.slf4j>1.7.36</version.slf4j>
+    <!-- 覆盖 base 的 5.14.4：与 spring-boot 2.7.18 策展版本（junit-bom 5.8.2）保持一致 -->
+    <version.junit-jupiter>5.8.2</version.junit-jupiter>
   </properties>
 
   <profiles>
@@ -35,6 +39,25 @@
           <exists>src/main/java</exists>
         </file>
       </activation>
+      <dependencyManagement>
+        <dependencies>
+          <!-- 前置导入占住位置，防止 junit 被 spring-boot-dependencies 接管；版本由 boot 覆盖的 version.junit-jupiter 决定 -->
+          <dependency>
+            <groupId>org.junit</groupId>
+            <artifactId>junit-bom</artifactId>
+            <version>${version.junit-jupiter}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+          <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${version.spring-boot}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
       <build>
         <pluginManagement>
           <plugins>

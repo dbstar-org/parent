@@ -9,7 +9,7 @@
 | parent | 所有父项目的继承根。包含项目的编码设置；Maven基础插件版本；代码发布相关设置 |
 | pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；站点报告插件设置（代码质量报告通过Sonar生成） |
 | base | 引入常用的基准依赖包。包含slf4j、Apache Commons和JUnit 5测试环境 |
-| boot | 以spring-boot.jar的方式来打包可执行jar，并生成git.properties版本信息 |
+| boot | 以spring-boot.jar的方式来打包可执行jar，并通过spring-boot-dependencies做依赖管理 |
 
 本文包含以下内容：
 
@@ -91,6 +91,9 @@ graph TD;
 | base | version.commons-codec | 1.22.0 | commons-codec | commons-codec |
 | base | version.commons-beanutils | 1.11.0 | commons-beanutils | commons-beanutils |
 | base | version.commons-collections4 | 4.5.0 | org.apache.commons | commons-collections4 |
+| boot | version.slf4j | 1.7.36 | org.slf4j | slf4j-api及jul/jcl/log4j桥接包 | 覆盖base的2.0.18，适配logback 1.2绑定机制 |
+| boot | version.junit-jupiter | 5.8.2 | org.junit | junit-bom | import，Profile`spring-boot`激活时；覆盖base的5.14.4与spring-boot 2.7.18策展版一致，前置导入防BOM接管 |
+| boot | version.spring-boot | 2.7.18 | org.springframework.boot | spring-boot-dependencies | import，Profile`spring-boot`激活时，logback等base未钉版的构件由spring策展版接管 |
 
 ---
 
