@@ -50,7 +50,7 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 
 - 发布使用 maven-release-plugin，命令：`mvn release:prepare -P release`（`release` Profile 启用 GPG 签名）。tag 格式为 `v@{project.version}`，子模块自动统一版本（`autoVersionSubmodules=true`）。
 - 部署目标由 Profile 选择：
-  - `distribution-ossrh`：发布到 Maven 中央仓库（Sonatype OSSRH，`s01.oss.sonatype.org`，autoReleaseAfterClose=true）
+  - `distribution-central`：发布到 Maven 中央仓库（Central Portal，`central-publishing-maven-plugin`，server id `central`，autoPublish + waitUntil=published；该插件要求 Maven ≥ 3.9.2，仅在发布时激活）
   - `distribution-github`：发布到 GitHub Packages（`maven.pkg.github.com/dbstar-org/parent`）
   - `site-local`：在本地 `~/.m2/sites` 生成站点报告
 - CI 在 `.github/workflows/`：
@@ -75,6 +75,6 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 
 ## 安全注意事项
 
-- 发布需要 GPG 密钥（`release` Profile 签名）和 OSSRH / GitHub Packages 凭证（本机 `~/.m2/settings.xml` 中的 `ossrh` / `github` server 配置），CI 通过 `secrets: inherit` 注入。不要在 pom 或仓库中写入任何凭证。
+- 发布需要 GPG 密钥（`release` Profile 签名）和 Central Portal / GitHub Packages 凭证（本机 `~/.m2/settings.xml` 中的 `central` / `github` server 配置；Central 使用 Portal 生成的 User Token），CI 通过 `secrets: inherit` 注入。不要在 pom 或仓库中写入任何凭证。
 - `base` 模块中对 slf4j 桥接包排除了 `slf4j-api` 传递依赖、对 commons-beanutils 排除了 commons-logging，修改这些 exclusion 会影响所有下游项目的日志体系，需谨慎。
 - 本项目的任何改动都会被所有下游继承项目感知，修改共享配置（插件版本、依赖版本、Profile 激活条件）前应评估对下游的兼容性影响。

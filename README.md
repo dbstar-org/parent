@@ -116,7 +116,7 @@ graph TD;
 | parent | org.codehaus.mojo | versions-maven-plugin | 生成报告时 |
 | parent | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
 | parent | org.apache.maven.plugins | maven-release-plugin | Profile`release`激活时 |
-| parent | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
+| parent | org.sonatype.central | central-publishing-maven-plugin | Profile`distribution-central`激活时 |
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | docker | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
@@ -145,7 +145,7 @@ graph TD;
 | parent | version.maven-release-plugin | 3.3.1 | org.apache.maven.plugins | maven-release-plugin |
 | parent | version.maven-assembly-plugin | 3.8.0 | org.apache.maven.plugins | maven-assembly-plugin |
 | parent | version.maven-gpg-plugin | 3.2.8 | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
-| parent | version.nexus-staging-maven-plugin | 1.7.0 | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
+| parent | version.central-publishing-maven-plugin | 0.11.0 | org.sonatype.central | central-publishing-maven-plugin | Profile`distribution-central`激活时 |
 | pure | version.maven-compiler-plugin | 3.15.0 | org.apache.maven.plugins | maven-compiler-plugin |
 | pure | version.maven-jar-plugin | 3.5.1 | org.apache.maven.plugins | maven-jar-plugin |
 | pure | version.maven-javadoc-plugin | 3.12.0 | org.apache.maven.plugins | maven-javadoc-plugin |
@@ -169,7 +169,7 @@ graph TD;
 | 父项目 | Profile | 激活条件 | 用途 | 
 | --- | --- | --- | --- |
 | parent | release | 手动 | 在发布版本时使用：`mvn release:prepare -P release`，生成gpg签名 |
-| parent | distribution-ossrh | 手动 | 用于提交发布物到Maven中央仓库 |
+| parent | distribution-central | 手动 | 用于提交发布物到Maven中央仓库（Central Portal） |
 | parent | distribution-github | 手动 | 用于提交发布物到Github个人Maven仓库 |
 | parent | site-local | 手动 | 用于在本地生成站点报告 |
 | pure | jdk8 | JDK版本为1.8 | 设置`maven.compiler.source`/`target` |

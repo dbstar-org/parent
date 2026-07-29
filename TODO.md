@@ -14,9 +14,16 @@
   - 注意：commons-beanutils 对 commons-logging 的 exclusion、slf4j 桥接包对 slf4j-api 的 exclusion 需保持原样。
   - 验收：`mvn validate` 通过；README 版本表格同步更新。
 
-- [ ] **迁移中央仓库发布到 Central Portal**
-  - 现状：OSSRH 已于 2025-06-30 关闭，`distribution-ossrh` Profile 和 nexus-staging-maven-plugin 已是死配置，发布 Maven 中央仓库当前必然失败。
-  - 方案：替换为 `org.sonatype.central:central-publishing-maven-plugin`；配合在 Central Portal 迁移命名空间、生成发布 token、更新 `~/.m2/settings.xml` 与 GitHub secrets、改造 dbstar-org/general 的 maven-release.yml。
+- [ ] **迁移中央仓库发布到 Central Portal（本仓库改造已完成，剩人工准备工作）**
+  - 已完成：`distribution-ossrh` 重写为 `distribution-central`（`central-publishing-maven-plugin` 0.11.0，server id `central`，autoPublish + waitUntil=published，含 SNAPSHOT 支持），nexus-staging 插件与属性已移除。注意该插件要求 Maven ≥ 3.9.2（仅发布时激活）。
+  - 人工准备工作：
+    1. 登录 [central.sonatype.com](https://central.sonatype.com)，Namespaces → Migrate Namespace 迁移 `io.github.dbstarll`；
+    2. 命名空间菜单开启 "Enable SNAPSHOTs"；
+    3. Account → Generate User Token；
+    4. 本地 `~/.m2/settings.xml` 增加 id 为 `central` 的 server（token 用户名/密码）；
+    5. GitHub 仓库 secrets 新增 Central token（替换 OSS_USERNAME / OSS_PASSWORD）；
+    6. 改造 dbstar-org/general 的 maven-release.yml：OSSRH 的 `release:perform` 段改为 `-Prelease,distribution-central`，env 换用新 secrets；
+    7. 触发一次真实 release 验证中央仓库发布成功。
   - 验收：一次真实 release 成功发布到中央仓库。
 
 - [ ] **升级 junit-jupiter**
