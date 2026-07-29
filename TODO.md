@@ -26,7 +26,12 @@
 
 - [ ] **评估 spring-boot 版本基线**
   - 现状：`boot` 模块 `version.spring-boot = 2.7.7`，2.7.x 开源支持已于 2023 年 11 月结束。
-  - 注意：升到 3.x 要求 Java 17 与 Jakarta EE 迁移，与 `pure` 默认编译级别 1.8 冲突；可能需要先升级 2.7.18（2.7 线最后一个版本），3.x 另议。
+  - 注意：升到 3.x 要求 Java 17 与 Jakarta EE 迁移，与 `pure` 默认编译级别 8 冲突；可能需要先升级 2.7.18（2.7 线最后一个版本），3.x 另议。
+  - 验收：明确结论并记录；若升级则 `mvn validate` 通过、README 同步更新。
+
+- [ ] **评估 ProGuard 7.x 升级**
+  - 现状：`obscure` 模块 `version.proguard = 6.2.2`，只支持 Java 8 字节码，混淆 Java 11+ 编译的 class 会失败。
+  - 注意：ProGuard 7.x 配置项有变化，需单独验证 obscure 的三种混淆策略（工具 jar / 可执行 jar / Web 跳过）。
   - 验收：明确结论并记录；若升级则 `mvn validate` 通过、README 同步更新。
 
 ## 已完成
@@ -36,6 +41,7 @@
 - [x] **升级 Maven 插件版本（根 pom）**：enforcer 3.6.3、antrun 3.2.0、clean 3.5.0、dependency 3.11.0、deploy 3.1.4、install 3.1.4、project-info-reports 3.9.0、versions 2.21.0、assembly 3.8.0、gpg 3.2.8、nexus-staging 1.7.0（均已实测 JDK 8 可运行）；enforcer 的 requireMavenVersion 同步从 3.2.5 提升到 3.6.3（新插件的 requiredMavenVersion 均为 3.6.3）。release 3.0.0-M7 留待 milestone 转正批次。
 - [x] **maven-site-plugin 改用稳定主线**：4.x 里程碑线停滞于 4.0.0-M16（2024-07，始终未出正式版），由 4.0.0-M4 改用活跃维护的 3.x 正式版 3.22.0（JDK 8 / Maven 3.6.3 要求均满足）。
 - [x] **升级 Maven 插件版本（pure 模块）**：compiler 3.15.0、jar 3.5.1、javadoc 3.12.0、resources 3.5.0、source 3.4.0、jacoco 0.8.15，surefire / surefire-report 由 3.0.0-M8 转正 3.5.6（均已实测 JDK 8 可运行，requiredMavenVersion 3.6.3 与 enforcer 门槛一致）。junit-jupiter 保持 5.9.2 留待单独处理。
+- [x] **按构建 JDK 分组的编译参数 Profile**：`project.java.version` 默认值 1.8 → 8（纯数字，`--release` 不兼容 `1.8` 格式）；删除死配置 `maven.compiler.compilerVersion`；新增 `jdk8`（source/target）、`jdk9+`（release）、`jdk23+`（proc=full，JDK 23 起 javac 不再默认执行注解处理）三个 profile；`maven.compiler.parameters=true` 全版本启用（保留方法参数名供反射使用）。已在 JDK 8/11/25 三种环境下实测属性解析与 `mvn verify`。
 
 ## 通用约束
 

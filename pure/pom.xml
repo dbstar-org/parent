@@ -15,12 +15,10 @@
 
   <properties>
     <!-- Global Config -->
-    <project.java.version>1.8</project.java.version>
+    <project.java.version>8</project.java.version>
 
     <!-- JDK -->
-    <maven.compiler.compilerVersion>${project.java.version}</maven.compiler.compilerVersion>
-    <maven.compiler.source>${project.java.version}</maven.compiler.source>
-    <maven.compiler.target>${project.java.version}</maven.compiler.target>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
 
     <!-- Plugin Version -->
     <version.maven-compiler-plugin>3.15.0</version.maven-compiler-plugin>
@@ -69,6 +67,37 @@
   </build>
 
   <profiles>
+    <profile>
+      <id>jdk8</id>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.source>${project.java.version}</maven.compiler.source>
+        <maven.compiler.target>${project.java.version}</maven.compiler.target>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>jdk9+</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.release>${project.java.version}</maven.compiler.release>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>jdk23+</id>
+      <activation>
+        <jdk>[23,)</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.proc>full</maven.compiler.proc>
+      </properties>
+    </profile>
+
     <profile>
       <id>java-main</id>
       <activation>

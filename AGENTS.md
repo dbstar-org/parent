@@ -27,7 +27,7 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 | 模块 | 职责 |
 | --- | --- |
 | `parent`（根） | 继承根。编码设置（UTF-8）、git 仓库相关属性（`project.git.*`）、基础插件版本（enforcer/release/gpg/site 等）、发布 Profile |
-| `pure` | 纯 Java 父项目。Java 编译级别（默认 1.8，属性 `project.java.version`）、打包插件、测试相关 Profile（JUnit 5 + JaCoCo）。代码质量/安全报告不在 pom 中预定义，统一由外部 `org.sonarsource.scanner.maven:sonar-maven-plugin:sonar` 生成 |
+| `pure` | 纯 Java 父项目。Java 编译级别（默认 8，属性 `project.java.version`，必须为纯数字格式）、按构建 JDK 分组的编译参数 Profile（jdk8 用 source/target，jdk9+ 用 release，jdk23+ 追加 proc=full）、打包插件、测试相关 Profile（JUnit 5 + JaCoCo）。代码质量/安全报告不在 pom 中预定义，统一由外部 `org.sonarsource.scanner.maven:sonar-maven-plugin:sonar` 生成 |
 | `base` | 引入基准依赖：slf4j（api + jul/jcl/log4j 桥接，2.0.6）和 Apache Commons（lang3/io/codec/beanutils/collections4） |
 | `docker` | 存在 `Dockerfile` 时激活 `docker` Profile，用 git-commit-id-plugin 生成 git.properties、用 dockerfile-maven-plugin 构建 Docker 镜像 |
 | `assembly` | 存在 `src/main/assembly` 时激活，用 maven-assembly-plugin 打 `jar-with-dependencies` 可执行 jar，主类由 `project.mainClass` 属性指定（子项目必须设置） |
@@ -37,7 +37,7 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 
 ## 构建与测试
 
-- 构建要求：Maven ≥ 3.6.3（enforcer 插件强制），JDK 8 及以上（默认编译级别 1.8）。
+- 构建要求：Maven ≥ 3.6.3（enforcer 插件强制），JDK 8 及以上（默认编译级别 8；JDK 8 构建用 `maven.compiler.source`/`target`，JDK 9+ 用 `maven.compiler.release`，JDK 23+ 追加 `maven.compiler.proc=full`，由 `jdk8`/`jdk9+`/`jdk23+` 三个 profile 按 JDK 自动切换）。
 - 全量构建：`mvn clean install`
 - 校验：`mvn verify`
 - 本项目自身没有 Java 代码和单元测试；「测试」本质上是验证各 pom 能正确解析。常用检查：

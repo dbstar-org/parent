@@ -56,10 +56,12 @@ graph TD;
 | parent | project.reporting.outputEncoding | `${project.encoding}` | 报告输出文件的默认编码 |
 | parent | project.site.root | `file://${env.HOME}/.m2/sites` | 本地报告站点的根目录，Profile`site-local`激活时 |
 | parent | project.site.root.project | `${project.site.root}/${project.git.uri}` | 本地报告站点的项目根目录，Profile`site-local`激活时 |
-| pure | project.java.version | 1.8 | Java版本 |
-| pure | maven.compiler.compilerVersion | `${project.java.version}` | Java编译级别 |
-| pure | maven.compiler.source | `${project.java.version}` | Java源文件版本 |
-| pure | maven.compiler.target | `${project.java.version}` | Java编译文件版本 |
+| pure | project.java.version | 8 | Java版本，必须使用纯数字格式（8/11/17） |
+| pure | maven.compiler.parameters | true | 编译时保留方法参数名（供Spring/Jackson反射使用） |
+| pure | maven.compiler.source | `${project.java.version}` | Java源文件版本，Profile`jdk8`激活时 |
+| pure | maven.compiler.target | `${project.java.version}` | Java编译文件版本，Profile`jdk8`激活时 |
+| pure | maven.compiler.release | `${project.java.version}` | Java编译发行版本，Profile`jdk9+`激活时 |
+| pure | maven.compiler.proc | full | 启用全量注解处理，Profile`jdk23+`激活时 |
 | docker | project.docker.image.prefix | `${project.git.group}` | Docker Image文件的前缀，Profile`docker`激活时 |
 | docker | project.docker.image.tag | `${git.commit.id.describe}` | Docker Image文件的标签(版本号)，Profile`docker`激活时 |
 | docker | project.docker.image.jar | `${project.build.finalName}.jar` | 用于构建Docker Image的Jar包名称，Profile`docker`激活时 |
@@ -170,6 +172,9 @@ graph TD;
 | parent | distribution-ossrh | 手动 | 用于提交发布物到Maven中央仓库 |
 | parent | distribution-github | 手动 | 用于提交发布物到Github个人Maven仓库 |
 | parent | site-local | 手动 | 用于在本地生成站点报告 |
+| pure | jdk8 | JDK版本为1.8 | 设置`maven.compiler.source`/`target` |
+| pure | jdk9+ | JDK版本≥9 | 设置`maven.compiler.release` |
+| pure | jdk23+ | JDK版本≥23 | 设置`maven.compiler.proc`为full（JDK23起javac不再默认执行注解处理） |
 | pure | java-main | 存在目录：src/main/java | 生成jar、配置javadoc.jar、source.jar和相关报告 |
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、代码覆盖率报告、生成test.jar、配置test-javadoc.jar、test-source.jar和相关报告 |
 | pure | release | 手动 | 生成javadoc.jar、source.jar |
