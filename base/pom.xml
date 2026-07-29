@@ -30,6 +30,8 @@
     <version.commons-codec>1.15</version.commons-codec>
     <version.commons-beanutils>1.9.4</version.commons-beanutils>
     <version.commons-collections4>4.4</version.commons-collections4>
+    <!-- test version -->
+    <version.junit-jupiter>5.14.4</version.junit-jupiter>
   </properties>
 
   <dependencyManagement>
@@ -134,4 +136,33 @@
       <artifactId>commons-io</artifactId>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>java-test</id>
+      <activation>
+        <file>
+          <exists>src/test/java</exists>
+        </file>
+      </activation>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>org.junit</groupId>
+            <artifactId>junit-bom</artifactId>
+            <version>${version.junit-jupiter}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 </project>

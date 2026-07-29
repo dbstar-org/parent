@@ -28,7 +28,7 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 | --- | --- |
 | `parent`（根） | 继承根。编码设置（UTF-8）、git 仓库相关属性（`project.git.*`）、基础插件版本（enforcer/release/gpg/site 等）、发布 Profile |
 | `pure` | 纯 Java 父项目。Java 编译级别（默认 8，属性 `project.java.version`，必须为纯数字格式）、按构建 JDK 分组的编译参数 Profile（jdk8 用 source/target，jdk9+ 用 release，jdk23+ 追加 proc=full）、打包插件、测试相关 Profile（JUnit 5 + JaCoCo）。代码质量/安全报告不在 pom 中预定义，统一由外部 `org.sonarsource.scanner.maven:sonar-maven-plugin:sonar` 生成 |
-| `base` | 引入基准依赖：slf4j（api + jul/jcl/log4j 桥接，2.0.6）和 Apache Commons（lang3/io/codec/beanutils/collections4） |
+| `base` | 引入基准依赖：slf4j（api + jul/jcl/log4j 桥接，2.0.6）、Apache Commons（lang3/io/codec/beanutils/collections4）和 JUnit 5 测试环境（`java-test` Profile 导入 junit-bom + 注入 junit-jupiter 聚合构件） |
 | `docker` | 存在 `Dockerfile` 时激活 `docker` Profile，用 git-commit-id-plugin 生成 git.properties、用 dockerfile-maven-plugin 构建 Docker 镜像 |
 | `assembly` | 存在 `src/main/assembly` 时激活，用 maven-assembly-plugin 打 `jar-with-dependencies` 可执行 jar，主类由 `project.mainClass` 属性指定（子项目必须设置） |
 | `mode` | 存在 `src/main/mode` 时激活，按运行模式（`project.mode`，默认 `dev`）用 `src/main/mode/${project.mode}.properties` 做资源过滤 |
@@ -70,7 +70,7 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 ## 测试策略
 
 - 本仓库自身无测试代码。
-- 预定义的测试体系（在下游子项目中生效）：JUnit 5（junit-jupiter-engine 5.9.2）+ maven-surefire-plugin + JaCoCo 覆盖率（0.8.8），由 `java-test` Profile（存在 `src/test/java` 目录时）激活。
+- 预定义的测试体系（在下游子项目中生效）：测试插件（maven-surefire-plugin 3.5.6 + JaCoCo 覆盖率 0.8.15）由 `pure` 的 `java-test` Profile（存在 `src/test/java` 目录时）激活；JUnit 5 依赖由 `base` 的同名 `java-test` Profile 提供——导入 junit-bom 5.14.4 统一版本，并注入 `junit-jupiter` 聚合构件（api+params+engine，test scope）作为默认测试环境。
 - 代码质量/安全报告不在 pom 中预定义：findbugs/pmd/checkstyle/jdepend/taglist/jxr/changelog 等老旧报告插件已于 1.4.0 移除，统一改用外部 Sonar 扫描（`mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar`）；`java-main` Profile 的站点报告仅保留 javadoc。
 
 ## 安全注意事项

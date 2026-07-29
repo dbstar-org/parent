@@ -26,11 +26,6 @@
     7. 触发一次真实 release 验证中央仓库发布成功。
   - 验收：一次真实 release 成功发布到中央仓库。
 
-- [ ] **升级 junit-jupiter**
-  - 现状：junit-jupiter 5.9.2；5.x 最新 5.14.4（Java 8 兼容）。
-  - 注意：JUnit 6.x 要求 Java 17，与本项目 JDK 8 基线冲突，只能升 5.x 线。
-  - 验收：`mvn validate` 通过；README 版本表格同步更新。
-
 - [ ] **评估 spring-boot 版本基线**
   - 现状：`boot` 模块 `version.spring-boot = 2.7.7`，2.7.x 开源支持已于 2023 年 11 月结束。
   - 注意：升到 3.x 要求 Java 17 与 Jakarta EE 迁移，与 `pure` 默认编译级别 8 冲突；可能需要先升级 2.7.18（2.7 线最后一个版本），3.x 另议。
@@ -50,6 +45,7 @@
 - [x] **升级 Maven 插件版本（pure 模块）**：compiler 3.15.0、jar 3.5.1、javadoc 3.12.0、resources 3.5.0、source 3.4.0、jacoco 0.8.15，surefire / surefire-report 由 3.0.0-M8 转正 3.5.6（均已实测 JDK 8 可运行，requiredMavenVersion 3.6.3 与 enforcer 门槛一致）。junit-jupiter 保持 5.9.2 留待单独处理。
 - [x] **按构建 JDK 分组的编译参数 Profile**：`project.java.version` 默认值 1.8 → 8（纯数字，`--release` 不兼容 `1.8` 格式）；删除死配置 `maven.compiler.compilerVersion`；新增 `jdk8`（source/target）、`jdk9+`（release）、`jdk23+`（proc=full，JDK 23 起 javac 不再默认执行注解处理）三个 profile；`maven.compiler.parameters=true` 全版本启用（保留方法参数名供反射使用）。已在 JDK 8/11/25 三种环境下实测属性解析与 `mvn verify`。
 - [x] **milestone 插件版本替换为正式版**：maven-release-plugin 3.0.0-M7 → 3.3.1（JDK 8 可运行，requiredMavenVersion 3.6.3）；本地 `release:prepare -DdryRun=true` 完整跑通 17 个阶段（版本映射 v1.4.0 → 1.4.1-SNAPSHOT、tag v1.4.0 均正确）。至此 milestone 版本全部清零。
+- [x] **junit-jupiter 下沉 base 并改用 junit-bom**：`version.junit-jupiter` 5.9.2 → 5.14.4 并移至 `base`；base 新增与 pure 同名的 `java-test` Profile（自动合并），导入 junit-bom 统一版本，注入构件由 junit-jupiter-engine（仅运行期）换成 junit-jupiter 聚合构件（api+params+engine，开箱即可编写+运行测试）；pure 的 java-test 只保留 surefire/jacoco 等测试插件。
 
 ## 通用约束
 

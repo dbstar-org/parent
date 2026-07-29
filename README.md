@@ -8,7 +8,7 @@
 | ---| --- |
 | parent | 所有父项目的继承根。包含项目的编码设置；Maven基础插件版本；代码发布相关设置 |
 | pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；站点报告插件设置（代码质量报告通过Sonar生成） |
-| base | 引入常用的基准依赖包。包含slf4j和Apache Commons |
+| base | 引入常用的基准依赖包。包含slf4j、Apache Commons和JUnit 5测试环境 |
 | docker | 将Jar打包发布成Docker Image |
 | assembly | 使用maven-assembly-plugin来打包可执行jar |
 | mode | 以不同的运行模式来打包可执行jar |
@@ -78,7 +78,7 @@ graph TD;
 
 | 父项目 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- |
-| pure | org.junit.jupiter | junit-jupiter-engine | Profile`java-test`激活时 |
+| base | org.junit.jupiter | junit-jupiter | test，聚合构件（api+params+engine），Profile`java-test`激活时 |
 | base | org.slf4j | slf4j-api |
 | base | org.slf4j | jul-to-slf4j | runtime |
 | base | org.slf4j | jcl-over-slf4j | runtime |
@@ -93,7 +93,7 @@ graph TD;
 
 | 父项目 | 属性 | 默认版本 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- | --- | --- |
-| pure | version.junit-jupiter | 5.9.2 | org.junit.jupiter | junit-jupiter-engine | Profile`java-test`激活时 |
+| base | version.junit-jupiter | 5.14.4 | org.junit | junit-bom | import，Profile`java-test`激活时 |
 | base | version.slf4j | 2.0.6 | org.slf4j | slf4j-api |
 | base | version.slf4j | 2.0.6 | org.slf4j | jul-to-slf4j |
 | base | version.slf4j | 2.0.6 | org.slf4j | jcl-over-slf4j |
