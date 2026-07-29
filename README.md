@@ -7,7 +7,7 @@
 | 名称 | 用途 |
 | ---| --- |
 | parent | 所有父项目的继承根。包含项目的编码设置；Maven基础插件版本；代码发布相关设置 |
-| pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；代码质量相关的报告插件设置 |
+| pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；站点报告插件设置（代码质量报告通过Sonar生成） |
 | base | 引入常用的基准依赖包。包含slf4j和Apache Commons |
 | docker | 将Jar打包发布成Docker Image |
 | assembly | 使用maven-assembly-plugin来打包可执行jar |
@@ -115,13 +115,6 @@ graph TD;
 | parent | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
 | parent | org.apache.maven.plugins | maven-release-plugin | Profile`release`激活时 |
 | parent | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
-| pure | org.apache.maven.plugins | maven-jxr-plugin | Profile`java-main`激活，生成报告时 |
-| pure | org.apache.maven.plugins | maven-checkstyle-plugin | Profile`java-main`激活，生成报告时 |
-| pure | org.apache.maven.plugins | maven-changelog-plugin | Profile`java-main`激活，生成报告时 |
-| pure | org.apache.maven.plugins | maven-pmd-plugin | Profile`java-main`激活，生成报告时 |
-| pure | org.codehaus.mojo | jdepend-maven-plugin | Profile`java-main`激活，生成报告时 |
-| pure | org.codehaus.mojo | findbugs-maven-plugin | Profile`java-main`激活，生成报告时 |
-| pure | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活，生成报告时 |
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | docker | pl.project13.maven | git-commit-id-plugin | Profile`docker`激活时 |
@@ -156,14 +149,6 @@ graph TD;
 | pure | version.maven-javadoc-plugin | 3.4.1 | org.apache.maven.plugins | maven-javadoc-plugin |
 | pure | version.maven-resources-plugin | 3.3.0 | org.apache.maven.plugins | maven-resources-plugin |
 | pure | version.maven-source-plugin | 3.2.1 | org.apache.maven.plugins | maven-source-plugin |
-| pure | version.maven-jxr-plugin | 3.3.0 | org.apache.maven.plugins | maven-jxr-plugin | Profile`java-main`激活时 |
-| pure | version.maven-checkstyle-plugin | 3.2.1 | org.apache.maven.plugins | maven-checkstyle-plugin | Profile`java-main`激活时 |
-| pure | version.checkstyle | 9.3 | com.puppycrawl.tools | checkstyle | Profile`java-main`激活时 |
-| pure | version.maven-changelog-plugin | 2.3 | org.apache.maven.plugins | maven-changelog-plugin | Profile`java-main`激活时 |
-| pure | version.maven-pmd-plugin | 3.20.0 | org.apache.maven.plugins | maven-pmd-plugin | Profile`java-main`激活时 |
-| pure | version.jdepend-maven-plugin | 2.0 | org.codehaus.mojo | jdepend-maven-plugin | Profile`java-main`激活时 |
-| pure | version.findbugs-maven-plugin | 3.0.5 | org.codehaus.mojo | findbugs-maven-plugin | Profile`java-main`激活时 |
-| pure | version.taglist-maven-plugin | 3.0.0 | org.codehaus.mojo | taglist-maven-plugin | Profile`java-main`激活时 |
 | pure | version.maven-surefire-plugin | 3.0.0-M8 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
 | pure | version.maven-surefire-report-plugin | 3.0.0-M8 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.jacoco-maven-plugin | 0.8.8 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |

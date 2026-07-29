@@ -19,7 +19,7 @@
   - 验收：`mvn validate` 与 `mvn verify` 通过；README 版本表格同步更新。
 
 - [ ] **升级 Maven 插件版本（pure 模块）**
-  - 现状：compiler 3.10.1 → 3.15.0、jar 3.3.0 → 3.5.1、javadoc 3.4.1 → 3.12.0、resources 3.3.0 → 3.5.0、source 3.2.1 → 3.4.0、checkstyle-plugin 3.2.1 → 3.6.0、jxr 3.3.0 → 3.6.0、pmd 3.20.0 → 3.28.0、jacoco 0.8.8 → 0.8.15、jdepend 2.0 → 2.2.0、taglist 3.0.0 → 3.2.2。
+  - 现状：compiler 3.10.1 → 3.15.0、jar 3.3.0 → 3.5.1、javadoc 3.4.1 → 3.12.0、resources 3.3.0 → 3.5.0、source 3.2.1 → 3.4.0、jacoco 0.8.8 → 0.8.15。
   - 验收：`mvn validate` 通过；README 版本表格同步更新。
 
 - [ ] **milestone 插件版本替换为正式版**
@@ -27,16 +27,9 @@
   - 注意：maven-site-plugin 4.x 至今只有 milestone 版，需确认下游站点构建兼容性后再定版本；release 插件升级会改变发布行为，需单独验证 `mvn release:prepare`。
   - 验收：`mvn validate` 通过；发布流程不受影响。
 
-- [ ] **升级 checkstyle 与 junit-jupiter**
-  - 现状：checkstyle 9.3（主线已 10.x/11.x）、junit-jupiter 5.9.2。
-  - 注意：checkstyle 大版本升级可能使现有规则文件 `sun_checks-120.xml` 下的检查变严，需评估对下游的影响。
+- [ ] **升级 junit-jupiter**
+  - 现状：junit-jupiter 5.9.2。
   - 验收：`mvn validate` 通过；README 版本表格同步更新。
-
-- [ ] **findbugs 迁移到 spotbugs**
-  - 现状：findbugs-maven-plugin 3.0.5 已停止维护（2018 年最后发布），对新版 JDK 字节码支持差。
-  - 方案：替换为 `com.github.spotbugs:spotbugs-maven-plugin`，属性名由 `version.findbugs-maven-plugin` 调整为 `version.spotbugs-maven-plugin`。
-  - 注意：属于接口变更，会改变下游的插件配置继承方式，需评估。
-  - 验收：`mvn validate` 通过；README 插件清单同步更新。
 
 - [ ] **评估 spring-boot 版本基线**
   - 现状：`boot` 模块 `version.spring-boot = 2.7.7`，2.7.x 开源支持已于 2023 年 11 月结束。
@@ -46,6 +39,7 @@
 ## 已完成
 
 - [x] **README 与 pom 版本不一致**：`README.md` 中 `version.checkstyle` 由 10.6.0 修正为与 pom 一致的 9.3。
+- [x] **移除老旧报告插件**：从 `pure` 模块 `java-main` Profile 删除 findbugs、pmd、checkstyle、jdepend、taglist、jxr、changelog 共 7 个报告插件及 8 个版本属性，代码质量/安全报告统一改用 Sonar（`org.sonarsource.scanner.maven:sonar-maven-plugin:sonar`，不纳入 pom 管理）。findbugs→spotbugs 迁移项随之作废。
 
 ## 通用约束
 

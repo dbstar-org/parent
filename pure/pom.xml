@@ -29,16 +29,6 @@
     <version.maven-resources-plugin>3.3.0</version.maven-resources-plugin>
     <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
 
-    <!-- Reporting Plugin Version -->
-    <version.maven-jxr-plugin>3.3.0</version.maven-jxr-plugin>
-    <version.maven-checkstyle-plugin>3.2.1</version.maven-checkstyle-plugin>
-    <version.checkstyle>9.3</version.checkstyle>
-    <version.maven-changelog-plugin>2.3</version.maven-changelog-plugin>
-    <version.maven-pmd-plugin>3.20.0</version.maven-pmd-plugin>
-    <version.jdepend-maven-plugin>2.0</version.jdepend-maven-plugin>
-    <version.findbugs-maven-plugin>3.0.5</version.findbugs-maven-plugin>
-    <version.taglist-maven-plugin>3.0.0</version.taglist-maven-plugin>
-
     <!-- Test Plugin Version-->
     <version.junit-jupiter>5.9.2</version.junit-jupiter>
     <version.maven-surefire-plugin>3.0.0-M8</version.maven-surefire-plugin>
@@ -111,92 +101,6 @@
                 </execution>
               </executions>
             </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-jxr-plugin</artifactId>
-              <version>${version.maven-jxr-plugin}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-checkstyle-plugin</artifactId>
-              <version>${version.maven-checkstyle-plugin}</version>
-              <configuration>
-                <configLocation>https://dbstarll.github.io/sun_checks-120.xml</configLocation>
-              </configuration>
-              <dependencies>
-                <dependency>
-                  <groupId>com.puppycrawl.tools</groupId>
-                  <artifactId>checkstyle</artifactId>
-                  <version>${version.checkstyle}</version>
-                </dependency>
-              </dependencies>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-changelog-plugin</artifactId>
-              <version>${version.maven-changelog-plugin}</version>
-              <configuration>
-                <!-- <displayFileDetailUrl>${project.git.web.master}/%FILE%</displayFileDetailUrl> -->
-                <displayFileRevDetailUrl>${project.git.web.root}/blob/%REV%/%FILE%</displayFileRevDetailUrl>
-                <displayChangeSetDetailUrl>${project.git.web.root}/commit/%REV%</displayChangeSetDetailUrl>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-pmd-plugin</artifactId>
-              <version>${version.maven-pmd-plugin}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>jdepend-maven-plugin</artifactId>
-              <version>${version.jdepend-maven-plugin}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>findbugs-maven-plugin</artifactId>
-              <version>${version.findbugs-maven-plugin}</version>
-              <configuration>
-                <threshold>Low</threshold>
-                <effort>Max</effort>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>taglist-maven-plugin</artifactId>
-              <version>${version.taglist-maven-plugin}</version>
-              <configuration>
-                <tagListOptions>
-                  <tagClasses>
-                    <tagClass>
-                      <displayName>Todo Work Annotation</displayName>
-                      <tags>
-                        <tag>
-                          <matchString>TODO</matchString>
-                          <matchType>ignoreCase</matchType>
-                        </tag>
-                        <tag>
-                          <matchString>@todo</matchString>
-                          <matchType>ignoreCase</matchType>
-                        </tag>
-                        <tag>
-                          <matchString>FIXME</matchString>
-                          <matchType>exact</matchType>
-                        </tag>
-                      </tags>
-                    </tagClass>
-                    <tagClass>
-                      <displayName>Version Annotation</displayName>
-                      <tags>
-                        <tag>
-                          <matchString>@deprecated</matchString>
-                          <matchType>ignoreCase</matchType>
-                        </tag>
-                      </tags>
-                    </tagClass>
-                  </tagClasses>
-                </tagListOptions>
-              </configuration>
-            </plugin>
           </plugins>
         </pluginManagement>
       </build>
@@ -205,34 +109,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jxr-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-changelog-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-pmd-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>jdepend-maven-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>taglist-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </reporting>
