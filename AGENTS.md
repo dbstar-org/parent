@@ -37,7 +37,7 @@ boot → docker        （注意：boot 继承自 docker，与 assembly 分支�
 
 ## 构建与测试
 
-- 构建要求：Maven ≥ 3.2.5（enforcer 插件强制），JDK 8 及以上（默认编译级别 1.8）。
+- 构建要求：Maven ≥ 3.6.3（enforcer 插件强制），JDK 8 及以上（默认编译级别 1.8）。
 - 全量构建：`mvn clean install`
 - 校验：`mvn verify`
 - 本项目自身没有 Java 代码和单元测试；「测试」本质上是验证各 pom 能正确解析。常用检查：

@@ -131,19 +131,19 @@ graph TD;
 
 | 父项目 | 属性 | 默认版本 | groupId | artifactId | 备注 | 
 | --- | --- | --- | --- | --- | --- |
-| parent | version.maven-enforcer-plugin | 3.1.0 | org.apache.maven.plugins | maven-enforcer-plugin |
-| parent | version.maven-antrun-plugin | 3.1.0 | org.apache.maven.plugins | maven-antrun-plugin |
-| parent | version.maven-clean-plugin | 3.2.0 | org.apache.maven.plugins | maven-clean-plugin |
-| parent | version.maven-dependency-plugin | 3.5.0 | org.apache.maven.plugins | maven-dependency-plugin |
-| parent | version.maven-deploy-plugin | 3.0.0 | org.apache.maven.plugins | maven-deploy-plugin |
-| parent | version.maven-install-plugin | 3.1.0 | org.apache.maven.plugins | maven-install-plugin |
-| parent | version.maven-project-info-reports-plugin | 3.4.2 | org.apache.maven.plugins | maven-project-info-reports-plugin |
-| parent | version.maven-site-plugin | 4.0.0-M4 | org.apache.maven.plugins | maven-site-plugin |
-| parent | version.versions-maven-plugin | 2.14.2 | org.codehaus.mojo | versions-maven-plugin |
+| parent | version.maven-enforcer-plugin | 3.6.3 | org.apache.maven.plugins | maven-enforcer-plugin |
+| parent | version.maven-antrun-plugin | 3.2.0 | org.apache.maven.plugins | maven-antrun-plugin |
+| parent | version.maven-clean-plugin | 3.5.0 | org.apache.maven.plugins | maven-clean-plugin |
+| parent | version.maven-dependency-plugin | 3.11.0 | org.apache.maven.plugins | maven-dependency-plugin |
+| parent | version.maven-deploy-plugin | 3.1.4 | org.apache.maven.plugins | maven-deploy-plugin |
+| parent | version.maven-install-plugin | 3.1.4 | org.apache.maven.plugins | maven-install-plugin |
+| parent | version.maven-project-info-reports-plugin | 3.9.0 | org.apache.maven.plugins | maven-project-info-reports-plugin |
+| parent | version.maven-site-plugin | 3.22.0 | org.apache.maven.plugins | maven-site-plugin |
+| parent | version.versions-maven-plugin | 2.21.0 | org.codehaus.mojo | versions-maven-plugin |
 | parent | version.maven-release-plugin | 3.0.0-M7 | org.apache.maven.plugins | maven-release-plugin |
-| parent | version.maven-assembly-plugin | 3.4.2 | org.apache.maven.plugins | maven-assembly-plugin |
-| parent | version.maven-gpg-plugin | 3.0.1 | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
-| parent | version.nexus-staging-maven-plugin | 1.6.13 | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
+| parent | version.maven-assembly-plugin | 3.8.0 | org.apache.maven.plugins | maven-assembly-plugin |
+| parent | version.maven-gpg-plugin | 3.2.8 | org.apache.maven.plugins | maven-gpg-plugin | Profile`release`激活时 |
+| parent | version.nexus-staging-maven-plugin | 1.7.0 | org.sonatype.plugins | nexus-staging-maven-plugin | Profile`distribution-ossrh`激活时 |
 | pure | version.maven-compiler-plugin | 3.10.1 | org.apache.maven.plugins | maven-compiler-plugin |
 | pure | version.maven-jar-plugin | 3.3.0 | org.apache.maven.plugins | maven-jar-plugin |
 | pure | version.maven-javadoc-plugin | 3.4.1 | org.apache.maven.plugins | maven-javadoc-plugin |

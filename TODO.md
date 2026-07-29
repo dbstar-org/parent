@@ -14,17 +14,13 @@
   - 注意：commons-beanutils 对 commons-logging 的 exclusion、slf4j 桥接包对 slf4j-api 的 exclusion 需保持原样。
   - 验收：`mvn validate` 通过；README 版本表格同步更新。
 
-- [ ] **升级 Maven 插件版本（根 pom）**
-  - 现状：enforcer 3.1.0 → 3.6.3、gpg 3.0.1 → 3.2.8、deploy 3.0.0 → 3.1.4、install 3.1.0 → 3.1.4、clean 3.2.0 → 3.5.0、antrun 3.1.0 → 3.2.0、assembly 3.4.2 → 3.8.0、dependency 3.5.0 → 3.11.0、project-info-reports 3.4.2 → 3.9.0、versions 2.14.2 → 2.21.0、nexus-staging 1.6.13 → 1.7.0。
-  - 验收：`mvn validate` 与 `mvn verify` 通过；README 版本表格同步更新。
-
 - [ ] **升级 Maven 插件版本（pure 模块）**
   - 现状：compiler 3.10.1 → 3.15.0、jar 3.3.0 → 3.5.1、javadoc 3.4.1 → 3.12.0、resources 3.3.0 → 3.5.0、source 3.2.1 → 3.4.0、jacoco 0.8.8 → 0.8.15。
   - 验收：`mvn validate` 通过；README 版本表格同步更新。
 
 - [ ] **milestone 插件版本替换为正式版**
-  - 现状：maven-release-plugin 3.0.0-M7（正式版 3.3.1）、surefire / surefire-report 3.0.0-M8（正式版 3.2.5+）、maven-site-plugin 4.0.0-M4。
-  - 注意：maven-site-plugin 4.x 至今只有 milestone 版，需确认下游站点构建兼容性后再定版本；release 插件升级会改变发布行为，需单独验证 `mvn release:prepare`。
+  - 现状：maven-release-plugin 3.0.0-M7（正式版 3.3.1）、surefire / surefire-report 3.0.0-M8（正式版 3.2.5+）。
+  - 注意：release 插件升级会改变发布行为，需单独验证 `mvn release:prepare`。
   - 验收：`mvn validate` 通过；发布流程不受影响。
 
 - [ ] **升级 junit-jupiter**
@@ -40,6 +36,8 @@
 
 - [x] **README 与 pom 版本不一致**：`README.md` 中 `version.checkstyle` 由 10.6.0 修正为与 pom 一致的 9.3。
 - [x] **移除老旧报告插件**：从 `pure` 模块 `java-main` Profile 删除 findbugs、pmd、checkstyle、jdepend、taglist、jxr、changelog 共 7 个报告插件及 8 个版本属性，代码质量/安全报告统一改用 Sonar（`org.sonarsource.scanner.maven:sonar-maven-plugin:sonar`，不纳入 pom 管理）。findbugs→spotbugs 迁移项随之作废。
+- [x] **升级 Maven 插件版本（根 pom）**：enforcer 3.6.3、antrun 3.2.0、clean 3.5.0、dependency 3.11.0、deploy 3.1.4、install 3.1.4、project-info-reports 3.9.0、versions 2.21.0、assembly 3.8.0、gpg 3.2.8、nexus-staging 1.7.0（均已实测 JDK 8 可运行）；enforcer 的 requireMavenVersion 同步从 3.2.5 提升到 3.6.3（新插件的 requiredMavenVersion 均为 3.6.3）。release 3.0.0-M7 留待 milestone 转正批次。
+- [x] **maven-site-plugin 改用稳定主线**：4.x 里程碑线停滞于 4.0.0-M16（2024-07，始终未出正式版），由 4.0.0-M4 改用活跃维护的 3.x 正式版 3.22.0（JDK 8 / Maven 3.6.3 要求均满足）。
 
 ## 通用约束
 
