@@ -4,6 +4,20 @@
 
 ## 待办
 
+- [ ] **account-core 改继承 native**（后续独立议题，在 account-core 仓库执行）
+  - parent 坐标 `io.github.dbstarll.parent:base` → `io.github.dbstarll.parent:native`（版本随 native 层首个发布版）；
+  - 删根 pom 自带 `native-trace` Profile（pom.xml:136-149，已由 native 层提供）；
+  - 自行覆盖 `version.slf4j` / `version.junit-jupiter` / `version.spring-boot` / `project.java.version`——继承 native 会经 boot 层带入 spring-boot 2.7.18 BOM 与 slf4j 1.7.36 等 2.7 适配覆盖，作为 SB3 库必须钉回自己的基线；
+  - `dependencies` 模块「parent 必须是外部 POM」约束不动（它直接继承 `io.github.dbstarll.parent:base`，不经过 account-core-parent）；
+  - 验收：`mvn verify` 通过，依赖版本与迁移前一致（`mvn dependency:list` 对比）。
+
+- [ ] **spring-boot-use-core 改继承 native**（后续独立议题，在 spring-boot-use-core 仓库执行）
+  - parent 坐标 `io.github.dbstarll.parent:boot` → `io.github.dbstarll.parent:native`；
+  - 删自带 `native` / `native-trace` Profile（pom.xml:199-264，已由 native 层提供）；
+  - 项目特定 buildArg（`-H:ExcludeResources`）改以同名 `native-build` Profile 合并追加；`-H:ConfigurationFileDirectories` 无需追加——覆盖 `project.native.agent.config.dir=${project.basedir}/native/agent-output-test` 即同时改变采集输出与编译输入；
+  - 属性 `native.agent.config.dir` 改名为 `project.native.agent.config.dir`，采集输出覆盖为 `${project.basedir}/native/agent-output-test`；
+  - 验收：`mvn clean test -Pnative-trace` 与 `mvn -Pnative package -DskipTests` 流程不变，二进制产出位置不变。
+
 - [ ] **迁移中央仓库发布到 Central Portal（本仓库改造已完成，剩人工准备工作）**
   - 已完成：`distribution-ossrh` 重写为 `distribution-central`（`central-publishing-maven-plugin` 0.11.0，server id `central`，autoPublish + waitUntil=published，含 SNAPSHOT 支持），nexus-staging 插件与属性已移除。注意该插件要求 Maven ≥ 3.9.2（仅发布时激活）。
   - 人工准备工作：
@@ -23,6 +37,8 @@
 
 ## 已完成
 
+- [x] **native-trace 产出物默认作为 native-build 输入**：`native-build` 的 buildArgs 固化 `-H:ConfigurationFileDirectories=${project.native.agent.config.dir}`（置于 `-march` 之前），trace 输出目录与 build 输入目录经同一属性闭环，覆盖该属性即同时改变两端。安全性经本机 GraalVM CE 25.1.3 实测：该选项指向不存在目录被 native-image 静默忽略（hello world 编译成功、二进制可运行），未跑 native-trace 直接 native-build 不会失败。README 同步注明两步构建顺序（`clean test -Pnative-trace` → `-Pnative-build package -DskipTests`）之间不能再 clean（默认产出在 `target/native` 随 clean 清除）。
+- [x] **新增 native 层（GraalVM native image 构建支撑）**：新建 `native` 模块（`native → boot`，继承链收敛为 pure→parent、base→pure、boot→base、native→boot），参考 spring-boot-use-core 实战配置与 account-core/native-hints skill 的采集约定。`native-build` Profile（手动激活）：spring-boot-maven-plugin 追加 `process-aot` execution（版本由 boot 的 spring-boot Profile 的 pluginManagement 提供）、native-maven-plugin 完整声明于 `<plugins>`（`extensions=true` 必须在实际声明处）含 maven-shared-utils 插件依赖钉版、`compile-no-fork` 绑定 package；通用项固化（outputDirectory、`-march`），项目特定 buildArg 由下游同名 Profile 合并追加（父 POM 的 `<buildArgs>` 须带 `combine.children="append"`，否则下游列表会整体替换父 POM 列表——壳项目实测确认合并后父项在前）。实测发现：激活 `native-build` Profile 时 native-maven-plugin 的 Maven 扩展按 Java 17 编译（class file 61.0），JDK 8 环境下任何 mvn 目标都会报 UnsupportedClassVersionError——`-Pnative-build` 要求构建 JDK ≥ 17，而 native 编译本就运行在 GraalVM JDK 上，正常流程无影响，已在 README 注明。`native-trace` Profile（手动激活）：surefire argLine 以 `@{argLine}` 开头挂 Tracing Agent。**native 层不动版本基线**（spring-boot/java/slf4j/junit 全由下游自定），pure 现有 jdk23+ Profile + compiler 3.15.0 + JaCoCo 0.8.15 已覆盖 GraalVM 25（JDK 25）编译适配，无需 jdk25 Profile。三个可覆盖属性 `project.native.outputDirectory` / `project.native.march` / `project.native.agent.config.dir` 遵循 `project.*` 约定。
 - [x] **依赖版本升级到 JDK 1.8 适配的最新版**：slf4j 2.0.6→2.0.18、commons-lang3 3.12.0→3.20.0、commons-io 2.11.0→2.22.0、commons-codec 1.15→1.22.0、commons-beanutils 1.9.4→1.11.0（修复 CVE-2025-48734）、commons-collections4 4.4→4.5.0、spring-boot 2.7.7→2.7.18（2.7 线最后一版）；8 个新构件全部实测字节码 version 52.0（Java 1.8），无需回退；slf4j 桥接包对 slf4j-api、commons-beanutils 对 commons-logging 的 exclusion 保持原样（1.11.0 传递依赖面与 1.9.4 一致，commons-logging 仍在）；junit-bom 5.14.4 已是 5.x 最新线（JUnit 6 需 Java 17）不动。
 - [x] **git-commit-id-plugin 提升到 base 层**：从 boot 的 spring-boot Profile（spring 专属）提升到 base 新增的 `java-main` Profile（与 pure 同名 Profile 自动合并，存在 `src/main/java` 即激活），所有 Java 项目均可生成 git.properties，不再局限于 spring；新增 `failOnNoGitDirectory=false`，无 .git 目录的构建环境（源码包、CI 浅克隆）宽容跳过；版本属性 `version.git-commit-id-plugin` 同步移至 base，boot 中相关配置（插件、filters）全部拆除。
 - [x] **boot 导入 spring-boot-dependencies BOM**：在 boot 的 spring-boot Profile（src/main/java 门控）内 import BOM，版本复用 `version.spring-boot`（2.7.18），插件与 BOM 天然同版；logback（1.2.12）、junit（5.8.2）等 base 未直接钉版的构件由 spring 策展版接管（slf4j 的接管未达预期，见下条修正）。

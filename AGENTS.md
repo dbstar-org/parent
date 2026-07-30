@@ -10,12 +10,13 @@
 
 ## 模块结构与继承关系
 
-仓库根 `pom.xml` 聚合了 3 个模块，模块之间的**继承链**（注意：不是平级的兄弟模块）如下：
+仓库根 `pom.xml` 聚合了 4 个模块，模块之间的**继承链**（注意：不是平级的兄弟模块）如下：
 
 ```
 pure → parent
 base → pure
 boot → base
+native → boot
 ```
 
 各模块职责（一句话版；版本号、属性默认值、激活条件的权威清单见 README 表格，此处不重复）：
@@ -26,6 +27,7 @@ boot → base
 | `pure` | 纯 Java 父项目：编译级别与按构建 JDK 分组的编译参数 Profile（jdk8/jdk9+/jdk23+）、打包插件、测试插件（surefire + JaCoCo） |
 | `base` | 基准依赖（slf4j + 桥接、Apache Commons、Lombok provided）、JUnit 5 测试环境（java-test Profile）、git-commit-id-plugin（java-main Profile 生成 git.properties） |
 | `boot` | spring-boot 可执行 jar：spring-boot Profile 内导入 spring-boot-dependencies BOM 做依赖管理（junit/slf4j 有显式覆盖，见「安全注意事项」）、spring-boot-maven-plugin repackage |
+| `native` | GraalVM native image 构建支撑：`native-build` Profile（Spring AOT + native-maven-plugin 编译骨架，通用 buildArg 固化、项目特定 buildArg 由下游同名 Profile 合并追加）、`native-trace` Profile（surefire 挂 Tracing Agent 采集反射元数据）；`native-trace` 产出目录默认经 `project.native.agent.config.dir` 属性作为 `native-build` 的 `-H:ConfigurationFileDirectories` 输入（缺失目录被静默忽略）；**不动版本基线**，spring-boot/java 等基线由下游项目自定 |
 
 ## 构建与测试
 
@@ -72,3 +74,4 @@ boot → base
 - 依赖版本接管优先级（已实测验证）：**父 pom 直接 dependencyManagement 钉版 > 子 pom 导入的 BOM > 父 pom 导入的 BOM**；同一 pom 内多个 BOM 按声明顺序先声明者胜。因此 boot 导入 spring-boot-dependencies 后，base 直接钉版的构件（slf4j、commons-lang3、commons-codec 等）仍胜 BOM；boot 通过覆盖 `version.slf4j` 属性钉回 spring 适配版本，是利用「属性在子项目上下文中插值」的机制，修改 base 的 `version.*` 属性名时需检查 boot 是否有同名覆盖。
 - **抢在 spring-boot 发版前单独升级子项（如 CVE 修复）的通用方法**：在 boot 的 spring-boot Profile 的 dependencyManagement 中**直接声明**该构件的新版本（配 `version.*` 属性）——直接声明胜过一切 BOM；有自家 BOM 的组件族（如 junit）可前置导入对应 BOM。注意：覆盖 spring-boot-dependencies 的内部属性（如 `logback.version`）无效，BOM 内属性在 BOM 自己的上下文中插值。
 - 本项目的任何改动都会被所有下游继承项目感知，修改共享配置（插件版本、依赖版本、Profile 激活条件）前应评估对下游的兼容性影响。
+- surefire 的 `<argLine>` 约定（`native-trace` 等 Profile 遵守）：所有 `<argLine>` 必须以 `@{argLine}` 开头（晚期属性替换，保留 JaCoCo prepare-agent 写入的覆盖率 agent）；对应禁令——公共属性 `argLine` 严禁经 settings profile / pom `<properties>` / `-DargLine` 注入，会与 JaCoCo 争抢或被显式 `<argLine>` 静默覆盖（实测 fork JVM 启动失败）。

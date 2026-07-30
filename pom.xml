@@ -33,6 +33,7 @@
     <module>pure</module>
     <module>base</module>
     <module>boot</module>
+    <module>native</module>
   </modules>
 
   <scm>

@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.dbstarll.parent</groupId>
+    <artifactId>boot</artifactId>
+    <version>1.4.0-SNAPSHOT</version>
+    <relativePath>../boot</relativePath>
+  </parent>
+  <artifactId>native</artifactId>
+  <packaging>pom</packaging>
+
+  <name>native</name>
+  <description>parent for GraalVM native image</description>
+  <url>https://github.com/dbstar-org/parent/tree/main/native</url>
+
+  <scm>
+    <url>${project.git.web.master}</url>
+    <connection>scm:git:${project.git.git.root}</connection>
+    <developerConnection>scm:git:${project.git.web.root}</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <!-- 二进制产出目录，兼作 docker context；沿用实战约定 -->
+    <project.native.outputDirectory>${project.basedir}/native</project.native.outputDirectory>
+    <!-- 防 K8s 旧 CPU 节点 ISA 报错，可覆盖为 native 等 -->
+    <project.native.march>compatibility</project.native.march>
+    <!-- Tracing Agent 采集输出目录，默认随 mvn clean 自清；同时默认作为 native-build 的 -H:ConfigurationFileDirectories 输入（目录不存在时被静默忽略） -->
+    <project.native.agent.config.dir>${project.build.directory}/native</project.native.agent.config.dir>
+    <!-- plugin version -->
+    <version.native-maven-plugin>1.1.6</version.native-maven-plugin>
+    <!-- native-maven-plugin 引用了 maven-shared-utils 的类但未声明，Maven 3.9+ 不再提供，需以插件依赖补上 -->
+    <version.maven-shared-utils>3.4.2</version.maven-shared-utils>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>native-build</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>process-aot</id>
+                <goals>
+                  <goal>process-aot</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- extensions=true 必须在实际插件声明处；项目特定 buildArg 由下游同名 native-build Profile 合并追加 -->
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <version>${version.native-maven-plugin}</version>
+            <extensions>true</extensions>
+            <dependencies>
+              <dependency>
+                <groupId>org.apache.maven.shared</groupId>
+                <artifactId>maven-shared-utils</artifactId>
+                <version>${version.maven-shared-utils}</version>
+              </dependency>
+            </dependencies>
+            <configuration>
+              <outputDirectory>${project.native.outputDirectory}</outputDirectory>
+              <!-- combine.children=append：下游同名 Profile 追加的项目特定 buildArg 合并到本列表之后，而非替换 -->
+              <buildArgs combine.children="append">
+                <buildArg>-H:ConfigurationFileDirectories=${project.native.agent.config.dir}</buildArg>
+                <buildArg>-march=${project.native.march}</buildArg>
+              </buildArgs>
+            </configuration>
+            <executions>
+              <execution>
+                <id>build-native</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>compile-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>native-trace</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <!-- @{argLine} 开头保留 JaCoCo agent；公共属性 argLine 严禁经 settings/pom properties/-D 注入 -->
+              <!-- 不设周期写盘（config-write-period-secs）：异常终止的采集结果不完整不可信，仅 JVM 正常退出时写盘 -->
+              <argLine>@{argLine} -agentlib:native-image-agent=config-output-dir=${project.native.agent.config.dir}</argLine>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
