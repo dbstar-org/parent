@@ -31,6 +31,27 @@
     <version.junit-jupiter>5.8.2</version.junit-jupiter>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <!-- 前置导入占住位置，防止 junit 被 spring-boot-dependencies 接管；版本由 boot 覆盖的 version.junit-jupiter 决定 -->
+      <!-- 必须无条件放置在主干：file 激活的 profile 只在带源码构建时求值，下游从仓库消费部署 pom 时不生效 -->
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${version.junit-jupiter}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${version.spring-boot}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <profiles>
     <profile>
       <id>spring-boot</id>
@@ -39,25 +60,6 @@
           <exists>src/main/java</exists>
         </file>
       </activation>
-      <dependencyManagement>
-        <dependencies>
-          <!-- 前置导入占住位置，防止 junit 被 spring-boot-dependencies 接管；版本由 boot 覆盖的 version.junit-jupiter 决定 -->
-          <dependency>
-            <groupId>org.junit</groupId>
-            <artifactId>junit-bom</artifactId>
-            <version>${version.junit-jupiter}</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <version>${version.spring-boot}</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
       <build>
         <pluginManagement>
           <plugins>

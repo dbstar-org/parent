@@ -100,8 +100,8 @@ graph TD;
 | base | version.commons-collections4 | 4.5.0 | org.apache.commons | commons-collections4 |
 | base | version.lombok | 1.18.46 | org.projectlombok | lombok | scope=provided，编译期注解处理器 |
 | boot | version.slf4j | 1.7.36 | org.slf4j | slf4j-api及jul/jcl/log4j桥接包 | 覆盖base的2.0.18，适配logback 1.2绑定机制 |
-| boot | version.junit-jupiter | 5.8.2 | org.junit | junit-bom | import，Profile`spring-boot`激活时；覆盖base的5.14.4与spring-boot 2.7.18策展版一致，前置导入防BOM接管 |
-| boot | version.spring-boot | 2.7.18 | org.springframework.boot | spring-boot-dependencies | import，Profile`spring-boot`激活时，logback等base未钉版的构件由spring策展版接管 |
+| boot | version.junit-jupiter | 5.8.2 | org.junit | junit-bom | import，主干生效；覆盖base的5.14.4与spring-boot 2.7.18策展版一致，前置导入防BOM接管 |
+| boot | version.spring-boot | 2.7.18 | org.springframework.boot | spring-boot-dependencies | import，主干生效，logback等base未钉版的构件由spring策展版接管 |
 
 ---
 
