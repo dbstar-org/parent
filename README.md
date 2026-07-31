@@ -180,6 +180,29 @@ graph TD;
 
 ---
 
+### Spring Boot 3.x 适配
+
+`boot` 父项目默认基线保持 **Spring Boot 2.7.18 + JDK 8**（`version.spring-boot=2.7.18`、`version.slf4j=1.7.36`、`version.junit-jupiter=5.8.2`），以保证对存量 JDK 8 项目的兼容。
+
+若下游项目需迁移到 **Spring Boot 3.x + JDK 17**，只需在子项目的根 `pom.xml` 中覆盖以下属性即可，无需修改父项目：
+
+```xml
+<properties>
+  <project.java.version>17</project.java.version>
+  <version.spring-boot>3.5.16</version.spring-boot>
+  <version.slf4j>2.0.18</version.slf4j>
+  <version.junit-jupiter>5.12.2</version.junit-jupiter>
+</properties>
+```
+
+参考实践：
+- `account-core`（库项目，继承 `io.github.dbstarll.parent:boot`）
+- `spring-boot-use-core`（可执行应用，继承 `io.github.dbstarll.parent:native`）
+
+两者均已按上述方式覆盖，且 `mvn clean verify` 构建通过。
+
+---
+
 ### 代码仓库相关配置
 
 在根项目`parent`中，预定义了一些与git仓库相关的配置项，这些配置项的默认值以[github.com](https://github.com)为蓝本，如下所示：
