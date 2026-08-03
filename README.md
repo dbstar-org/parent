@@ -196,10 +196,35 @@ graph TD;
 ```
 
 参考实践：
-- `account-core`（库项目，继承 `io.github.dbstarll.parent:boot`）
+- `account-core`（库项目，继承 `io.github.dbstarll.parent:boot`，`master-boot3-java17` 分支）
 - `spring-boot-use-core`（可执行应用，继承 `io.github.dbstarll.parent:native`）
 
 两者均已按上述方式覆盖，且 `mvn clean verify` 构建通过。
+
+---
+
+### Spring Boot 4.x 适配
+
+`boot` 父项目默认基线仍为 **Spring Boot 2.7.18 + JDK 8**（见上节）。迁移到 **Spring Boot 4.x + JDK 25**，同样只需在子项目根 `pom.xml` 中覆盖属性：
+
+```xml
+<properties>
+  <project.java.version>25</project.java.version>
+  <version.spring-boot>4.1.0</version.spring-boot>
+  <version.slf4j>2.0.18</version.slf4j>
+  <version.junit-jupiter>6.0.3</version.junit-jupiter>
+</properties>
+```
+
+与 3.x 适配的差异点：
+
+- **JDK 要求**：Spring Boot 4 最低 JDK 17，实践上使用 JDK 25（`project.java.version=25`，编译参数、注解处理、JaCoCo 等由 `pure` 层按 JDK 版本自动适配）
+- **JUnit 6**：`spring-boot-dependencies` 4.x 策展 JUnit 6，覆盖值取 `6.0.3`（`org.junit:junit-bom` 坐标不变）；`slf4j` 覆盖值与 3.x 相同（`2.0.18`，与 4.x 策展版一致）
+- **不再策展的构件**：`logstash-logback-encoder` 已从 4.x BOM 移除，如使用需在子项目自行钉版；`springdoc-openapi` 从未被策展，Boot 4 需使用其 3.x 版本并自行管理
+- **库项目附加项**：全部模块为库、无 main class 时，建议加 `<spring-boot.repackage.skip>true</spring-boot.repackage.skip>` 屏蔽 `spring-boot` Profile 的 repackage
+
+参考实践：
+- `account-core`（库项目，继承 `io.github.dbstarll.parent:boot`，`master-boot4-java25` 分支，已按上述方式覆盖且 `mvn clean install` 构建通过）
 
 ---
 
