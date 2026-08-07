@@ -31,7 +31,7 @@ native → boot
 | --- | --- |
 | `parent`（根） | 继承根：编码、git 仓库属性（`project.git.*`）、基础插件版本、发布 Profile |
 | `pure` | 纯 Java 父项目：编译级别与按构建 JDK 分组的编译参数 Profile（jdk8/jdk9+/jdk23+）、打包插件、测试插件（surefire + JaCoCo） |
-| `base` | 基准依赖（slf4j + 桥接、Apache Commons、Lombok provided）、JUnit 5 测试环境（java-test Profile）、git-commit-id-plugin（java-main Profile 生成 git.properties） |
+| `base` | 基准依赖（slf4j + 桥接、Apache Commons、Lombok optional）、JUnit 5 测试环境（java-test Profile）、git-commit-id-plugin（java-main Profile 生成 git.properties） |
 | `boot` | spring-boot 可执行 jar：**主干** dependencyManagement 导入 junit-bom（前置占位）+ spring-boot-dependencies BOM 做依赖管理（junit/slf4j 有属性钉版覆盖，见「安全注意事项」）；`spring-boot` Profile（file 激活）只做 spring-boot-maven-plugin repackage |
 | `native` | GraalVM native image 构建支撑：`native-build` Profile（Spring AOT + native-maven-plugin 编译骨架，通用 buildArg 固化、项目特定 buildArg 由下游同名 Profile 合并追加）、`native-trace` Profile（surefire 挂 Tracing Agent 采集反射元数据）；`native-trace` 产出目录默认经 `project.native.agent.config.dir` 属性作为 `native-build` 的 `-H:ConfigurationFileDirectories` 输入（缺失目录被静默忽略）；**不动版本基线**，spring-boot/java 等基线由下游项目自定 |
 
@@ -48,6 +48,7 @@ native → boot
 
 ## 发布与部署
 
+- **本地禁止执行 `mvn install` / `mvn deploy` 向仓库安装或发布构件**；快照与正式版的安装、部署一律由 GitHub CI 完成（见下文 workflow）。本地验证 pom 只用 `mvn validate` / `mvn verify`。
 - 发布使用 maven-release-plugin，命令：`mvn release:prepare -P release`（`release` Profile 启用 GPG 签名）。tag 格式为 `v@{project.version}`，子模块自动统一版本（`autoVersionSubmodules=true`）。
 - 部署目标由 Profile 选择：
   - `distribution-central`：发布到 Maven 中央仓库（Central Portal，`central-publishing-maven-plugin`，server id `central`，autoPublish + waitUntil=published；该插件要求 Maven ≥ 3.9.2，仅在发布时激活）
