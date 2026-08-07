@@ -145,11 +145,11 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
     </dependency>
-    <!-- lombok：编译期注解处理器，不进运行期、不向下游传递 -->
+    <!-- lombok：编译期注解处理器，optional 不向下游传递；spring-boot repackage/run 默认跳过 optional，不打进可执行 jar -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <scope>provided</scope>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
