@@ -61,7 +61,7 @@ graph TD;
 | boot | project.mainClass | 无默认值，必须在子项目中设置 | 可执行jar的主类，Profile`spring-boot`激活时 |
 | boot | project.spring-boot.attach | false | 是否发布Spring Boot打包后的可执行Jar，Profile`spring-boot`激活时 |
 | boot | project.spring-boot.classifier | boot | 可执行Jar的classifier后缀名称，Profile`spring-boot`激活时 |
-| native | project.native.outputDirectory | `${project.basedir}/native` | native二进制的产出目录，兼作docker context，Profile`native-build`激活时 |
+| native | project.native.outputDirectory | `${project.build.directory}/native` | native二进制的产出目录，默认放target/native/随mvn clean清理；docker build通过`-f`指定Dockerfile、以该目录作为context，Profile`native-build`激活时 |
 | native | project.native.march | compatibility | native编译的`-march`参数（防旧CPU节点ISA报错），Profile`native-build`激活时 |
 | native | project.native.agent.config.dir | `${project.build.directory}/native` | Tracing Agent反射元数据采集输出目录，Profile`native-trace`激活时；同时默认作为Profile`native-build`的`-H:ConfigurationFileDirectories`输入 |
 
@@ -175,7 +175,7 @@ graph TD;
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、代码覆盖率报告、生成test.jar、配置test-javadoc.jar、test-source.jar和相关报告 |
 | pure | release | 手动 | 生成javadoc.jar、source.jar |
 | boot | spring-boot | 存在目录：src/main/java | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
-| native | native-build | 手动 | Spring AOT处理+GraalVM编译native二进制到`${project.native.outputDirectory}`；默认将native-trace产出目录（`${project.native.agent.config.dir}`）作为反射元数据输入，目录不存在时被静默忽略（已实测）；通用buildArg已固化（`combine.children=append`），项目特定buildArg由子项目定义同名Profile合并追加。两步构建顺序：`mvn clean test -Pnative-trace`→`mvn -Pnative-build package -DskipTests`，两步之间不能再clean（默认产出在target/native随clean清除）。激活时要求构建JDK≥17（native-maven-plugin的Maven扩展按Java 17编译），native编译本就需要GraalVM JDK，正常流程无影响 |
+| native | native-build | 手动 | Spring AOT处理+GraalVM编译native二进制到`${project.native.outputDirectory}`；默认将native-trace产出目录（`${project.native.agent.config.dir}`）作为反射元数据输入，目录不存在时被静默忽略（已实测）；通用buildArg已固化（`combine.children=append`），项目特定buildArg由子项目定义同名Profile合并追加。两步构建顺序：`mvn clean verify -Pnative-trace -U -B`→`mvn package -Pnative-build -DskipTests -B`，第二步不clean以复用第一步产物；docker build通过`-f Dockerfile.native target/native`指定Dockerfile与context。激活时要求构建JDK≥17（native-maven-plugin的Maven扩展按Java 17编译），native编译本就需要GraalVM JDK，正常流程无影响 |
 | native | native-trace | 手动 | surefire挂Tracing Agent，跑测试时采集反射元数据到`${project.native.agent.config.dir}` |
 
 ---

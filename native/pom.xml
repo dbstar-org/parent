@@ -22,8 +22,8 @@
   </scm>
 
   <properties>
-    <!-- 二进制产出目录，兼作 docker context；沿用实战约定 -->
-    <project.native.outputDirectory>${project.basedir}/native</project.native.outputDirectory>
+    <!-- 二进制产出目录，默认放 target/native/ 随 mvn clean 清理；docker build 通过 -f 指定仓库中的 Dockerfile、target/native/ 作为 context -->
+    <project.native.outputDirectory>${project.build.directory}/native</project.native.outputDirectory>
     <!-- 防 K8s 旧 CPU 节点 ISA 报错，可覆盖为 native 等 -->
     <project.native.march>compatibility</project.native.march>
     <!-- Tracing Agent 采集输出目录，默认随 mvn clean 自清；同时默认作为 native-build 的 -H:ConfigurationFileDirectories 输入（目录不存在时被静默忽略） -->
