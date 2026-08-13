@@ -10,7 +10,7 @@
 | ---| --- |
 | parent | 所有父项目的继承根。包含项目的编码设置；Maven基础插件版本；代码发布相关设置 |
 | pure | 用于纯Java的父项目。包含编译级别；打包相关的插件设置；站点报告插件设置（代码质量报告通过Sonar生成） |
-| base | 引入常用的基准依赖包。包含slf4j、Apache Commons、Lombok和JUnit 5测试环境 |
+| base | 引入常用的基准依赖包。包含slf4j、Apache Commons、Lombok和JUnit 5测试环境（java-test Profile） |
 | boot | 以spring-boot.jar的方式来打包可执行jar，并通过spring-boot-dependencies做依赖管理 |
 | native | 用于GraalVM native image构建的父项目。包含Spring AOT+native编译骨架、Tracing Agent反射元数据采集；不动版本基线，基线由子项目自定 |
 
@@ -119,6 +119,7 @@ graph TD;
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | base | pl.project13.maven | git-commit-id-plugin | Profile`java-main`激活时 |
+| pure | org.codehaus.mojo | build-helper-maven-plugin | Profile`java-it`激活时，注册`src/it/java`为测试源码目录 |
 | boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 | native | org.graalvm.buildtools | native-maven-plugin | Profile`native-build`激活时 |
 
@@ -151,6 +152,7 @@ graph TD;
 | pure | version.maven-surefire-report-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.jacoco-maven-plugin | 0.8.15 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | base | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`java-main`激活时 |
+| pure | version.build-helper-maven-plugin | 3.6.0 | org.codehaus.mojo | build-helper-maven-plugin | Profile`java-it`激活时 |
 | boot | version.spring-boot | 2.7.18 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
 | native | version.native-maven-plugin | 1.1.6 | org.graalvm.buildtools | native-maven-plugin | Profile`native-build`激活时，完整声明于`<plugins>`（extensions=true必须在实际声明处） |
 | native | version.maven-shared-utils | 3.4.2 | org.apache.maven.shared | maven-shared-utils | native-maven-plugin的插件依赖钉版（其引用了该类库但未声明，Maven 3.9+不再提供） |
@@ -173,6 +175,7 @@ graph TD;
 | pure | java-main | 存在目录：src/main/java | 生成jar、配置javadoc.jar、source.jar和相关报告 |
 | base | java-main | 存在目录：src/main/java | 与pure的同名Profile合并，执行git-commit-id-plugin:revision生成git.properties（无.git目录时跳过） |
 | pure | java-test | 存在目录：src/test/java | 执行单元测试、代码覆盖率报告、生成test.jar、配置test-javadoc.jar、test-source.jar和相关报告 |
+| pure | java-it | 存在目录：src/it/java | 通过`build-helper-maven-plugin`将`src/it/java`注册为测试源码目录；failsafe执行由子项目按需声明 |
 | pure | release | 手动 | 生成javadoc.jar、source.jar |
 | boot | spring-boot | 存在目录：src/main/java | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
 | native | native-build | 手动 | Spring AOT处理+GraalVM编译native二进制到`${project.native.outputDirectory}`；默认将native-trace产出目录（`${project.native.agent.config.dir}`）作为反射元数据输入，目录不存在时被静默忽略（已实测）；通用buildArg已固化（`combine.children=append`），项目特定buildArg由子项目定义同名Profile合并追加。两步构建顺序：`mvn clean verify -Pnative-trace -U -B`→`mvn package -Pnative-build -DskipTests -B`，第二步不clean以复用第一步产物；docker build通过`-f Dockerfile.native target/native`指定Dockerfile与context。激活时要求构建JDK≥17（native-maven-plugin的Maven扩展按Java 17编译），native编译本就需要GraalVM JDK，正常流程无影响 |
