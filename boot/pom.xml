@@ -72,6 +72,13 @@
                 <classifier>${project.spring-boot.classifier}</classifier>
                 <!--suppress UnresolvedMavenProperty -->
                 <mainClass>${project.mainClass}</mainClass>
+                <!-- lombok 为编译期注解处理器，运行期无用，避免进入 boot jar -->
+                <excludes>
+                  <exclude>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                  </exclude>
+                </excludes>
               </configuration>
               <executions>
                 <execution>

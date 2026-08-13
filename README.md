@@ -98,7 +98,7 @@ graph TD;
 | base | version.commons-codec | 1.22.0 | commons-codec | commons-codec |
 | base | version.commons-beanutils | 1.11.0 | commons-beanutils | commons-beanutils |
 | base | version.commons-collections4 | 4.5.0 | org.apache.commons | commons-collections4 |
-| base | version.lombok | 1.18.46 | org.projectlombok | lombok | optional=true，编译期注解处理器，不打进 spring-boot 可执行 jar |
+| base | version.lombok | 1.18.46 | org.projectlombok | lombok | optional=true，编译期注解处理器；boot 层的 spring-boot-maven-plugin 默认排除，避免进入可执行 jar |
 | boot | version.slf4j | 1.7.36 | org.slf4j | slf4j-api及jul/jcl/log4j桥接包 | 覆盖base的2.0.18，适配logback 1.2绑定机制 |
 | boot | version.junit-jupiter | 5.8.2 | org.junit | junit-bom | import，主干生效；覆盖base的5.14.4与spring-boot 2.7.18策展版一致，前置导入防BOM接管 |
 | boot | version.spring-boot | 2.7.18 | org.springframework.boot | spring-boot-dependencies | import，主干生效，logback等base未钉版的构件由spring策展版接管 |
@@ -120,7 +120,7 @@ graph TD;
 | pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
 | base | pl.project13.maven | git-commit-id-plugin | Profile`java-main`激活时 |
 | pure | org.codehaus.mojo | build-helper-maven-plugin | Profile`java-it`激活时，注册`src/it/java`为测试源码目录 |
-| boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
+| boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时；默认排除`lombok`，避免其进入可执行 jar |
 | native | org.graalvm.buildtools | native-maven-plugin | Profile`native-build`激活时 |
 
 ---
