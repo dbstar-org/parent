@@ -98,6 +98,14 @@
               <argLine>@{argLine} -agentlib:native-image-agent=config-output-dir=${project.native.agent.config.dir}</argLine>
             </configuration>
           </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <!-- @{argLine} 开头保留 JaCoCo agent；使用 config-merge-dir 将 IT 采集结果合并到 surefire 同一目录 -->
+              <argLine>@{argLine} -agentlib:native-image-agent=config-merge-dir=${project.native.agent.config.dir}</argLine>
+            </configuration>
+          </plugin>
         </plugins>
       </build>
     </profile>

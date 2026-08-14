@@ -118,6 +118,7 @@ graph TD;
 | parent | org.sonatype.central | central-publishing-maven-plugin | Profile`distribution-central`激活时 |
 | pure | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活，生成报告时 |
 | pure | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
+| pure | org.apache.maven.plugins | maven-failsafe-plugin | Profile`java-test`激活时，执行 integration-test/verify goals |
 | base | pl.project13.maven | git-commit-id-plugin | Profile`java-main`激活时 |
 | pure | org.codehaus.mojo | build-helper-maven-plugin | Profile`java-it`激活时，注册`src/it/java`为测试源码目录 |
 | boot | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时；默认排除`lombok`，避免其进入可执行 jar |
@@ -151,6 +152,7 @@ graph TD;
 | pure | version.maven-surefire-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-plugin | Profile`java-test`激活时 |
 | pure | version.maven-surefire-report-plugin | 3.5.6 | org.apache.maven.plugins | maven-surefire-report-plugin | Profile`java-test`激活时 |
 | pure | version.jacoco-maven-plugin | 0.8.15 | org.jacoco | jacoco-maven-plugin | Profile`java-test`激活时 |
+| pure | version.maven-failsafe-plugin | 3.5.6 | org.apache.maven.plugins | maven-failsafe-plugin | Profile`java-test`激活时 |
 | base | version.git-commit-id-plugin | 4.9.10 | pl.project13.maven | git-commit-id-plugin | Profile`java-main`激活时 |
 | pure | version.build-helper-maven-plugin | 3.6.0 | org.codehaus.mojo | build-helper-maven-plugin | Profile`java-it`激活时 |
 | boot | version.spring-boot | 2.7.18 | org.springframework.boot | spring-boot-maven-plugin | Profile`spring-boot`激活时 |
@@ -174,12 +176,12 @@ graph TD;
 | pure | jdk23+ | JDK版本≥23 | 设置`maven.compiler.proc`为full（JDK23起javac不再默认执行注解处理） |
 | pure | java-main | 存在目录：src/main/java | 生成jar、配置javadoc.jar、source.jar和相关报告 |
 | base | java-main | 存在目录：src/main/java | 与pure的同名Profile合并，执行git-commit-id-plugin:revision生成git.properties（无.git目录时跳过） |
-| pure | java-test | 存在目录：src/test/java | 执行单元测试、代码覆盖率报告、生成test.jar、配置test-javadoc.jar、test-source.jar和相关报告 |
-| pure | java-it | 存在目录：src/it/java | 通过`build-helper-maven-plugin`将`src/it/java`注册为测试源码目录；failsafe执行由子项目按需声明 |
+| pure | java-test | 存在目录：src/test/java | 执行单元测试、集成测试（通过`maven-failsafe-plugin`）、代码覆盖率报告、生成test.jar、配置test-javadoc.jar、test-source.jar和相关报告 |
+| pure | java-it | 存在目录：src/it/java | 通过`build-helper-maven-plugin`将`src/it/java`注册为测试源码目录；执行由`java-test` Profile中的`maven-failsafe-plugin`负责 |
 | pure | release | 手动 | 生成javadoc.jar、source.jar |
 | boot | spring-boot | 存在目录：src/main/java | 执行spring-boot-maven-plugin:repackage goal来打包可执行jar |
 | native | native-build | 手动 | Spring AOT处理+GraalVM编译native二进制到`${project.native.outputDirectory}`；默认将native-trace产出目录（`${project.native.agent.config.dir}`）作为反射元数据输入，目录不存在时被静默忽略（已实测）；通用buildArg已固化（`combine.children=append`），项目特定buildArg由子项目定义同名Profile合并追加。两步构建顺序：`mvn clean verify -Pnative-trace -U -B`→`mvn package -Pnative-build -DskipTests -B`，第二步不clean以复用第一步产物；docker build通过`-f Dockerfile.native target/native`指定Dockerfile与context。激活时要求构建JDK≥17（native-maven-plugin的Maven扩展按Java 17编译），native编译本就需要GraalVM JDK，正常流程无影响 |
-| native | native-trace | 手动 | surefire挂Tracing Agent，跑测试时采集反射元数据到`${project.native.agent.config.dir}` |
+| native | native-trace | 手动 | surefire与failsafe均挂Tracing Agent，采集反射元数据到`${project.native.agent.config.dir}`；surefire使用`config-output-dir`，failsafe使用`config-merge-dir` |
 
 ---
 

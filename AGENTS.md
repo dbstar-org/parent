@@ -10,7 +10,7 @@
 
 ## 项目概述
 
-本项目是一组 **Maven 父 POM**（parent pom），groupId 为 `io.github.dbstarll.parent`，当前版本 `1.4.1-SNAPSHOT`。它不包含任何 Java 源代码，所有模块的 `<packaging>` 均为 `pom`。其用途是作为其他 Maven 项目的 `<parent>`，通过继承复用预定义的依赖版本、插件配置、Profile 和发布流程。
+本项目是一组 **Maven 父 POM**（parent pom），groupId 为 `io.github.dbstarll.parent`，当前版本 `1.4.2-SNAPSHOT`。它不包含任何 Java 源代码，所有模块的 `<packaging>` 均为 `pom`。其用途是作为其他 Maven 项目的 `<parent>`，通过继承复用预定义的依赖版本、插件配置、Profile 和发布流程。
 
 **分工**：`README.md` 是面向下游使用者的**权威配置参考**（全部版本号、属性默认值、依赖/插件/Profile 清单以此为准）；本文件是面向 AI 代理的**操作指南**（构建/发布命令、开发约定、实测经验与坑），不重复记录版本数字。修改 pom 后同步更新 README。
 
@@ -30,10 +30,10 @@ native → boot
 | 模块 | 职责 |
 | --- | --- |
 | `parent`（根） | 继承根：编码、git 仓库属性（`project.git.*`）、基础插件版本、发布 Profile |
-| `pure` | 纯 Java 父项目：编译级别与按构建 JDK 分组的编译参数 Profile（jdk8/jdk9+/jdk23+）、打包插件、测试插件（surefire + JaCoCo）、`src/it/java` 集成测试源码注册（java-it Profile） |
+| `pure` | 纯 Java 父项目：编译级别与按构建 JDK 分组的编译参数 Profile（jdk8/jdk9+/jdk23+）、打包插件、测试插件（surefire + failsafe + JaCoCo）、`src/it/java` 集成测试源码注册（java-it Profile） |
 | `base` | 基准依赖（slf4j + 桥接、Apache Commons、Lombok optional）、JUnit 5 测试环境（java-test Profile）、git-commit-id-plugin（java-main Profile 生成 git.properties） |
 | `boot` | spring-boot 可执行 jar：**主干** dependencyManagement 导入 junit-bom（前置占位）+ spring-boot-dependencies BOM 做依赖管理（junit/slf4j 有属性钉版覆盖，见「安全注意事项」）；`spring-boot` Profile（file 激活）执行 spring-boot-maven-plugin repackage，并默认排除 `lombok` |
-| `native` | GraalVM native image 构建支撑：`native-build` Profile（Spring AOT + native-maven-plugin 编译骨架，通用 buildArg 固化、项目特定 buildArg 由下游同名 Profile 合并追加）、`native-trace` Profile（surefire 挂 Tracing Agent 采集反射元数据）；`native-trace` 产出目录默认经 `project.native.agent.config.dir` 属性作为 `native-build` 的 `-H:ConfigurationFileDirectories` 输入（缺失目录被静默忽略）；**不动版本基线**，spring-boot/java 等基线由下游项目自定 |
+| `native` | GraalVM native image 构建支撑：`native-build` Profile（Spring AOT + native-maven-plugin 编译骨架，通用 buildArg 固化、项目特定 buildArg 由下游同名 Profile 合并追加）、`native-trace` Profile（surefire 与 failsafe 均挂 Tracing Agent 采集反射元数据，分别使用 `config-output-dir` 与 `config-merge-dir` 写入同一目录）；`native-trace` 产出目录默认经 `project.native.agent.config.dir` 属性作为 `native-build` 的 `-H:ConfigurationFileDirectories` 输入（缺失目录被静默忽略）；**不动版本基线**，spring-boot/java 等基线由下游项目自定 |
 
 ## 构建与测试
 
@@ -72,9 +72,9 @@ native → boot
 
 - 本仓库自身无测试代码。
 - 预定义的测试体系（在下游子项目中生效）：
-  - 测试插件由 `pure` 的 `java-test` Profile（存在 `src/test/java` 目录时）激活；
+  - 测试插件由 `pure` 的 `java-test` Profile（存在 `src/test/java` 目录时）激活，包含 surefire 与 failsafe；
   - JUnit 5 依赖由 `base` 的同名 Profile 提供（junit-bom 统一版本 + junit-jupiter 聚合构件作为默认测试环境）；
-  - `pure` 的 `java-it` Profile（存在 `src/it/java` 目录时）通过 `build-helper-maven-plugin` 将 `src/it/java` 注册为测试源码目录，**不负责执行**；执行需由子项目自行声明 `maven-failsafe-plugin`；
+  - `pure` 的 `java-it` Profile（存在 `src/it/java` 目录时）通过 `build-helper-maven-plugin` 将 `src/it/java` 注册为测试源码目录，**不负责执行**；执行由 `java-test` Profile 中的 `maven-failsafe-plugin` 统一提供；
   - 版本号见 README 表格。
 - 代码质量/安全报告不在 pom 中预定义：老旧报告插件（findbugs/pmd/checkstyle 等）已于 1.4.0 移除，统一改用外部 Sonar 扫描（`mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar`）。
 
